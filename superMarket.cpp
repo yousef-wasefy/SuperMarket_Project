@@ -54,6 +54,7 @@ when we finish we will add new functions and it may take week or more.
 */
 
 // ظبط الفانكشن بتاعتك من حيث الاسم والنوع والبراميترز اللي هتاخدها
+//حاولوا بقدر الامكان تنوعوا في النوع والبراميترز
 void sign_up();
 void log_in();
 void edit_information();
