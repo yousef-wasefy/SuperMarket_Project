@@ -30,19 +30,36 @@ struct Order
     double TotalPrice;
 };
 
-const int CATEGORY_COUNT = 5; // at least 5
-string productCategories[CATEGORY_COUNT] = {};
+const int CATEGORY_COUNT = 5;// at least 5
+string productCategories[CATEGORY_COUNT] = {"Dairy", "Beverages", "Bakery", "Snacks", "Frozen Food"};
 
-//هنهمشها دلوقت ونرجعهم اما نشوف ايه الكاتجوريز اللي هنضيفها
-// const int MAX_PRODUCTS = 100; // الحد الأقصى للمنتجات في كل فئة
+const int MAX_PRODUCTS = 3; // 3 products per category
+Product dairyProducts[MAX_PRODUCTS] = {
+    {"D001", "Milk", "Dairy", "2025-03-01", "2025-03-10", 1.50},
+    {"D002", "Cheese", "Dairy", "2025-02-25", "2025-03-20", 3.99},
+    {"D003", "Butter", "Dairy", "2025-02-28", "2025-04-15", 2.50}};
 
-// Product واسم الكاتجوري[MAX_PRODUCTS];
-// Product [MAX_PRODUCTS];
-// Product [MAX_PRODUCTS];
-// Product [MAX_PRODUCTS];
-// Product [MAX_PRODUCTS];
+Product beveragesProducts[MAX_PRODUCTS] = {
+    {"B001", "Orange Juice", "Beverages", "2025-03-05", "2025-06-05", 2.00},
+    {"B002", "Coca-Cola", "Beverages", "2025-02-15", "2025-08-15", 1.25},
+    {"B003", "Green Tea", "Beverages", "2025-01-30", "2025-07-30", 1.75}};
 
-/*NOTES 
+Product bakeryProducts[MAX_PRODUCTS] = {
+    {"BK001", "White Bread", "Bakery", "2025-03-08", "2025-03-12", 1.20},
+    {"BK002", "Croissant", "Bakery", "2025-03-07", "2025-03-10", 0.99},
+    {"BK003", "Chocolate Muffin", "Bakery", "2025-03-06", "2025-03-11", 1.50}};
+
+Product snacksProducts[MAX_PRODUCTS] = {
+    {"S001", "Potato Chips", "Snacks", "2025-02-20", "2025-08-20", 1.75},
+    {"S002", "Chocolate Bar", "Snacks", "2025-03-01", "2025-09-01", 1.25},
+    {"S003", "Peanuts", "Snacks", "2025-02-18", "2025-12-18", 2.30}};
+
+Product frozenFoodProducts[MAX_PRODUCTS] = {
+    {"F001", "Frozen Pizza", "Frozen Food", "2025-02-10", "2026-02-10", 5.50},
+    {"F002", "Ice Cream (Vanilla)", "Frozen Food", "2025-02-28", "2026-02-28", 3.99},
+    {"F003", "Chicken Nuggets", "Frozen Food", "2025-03-01", "2026-03-01", 6.75}};
+
+/*              -->> NOTES <<-- 
 - Don't modify,add or use any new structs or arrays before you tell us and we approve.
 - Don't forget to -->["pull"]<-- before you start working , and before you push your work.
 - We will finish from the required functions before the midterm, 
