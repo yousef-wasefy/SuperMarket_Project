@@ -20,6 +20,7 @@ struct Product
     string ProductionDate;
     string ExpiredDate;
     double Price;
+    string info;
 };
 
 struct Order
@@ -35,7 +36,7 @@ string productCategories[CATEGORY_COUNT] = {"Dairy", "Beverages", "Bakery", "Sna
 
 const int MAX_PRODUCTS = 3; // 3 products per category
 Product dairyProducts[MAX_PRODUCTS] = {
-    {"D001", "Milk", "Dairy", "2025-03-01", "2025-03-10", 1.50},
+    {"D001", "Milk", "Dairy", "2025-03-01", "2025-03-10", 1.50}, 
     {"D002", "Cheese", "Dairy", "2025-02-25", "2025-03-20", 3.99},
     {"D003", "Butter", "Dairy", "2025-02-28", "2025-04-15", 2.50}};
 
@@ -63,15 +64,16 @@ Product frozenFoodProducts[MAX_PRODUCTS] = {
 - Don't modify,add or use any new structs or arrays before you tell us and we approve.
 - Don't forget to -->["pull"]<-- before you start working , and before you push your work.
 - We will finish from the required functions before the midterm, 
-when we finish we will add new functions and it may take week or more.
+when we finish we may add new functions and it may take week or more.
 - Don't use GPT !!, just make him helps you.
 - بالنسبة لموضوع الفايل : انت الاول هتخلص الفانكشن بتاعتك عادي بعدين تبدا تظبط موضوع الفايل بحيث تقرا وتكتب منه
 - ممكن تستعين ب gpt في موضوع الفايل بس كون فاهم اللي بيتعمل
-- كل واحد مسؤول عن كوده
+- كل واحد مسؤول عن كوده (اكيد هنساعد بعض )
+- اتاكد ان الفانكشن بتاعتك بتأدي دورها بشكل كامل مع عدم وجود اي اخطاء في اي مكان في البروجكت
 */
 
 // ظبط الفانكشن بتاعتك من حيث الاسم والنوع والبراميترز اللي هتاخدها
-//حاولوا بقدر الامكان تنوعوا في النوع والبراميترز
+// حاولوا بقدر الامكان تنوعوا في النوع والبراميترز
 void sign_up();
 void log_in();
 void edit_information();
