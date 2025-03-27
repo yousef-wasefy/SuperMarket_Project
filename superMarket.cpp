@@ -74,16 +74,16 @@ when we finish we may add new functions and it may take week or more.
 
 // ظبط الفانكشن بتاعتك من حيث الاسم والنوع والبراميترز اللي هتاخدها
 // حاولوا بقدر الامكان تنوعوا في النوع والبراميترز
-void sign_up();
-void log_in();
-void edit_information();
-void view_products_menu();
-void view_the_information_of_the_item_that_the_customer_has_chosen();
-void the_customer_selects_the_goods_he_wants_to_add_to_his_order();
-void Review_his_order();
-void the_customer_is_able_to_modify_his_order();
-void view_total_price();
-void log_out();
+void sign_up(); //Sa3eed
+void log_in(); //Sa3eed
+void edit_information(); //nour
+void view_products_menu(); //Doha
+void view_the_information_of_the_item_that_the_customer_has_chosen(); //Doha
+void the_customer_selects_the_goods_he_wants_to_add_to_his_order(); //Mostafa
+void Review_his_order(); //Youssef hagras
+void the_customer_is_able_to_modify_his_order(); //Mohra
+void view_total_price(); //Youssef Ahmed
+void log_out(); //Sa3eed
 int menu();
 
 int main()
