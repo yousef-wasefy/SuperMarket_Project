@@ -1,6 +1,9 @@
 #include<iostream>
 #include<string>
 #include<vector>
+#include <chrono> //used for the time
+#include <ctime>  //used for the time
+#include <iomanip> //used for the time
 
 using namespace std;
 
@@ -10,7 +13,7 @@ struct Customer
     string Name;
     string PhoneNumber;
     string Location;
-};
+} customer[50];
 
 struct Product
 {
@@ -23,13 +26,26 @@ struct Product
     string info;
 };
 
+const int NUMBER_OF_PRODUCTS = 50;
 struct Order
 {
     int CustomerID;
-    Product list_Of_Products[50];
-    int ProductCount;  // عدد المنتجات في الطلب الفعلي
-    double TotalPrice;
-};
+    Product list_Of_Products[NUMBER_OF_PRODUCTS]; // that the customer will take
+    int ProductCount;  //عدد المنتجات في الطلب الفعلي
+    double TotalPrice = 0;
+    string orderTime;
+} customerOrder[50];
+
+// string getCurrentTimeString() // only testing rightnow
+// {
+//     auto now = std::chrono::system_clock::now();
+//     std::time_t now_time = std::chrono::system_clock::to_time_t(now);
+//     std::tm local_time = *std::localtime(&now_time); // تحويل الوقت إلى `tm`
+
+//     std::ostringstream oss;
+//     oss << std::put_time(&local_time, "%Y-%m-%d %H:%M"); // تحويل إلى نص
+//     return oss.str();
+// }
 
 const int CATEGORY_COUNT = 5;// at least 5
 string productCategories[CATEGORY_COUNT] = {"Dairy", "Beverages", "Bakery", "Snacks", "Frozen Food"};
@@ -37,7 +53,7 @@ string productCategories[CATEGORY_COUNT] = {"Dairy", "Beverages", "Bakery", "Sna
 const int MAX_PRODUCTS = 3; // 3 products per category
 Product dairyProducts[MAX_PRODUCTS] = {
     {"D001", "Milk", "Dairy", "2025-03-01", "2025-03-10", 1.50}, 
-    {"D002", "Cheese", "Dairy", "2025-02-25", "2025-03-20", 3.99},
+    {"D002", "Cheese", "Dairy", "2025-02-25", "2025-03-20", 4.00},
     {"D003", "Butter", "Dairy", "2025-02-28", "2025-04-15", 2.50}};
 
 Product beveragesProducts[MAX_PRODUCTS] = {
@@ -96,13 +112,15 @@ int main()
         choice = menu();
         switch(choice) //add your case.
         {
-
-            default:
-                cout << "Invalid choice!\nPlease re-enter the correct one\n";
-                answer = 'y';
-                continue;
+        case 8:
+            view_total_price();
+            break;
+        default:
+            cout << "Invalid choice!\nPlease re-enter the correct one\n";
+            answer = 'y';
+            continue;
         }
-        cout << "Another operation? (Y/N)";
+        cout << "\nAnother operation? (Y/N)";
         cin >> answer;
     } while (answer == 'Y' || answer == 'y');
     
@@ -128,4 +146,33 @@ int menu()
 
     cin >> choice;
     return choice;
+}
+
+void view_total_price()
+{
+    double totalPrice = 0;
+
+    // customerOrder[0].list_Of_Products[0] = dairyProducts[0];
+    // customerOrder[0].ProductCount = 2;
+    // customerOrder[0].orderTime = getCurrentTimeString();
+    // customerOrder[1].list_Of_Products[1] = dairyProducts[1];
+    // customerOrder[1].ProductCount = 3;
+    // customerOrder[1].orderTime = getCurrentTimeString();
+
+    cout << "Item\t\tquantity\ttotal price\tOrder Date & Time" << endl;
+    for (int j = 0; j < 2; j++)
+    {
+        cout << customerOrder[j].list_Of_Products[j].Name;
+        cout << "\t\t" << customerOrder[j].ProductCount;
+        cout << "\t\t" << customerOrder[j].list_Of_Products[j].Price * customerOrder[j].ProductCount;
+        cout << "\t\t" << customerOrder[j].orderTime;
+        cout << endl;
+    }
+
+    cout << "Total Price : ";
+    for (int i = 0; i < NUMBER_OF_PRODUCTS; i++)
+    {
+        totalPrice += customerOrder[i].list_Of_Products[i].Price * customerOrder[i].ProductCount;
+    }
+    cout << totalPrice << endl;
 }
