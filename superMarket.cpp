@@ -1,15 +1,19 @@
 #include<iostream>
 #include<string>
 #include<vector>
-#include <chrono> //used for the time
-#include <ctime>  //used for the time
-#include <iomanip> //used for the time
+#include<chrono> //used for the time
+#include<ctime>  //used for the time
+#include<iomanip> //used for the time
+#include<fstream>
 
 using namespace std;
 
+//ofstream outFile("superMarket.txt", ios::app); // file to save the data
+//ifstream inFile("superMarket.txt"); // file to read the data
+
 struct Customer
 {
-    int ID;
+    int ID = 0;
     string Name;
     string PhoneNumber;
     string Location;
@@ -22,16 +26,16 @@ struct Product
     string Category;
     string ProductionDate;
     string ExpiredDate;
-    double Price;
+    double Price = 0.0;
     string info;
 };
 
 const int NUMBER_OF_PRODUCTS = 50;
 struct Order
 {
-    int CustomerID;
+    int CustomerID = 0;
     Product list_Of_Products[NUMBER_OF_PRODUCTS]; // that the customer will take
-    int ProductCount;  //عدد المنتجات في الطلب الفعلي
+    int ProductCount = 0;  //عدد المنتجات في الطلب الفعلي
     double TotalPrice = 0;
     string orderTime;
 } customerOrder[50];
@@ -48,7 +52,7 @@ struct Order
 // }
 
 const int CATEGORY_COUNT = 5;// at least 5
-string productCategories[CATEGORY_COUNT] = {"Dairy", "Beverages", "Bakery", "Snacks", "Frozen Food"};
+string productCategories[CATEGORY_COUNT] = { "Dairy", "Beverages", "Bakery", "Snacks", "Frozen Food" };
 
 const int MAX_PRODUCTS = 3; // 3 products per category
 Product dairyProducts[MAX_PRODUCTS] = {
