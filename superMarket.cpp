@@ -55,30 +55,33 @@ const int CATEGORY_COUNT = 5;// at least 5
 string productCategories[CATEGORY_COUNT] = { "Dairy", "Beverages", "Bakery", "Snacks", "Frozen Food" };
 
 const int MAX_PRODUCTS = 3; // 3 products per category
-Product dairyProducts[MAX_PRODUCTS] = {
-    {"D001", "Milk", "Dairy", "2025-03-01", "2025-03-10", 1.50}, 
-    {"D002", "Cheese", "Dairy", "2025-02-25", "2025-03-20", 4.00},
-    {"D003", "Butter", "Dairy", "2025-02-28", "2025-04-15", 2.50}};
-
-Product beveragesProducts[MAX_PRODUCTS] = {
-    {"B001", "Orange Juice", "Beverages", "2025-03-05", "2025-06-05", 2.00},
-    {"B002", "Coca-Cola", "Beverages", "2025-02-15", "2025-08-15", 1.25},
-    {"B003", "Green Tea", "Beverages", "2025-01-30", "2025-07-30", 1.75}};
-
-Product bakeryProducts[MAX_PRODUCTS] = {
-    {"BK001", "White Bread", "Bakery", "2025-03-08", "2025-03-12", 1.20},
-    {"BK002", "Croissant", "Bakery", "2025-03-07", "2025-03-10", 0.99},
-    {"BK003", "Chocolate Muffin", "Bakery", "2025-03-06", "2025-03-11", 1.50}};
-
-Product snacksProducts[MAX_PRODUCTS] = {
-    {"S001", "Potato Chips", "Snacks", "2025-02-20", "2025-08-20", 1.75},
-    {"S002", "Chocolate Bar", "Snacks", "2025-03-01", "2025-09-01", 1.25},
-    {"S003", "Peanuts", "Snacks", "2025-02-18", "2025-12-18", 2.30}};
-
-Product frozenFoodProducts[MAX_PRODUCTS] = {
-    {"F001", "Frozen Pizza", "Frozen Food", "2025-02-10", "2026-02-10", 5.50},
-    {"F002", "Ice Cream (Vanilla)", "Frozen Food", "2025-02-28", "2026-02-28", 3.99},
-    {"F003", "Chicken Nuggets", "Frozen Food", "2025-03-01", "2026-03-01", 6.75}};
+Product Products[CATEGORY_COUNT][MAX_PRODUCTS] = {
+    { // Dairy
+        {"D001", "Milk", "Dairy", "2025-03-01", "2025-03-10", 1.50},
+        {"D002", "Cheese", "Dairy", "2025-02-25", "2025-03-20", 4.00},
+        {"D003", "Butter", "Dairy", "2025-02-28", "2025-04-15", 2.50}
+    },
+    { // Beverages
+        {"B001", "Orange Juice", "Beverages", "2025-03-05", "2025-06-05", 2.00},
+        {"B002", "Coca-Cola", "Beverages", "2025-02-15", "2025-08-15", 1.25},
+        {"B003", "Green Tea", "Beverages", "2025-01-30", "2025-07-30", 1.75}
+    },
+    { // Bakery
+        {"BK001", "White Bread", "Bakery", "2025-03-08", "2025-03-12", 1.20},
+        {"BK002", "Croissant", "Bakery", "2025-03-07", "2025-03-10", 0.99},
+        {"BK003", "Chocolate Muffin", "Bakery", "2025-03-06", "2025-03-11", 1.50}
+    },
+    { // Snacks
+        {"S001", "Potato Chips", "Snacks", "2025-02-20", "2025-08-20", 1.75},
+        {"S002", "Chocolate Bar", "Snacks", "2025-03-01", "2025-09-01", 1.25},
+        {"S003", "Peanuts", "Snacks", "2025-02-18", "2025-12-18", 2.30}
+    },
+    { // Frozen Food
+        {"F001", "Frozen Pizza", "Frozen Food", "2025-02-10", "2026-02-10", 5.50},
+        {"F002", "Ice Cream (Vanilla)", "Frozen Food", "2025-02-28", "2026-02-28", 3.99},
+        {"F003", "Chicken Nuggets", "Frozen Food", "2025-03-01", "2026-03-01", 6.75}
+    }
+};
 
 /*              -->> NOTES <<-- 
 - Don't modify,add or use any new structs or arrays before you tell us and we approve.
@@ -105,7 +108,6 @@ void the_customer_is_able_to_modify_his_order(); //Mohra
 void view_total_price(); //Youssef Ahmed
 void log_out(); //Sa3eed
 int menu();
-
 int main()
 {
     //pull first !!!!
@@ -116,6 +118,12 @@ int main()
         choice = menu();
         switch(choice) //add your case.
         {
+        case 3:
+            view_products_menu();
+            break;
+        case 4:
+            view_the_information_of_the_item_that_the_customer_has_chosen();
+            break;
         case 8:
             view_total_price();
             break;
@@ -151,7 +159,49 @@ int menu()
     cin >> choice;
     return choice;
 }
+// <<-- view product menu -->>
+void view_products_menu() {
+    cout << endl << "\t\t-------------------------------------" << endl;
+    cout << "\t\t\tMenu of the products" << endl;
+    cout << "\t\t-------------------------------------\n\n";
 
+    for (int cat = 0; cat < CATEGORY_COUNT; cat++) {
+        cout << "#" << productCategories[cat] << "\n\n";
+        for (int i = 0; i < MAX_PRODUCTS; i++) {
+            cout << "  Code  : " << Products[cat][i].Code << endl;
+            cout << "  Name  : " << Products[cat][i].Name << endl;
+            cout << "  Price : $" << Products[cat][i].Price << endl;
+            cout << "-------------------------------------\n";
+        }
+        cout << endl;
+    }
+}
+// <<-- view_the_information_of_the_item_that_the_customer_has_chosen -->>
+void view_the_information_of_the_item_that_the_customer_has_chosen() {
+    string code;
+    bool found = false;
+    cout << "Enter the product code: ";
+    cin >> code;
+
+    for (int cat = 0; cat < CATEGORY_COUNT; cat++) {
+        for (int i = 0; i < MAX_PRODUCTS; i++) {
+            if (Products[cat][i].Code == code) {
+                cout << "\nProduct [ " << Products[cat][i].Name << " ] Information:\n";
+                cout << "-------------------------\n";
+                cout << "Category      : " << Products[cat][i].Category << endl;
+                cout << "Production    : " << Products[cat][i].ProductionDate << endl;
+                cout << "Expiration    : " << Products[cat][i].ExpiredDate << endl;
+                cout << "-------------------------\n\n";
+                found = true;
+                break;
+            }
+        }
+    }
+
+    if (!found) {
+        cout << "\nProduct not found! Please check the code and try again.\n\n";
+    }
+}
 void view_total_price()
 {
     double totalPrice = 0;
