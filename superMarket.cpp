@@ -155,7 +155,6 @@ int menu()
     cout << "8. to view the total price\n";
     cout << "9. to edit information\n";
     cout << "10. to log out\n";
-
     cin >> choice;
     return choice;
 }
@@ -178,19 +177,20 @@ void view_products_menu() {
 }
 // <<-- view_the_information_of_the_item_that_the_customer_has_chosen -->>
 void view_the_information_of_the_item_that_the_customer_has_chosen() {
-    string code;
+    string name;
     bool found = false;
-    cout << "Enter the product code: ";
-    cin >> code;
-
+    cout << "Enter the product name: ";
+    cin.ignore();
+    getline(cin, name);
     for (int cat = 0; cat < CATEGORY_COUNT; cat++) {
         for (int i = 0; i < MAX_PRODUCTS; i++) {
-            if (Products[cat][i].Code == code) {
-                cout << "\nProduct [ " << Products[cat][i].Name << " ] Information:\n";
+            if (Products[cat][i].Name == name) {
+                cout << "\nProduct [ " << Products[cat][i].Code << " ] Information:\n";
                 cout << "-------------------------\n";
                 cout << "Category      : " << Products[cat][i].Category << endl;
                 cout << "Production    : " << Products[cat][i].ProductionDate << endl;
                 cout << "Expiration    : " << Products[cat][i].ExpiredDate << endl;
+                cout << "Price         : " << Products[cat][i].Price << endl;
                 cout << "-------------------------\n\n";
                 found = true;
                 break;
@@ -202,6 +202,7 @@ void view_the_information_of_the_item_that_the_customer_has_chosen() {
         cout << "\nProduct not found! Please check the code and try again.\n\n";
     }
 }
+
 void view_total_price()
 {
     double totalPrice = 0;
