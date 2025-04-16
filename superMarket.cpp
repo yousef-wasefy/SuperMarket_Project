@@ -55,6 +55,32 @@ const int CATEGORY_COUNT = 5;// at least 5
 string productCategories[CATEGORY_COUNT] = { "Dairy", "Beverages", "Bakery", "Snacks", "Frozen Food" };
 
 const int MAX_PRODUCTS = 3; // 3 products per category
+Product dairyProducts[MAX_PRODUCTS] = {
+     {"D001", "Milk", "Dairy", "2025-03-01", "2025-03-10", 1.50},
+     {"D002", "Cheese", "Dairy", "2025-02-25", "2025-03-20", 4.00},
+     {"D003", "Butter", "Dairy", "2025-02-28", "2025-04-15", 2.50} };
+
+Product beveragesProducts[MAX_PRODUCTS] = {
+    {"B001", "Orange Juice", "Beverages", "2025-03-05", "2025-06-05", 2.00},
+    {"B002", "Coca-Cola", "Beverages", "2025-02-15", "2025-08-15", 1.25},
+    {"B003", "Green Tea", "Beverages", "2025-01-30", "2025-07-30", 1.75} };
+
+Product bakeryProducts[MAX_PRODUCTS] = {
+    {"BK001", "White Bread", "Bakery", "2025-03-08", "2025-03-12", 1.20},
+    {"BK002", "Croissant", "Bakery", "2025-03-07", "2025-03-10", 0.99},
+    {"BK003", "Chocolate Muffin", "Bakery", "2025-03-06", "2025-03-11", 1.50} };
+
+Product snacksProducts[MAX_PRODUCTS] = {
+    {"S001", "Potato Chips", "Snacks", "2025-02-20", "2025-08-20", 1.75},
+    {"S002", "Chocolate Bar", "Snacks", "2025-03-01", "2025-09-01", 1.25},
+    {"S003", "Peanuts", "Snacks", "2025-02-18", "2025-12-18", 2.30} };
+
+Product frozenFoodProducts[MAX_PRODUCTS] = {
+    {"F001", "Frozen Pizza", "Frozen Food", "2025-02-10", "2026-02-10", 5.50},
+    {"F002", "Ice Cream (Vanilla)", "Frozen Food", "2025-02-28", "2026-02-28", 3.99},
+    {"F003", "Chicken Nuggets", "Frozen Food", "2025-03-01", "2026-03-01", 6.75} };
+
+//All the products are in the array of products
 Product Products[CATEGORY_COUNT][MAX_PRODUCTS] = {
     { // Dairy
         {"D001", "Milk", "Dairy", "2025-03-01", "2025-03-10", 1.50},
@@ -108,6 +134,7 @@ void the_customer_is_able_to_modify_his_order(); //Mohra
 void view_total_price(); //Youssef Ahmed
 void log_out(); //Sa3eed
 int menu();
+
 int main()
 {
     //pull first !!!!
