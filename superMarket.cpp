@@ -166,6 +166,8 @@ int main()
         case 8:
             view_total_price();
             break;
+        case 9 :
+            edit_information();
         default:
             cout << "Invalid choice!\nPlease re-enter the correct one\n";
             answer = 'y';
@@ -216,7 +218,7 @@ void sign_up() {
     cin >> NewCustomer.Password;
     customers[customerCount] = NewCustomer;
     customerCount++;
-    cout << "####Sgin Up Successfully. Your ID(" << NewCustomer.ID << ")####"; << endl;
+    cout << "####Sgin Up Successfully. Your ID(" << NewCustomer.ID << ")####" << endl;
     cout << "========================================" << endl;
 }
 // <<-- view product menu -->>
@@ -305,34 +307,39 @@ void edit_information()
     switch (categoryChoice) {
     case 1:
         cout << "\nDairy Products:\n";
-        cout << "1. Code: " << dairyProducts[0].Code << "   Name: " << dairyProducts[0].Name << "\n";
-        cout << "2. Code: " << dairyProducts[1].Code << "   Name: " << dairyProducts[1].Name << "\n";
-        cout << "3. Code: " << dairyProducts[2].Code << "   Name: " << dairyProducts[2].Name << "\n";
-        break;
+        for (int i = 0;i < MAX_PRODUCTS;i++)
+        {
+            cout << "1. Code: " << dairyProducts[i].Code << "   Name: " << dairyProducts[i].Name << "\n";
+            break;
+        }
     case 2:
         cout << "\nBeverages Products:\n";
-        cout << "1. Code: " << beveragesProducts[0].Code << "   Name: " << beveragesProducts[0].Name << "\n";
-        cout << "2. Code: " << beveragesProducts[1].Code << "   Name: " << beveragesProducts[1].Name << "\n";
-        cout << "3. Code: " << beveragesProducts[2].Code << "   Name: " << beveragesProducts[2].Name << "\n";
-        break;
+        for (int i = 0;i < MAX_PRODUCTS;i++)
+        {
+            cout << "1. Code: " << beveragesProducts[i].Code << "   Name: " << beveragesProducts[i].Name << "\n";
+            break;
+        }
     case 3:
         cout << "\nBakery Products:\n";
-        cout << "1. Code: " << bakeryProducts[0].Code << "   Name: " << bakeryProducts[0].Name << "\n";
-        cout << "2. Code: " << bakeryProducts[1].Code << "   Name: " << bakeryProducts[1].Name << "\n";
-        cout << "3. Code: " << bakeryProducts[2].Code << "   Name: " << bakeryProducts[2].Name << "\n";
-        break;
+        for (int i = 0;i < MAX_PRODUCTS;i++)
+        {
+            cout << "1. Code: " << bakeryProducts[i].Code << "   Name: " << bakeryProducts[i].Name << "\n";
+            break;
+        }
     case 4:
         cout << "\nSnacks Products:\n";
-        cout << "1. Code: " << snacksProducts[0].Code << "   Name: " << snacksProducts[0].Name << "\n";
-        cout << "2. Code: " << snacksProducts[1].Code << "   Name: " << snacksProducts[1].Name << "\n";
-        cout << "3. Code: " << snacksProducts[2].Code << "   Name: " << snacksProducts[2].Name << "\n";
-        break;
+        for (int i = 0;i < MAX_PRODUCTS;i++)
+        {
+            cout << "1. Code: " << snacksProducts[i].Code << "   Name: " << snacksProducts[i].Name << "\n";
+            break;
+        }
     case 5:
         cout << "\nFrozen Food Products:\n";
-        cout << "1. Code: " << frozenFoodProducts[0].Code << "   Name: " << frozenFoodProducts[0].Name << "\n";
-        cout << "2. Code: " << frozenFoodProducts[1].Code << "   Name: " << frozenFoodProducts[1].Name << "\n";
-        cout << "3. Code: " << frozenFoodProducts[2].Code << "   Name: " << frozenFoodProducts[2].Name << "\n";
-        break;
+        for (int i = 0;i < MAX_PRODUCTS;i++)
+        {
+            cout << "1. Code: " << frozenFoodProducts[i].Code << "   Name: " << frozenFoodProducts[i].Name << "\n";
+            break;
+        }
     default:
         cout << "Invalid category choice.\n";
         return;
@@ -349,7 +356,7 @@ void edit_information()
     cout << "4. Production Date\n";
     cout << "5. Expired Date\n";
     cout << "6. Price\n";
-    cout << "Enter your choice (1-7): ";
+    cout << "Enter your choice (1-6): ";
     cin >> fieldChoice;
 
     switch (categoryChoice) {
