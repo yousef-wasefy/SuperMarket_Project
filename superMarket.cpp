@@ -7,6 +7,7 @@
 #include<fstream>
 
 using namespace std;
+#define max=50;//added by sa3ed 
 
 //ofstream outFile("superMarket.txt", ios::app); // file to save the data
 //ifstream inFile("superMarket.txt"); // file to read the data
@@ -17,7 +18,8 @@ struct Customer
     string Name;
     string PhoneNumber;
     string Location;
-} customer[50];
+    string Password;
+};
 
 struct Product
 {
@@ -152,6 +154,9 @@ int main()
         choice = menu();
         switch(choice) //add your case.
         {
+        case 1:
+            sign_up();
+            break;
         case 3:
             view_products_menu();
             break;
@@ -191,6 +196,24 @@ int menu()
     cout << "10. to log out\n";
     cin >> choice;
     return choice;
+}
+//<<--sgin_up-->>
+Customer customers[max]
+int customerCount=0
+void sgin_up() {
+    Customer NewCustomer;
+    NewCustomer.id = customerCount + 1;
+    cout << "Enter Your Name:\t\t";
+    cin >> NewCustomer.Name;
+    cout << "Enter Your Phone Number:\t\t";
+    cin >> NewCustomer.phoneNumber;
+    cout << "Enter Your Location:\t\t";
+    cin >> NewCustomer.Location;
+    cout << "Enter Your Password:\t\t";
+    cin >> NewCustomer.Password;
+    customers[customerCount] = NewCustomer;
+    customerCount++;
+    cout << "<<----Sgin Up Successfully. Your ID\t" << NewCustomer.id << "---->>";
 }
 // <<-- view product menu -->>
 void view_products_menu() {
