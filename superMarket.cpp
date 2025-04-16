@@ -111,10 +111,10 @@ Product Products[CATEGORY_COUNT][MAX_PRODUCTS] = {
     }
 };
 
-/*              -->> NOTES <<-- 
+/*              -->> NOTES <<--
 - Don't modify,add or use any new structs or arrays before you tell us and we approve.
 - Don't forget to -->["pull"]<-- before you start working , and before you push your work.
-- We will finish from the required functions before the midterm, 
+- We will finish from the required functions before the midterm,
 when we finish we may add new functions and it may take week or more.
 - Don't use GPT !!, just make him helps you.
 - بالنسبة لموضوع الفايل : انت الاول هتخلص الفانكشن بتاعتك عادي بعدين تبدا تظبط موضوع الفايل بحيث تقرا وتكتب منه
@@ -152,7 +152,7 @@ int main()
     do
     {
         choice = menu();
-        switch(choice) //add your case.
+        switch (choice) //add your case.
         {
         case 1:
             sign_up();
@@ -166,7 +166,7 @@ int main()
         case 8:
             view_total_price();
             break;
-        case 9 :
+        case 9:
             edit_information();
         default:
             cout << "Invalid choice!\nPlease re-enter the correct one\n";
@@ -176,7 +176,7 @@ int main()
         cout << "\nAnother operation? (Y/N)";
         cin >> answer;
     } while (answer == 'Y' || answer == 'y');
-    
+
     return 0; //pull first !!!!
 }
 
@@ -296,7 +296,7 @@ void view_total_price()
 }
 
 void edit_information()
- {
+{
     int categoryChoice, productChoice, fieldChoice;
 
     cout << "Select product category to edit:\n";
@@ -310,36 +310,36 @@ void edit_information()
         for (int i = 0;i < MAX_PRODUCTS;i++)
         {
             cout << "1. Code: " << dairyProducts[i].Code << "   Name: " << dairyProducts[i].Name << "\n";
-            break;
         }
+            break;
     case 2:
         cout << "\nBeverages Products:\n";
         for (int i = 0;i < MAX_PRODUCTS;i++)
         {
             cout << "1. Code: " << beveragesProducts[i].Code << "   Name: " << beveragesProducts[i].Name << "\n";
-            break;
         }
+            break;
     case 3:
         cout << "\nBakery Products:\n";
         for (int i = 0;i < MAX_PRODUCTS;i++)
         {
             cout << "1. Code: " << bakeryProducts[i].Code << "   Name: " << bakeryProducts[i].Name << "\n";
-            break;
         }
+            break;
     case 4:
         cout << "\nSnacks Products:\n";
         for (int i = 0;i < MAX_PRODUCTS;i++)
         {
             cout << "1. Code: " << snacksProducts[i].Code << "   Name: " << snacksProducts[i].Name << "\n";
-            break;
         }
+            break;
     case 5:
         cout << "\nFrozen Food Products:\n";
         for (int i = 0;i < MAX_PRODUCTS;i++)
         {
             cout << "1. Code: " << frozenFoodProducts[i].Code << "   Name: " << frozenFoodProducts[i].Name << "\n";
-            break;
         }
+            break;
     default:
         cout << "Invalid category choice.\n";
         return;
@@ -347,7 +347,7 @@ void edit_information()
 
     cout << "\n Select product number to edit (1-3): ";
     cin >> productChoice;
-    productChoice = productChoice - 1; 
+    productChoice = productChoice - 1;
 
     cout << "\nWhich data do you want to edit?\n";
     cout << "1. Code\n";
@@ -360,7 +360,7 @@ void edit_information()
     cin >> fieldChoice;
 
     switch (categoryChoice) {
-    case 1: 
+    case 1:
         switch (fieldChoice) {
         case 1:
             cout << "Enter new Code: ";
@@ -391,7 +391,7 @@ void edit_information()
             return;
         }
         break;
-    case 2: 
+    case 2:
         switch (fieldChoice) {
         case 1:
             cout << "Enter new Code: ";
@@ -422,7 +422,7 @@ void edit_information()
             return;
         }
         break;
-    case 3: 
+    case 3:
         switch (fieldChoice) {
         case 1:
             cout << "Enter new Code: ";
@@ -453,7 +453,7 @@ void edit_information()
             return;
         }
         break;
-    case 4: 
+    case 4:
         switch (fieldChoice) {
         case 1:
             cout << "Enter new Code: ";
@@ -484,7 +484,7 @@ void edit_information()
             return;
         }
         break;
-    case 5: 
+    case 5:
         switch (fieldChoice) {
         case 1:
             cout << "Enter new Code: ";
