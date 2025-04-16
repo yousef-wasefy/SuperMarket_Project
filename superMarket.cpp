@@ -7,7 +7,7 @@
 #include<fstream>
 
 using namespace std;
-#define max=50;//added by sa3ed 
+#define max 50//added by sa3ed 
 
 //ofstream outFile("superMarket.txt", ios::app); // file to save the data
 //ifstream inFile("superMarket.txt"); // file to read the data
@@ -184,6 +184,7 @@ int menu()
 
     cout << "\t\tWelcome to Super Market Online Shopping" << endl;
     cout << "\t\t***************************************" << endl;
+    cout << "========================================" << endl;
     cout << "Press\n1. to sign up\n";
     cout << "2. to log in\n";
     cout << "3. to view products menu\n";
@@ -194,26 +195,29 @@ int menu()
     cout << "8. to view the total price\n";
     cout << "9. to edit information\n";
     cout << "10. to log out\n";
+    cout << "========================================" << endl;
     cin >> choice;
     return choice;
 }
-//<<--sgin_up-->>
-Customer customers[max]
-int customerCount=0
-void sgin_up() {
+//<<--sign_up-->>
+Customer customers[max];
+int customerCount = 0;
+void sign_up() {
+    cout << "========================================" << endl;
     Customer NewCustomer;
-    NewCustomer.id = customerCount + 1;
+    NewCustomer.ID = customerCount + 1;
     cout << "Enter Your Name:\t\t";
     cin >> NewCustomer.Name;
-    cout << "Enter Your Phone Number:\t\t";
-    cin >> NewCustomer.phoneNumber;
+    cout << "Enter Your Phone Number:\t";
+    cin >> NewCustomer.PhoneNumber;
     cout << "Enter Your Location:\t\t";
     cin >> NewCustomer.Location;
     cout << "Enter Your Password:\t\t";
     cin >> NewCustomer.Password;
     customers[customerCount] = NewCustomer;
     customerCount++;
-    cout << "<<----Sgin Up Successfully. Your ID\t" << NewCustomer.id << "---->>";
+    cout << "####Sgin Up Successfully. Your ID(" << NewCustomer.ID << ")####"; << endl;
+    cout << "========================================" << endl;
 }
 // <<-- view product menu -->>
 void view_products_menu() {
