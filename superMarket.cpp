@@ -7,7 +7,7 @@
 #include<fstream>
 
 using namespace std;
-#define max 50//added by sa3ed 
+#define max 50 
 
 //ofstream outFile("superMarket.txt", ios::app); // file to save the data
 //ifstream inFile("superMarket.txt"); // file to read the data
@@ -29,7 +29,6 @@ struct Product
     string ProductionDate;
     string ExpiredDate;
     double Price = 0.0;
-    string info;
 };
 
 const int NUMBER_OF_PRODUCTS = 50;
@@ -166,6 +165,9 @@ int main()
         case 8:
             view_total_price();
             break;
+		case 9:
+			edit_information();
+			break;
         default:
             cout << "Invalid choice!\nPlease re-enter the correct one\n";
             answer = 'y';
@@ -199,7 +201,9 @@ int menu()
     cin >> choice;
     return choice;
 }
-//<<--sign_up-->>
+
+
+// <<--sign_up-->>
 Customer customers[max];
 int customerCount = 0;
 void sign_up() {
@@ -216,7 +220,7 @@ void sign_up() {
     cin >> NewCustomer.Password;
     customers[customerCount] = NewCustomer;
     customerCount++;
-    cout << "####Sgin Up Successfully. Your ID(" << NewCustomer.ID << ")####"; << endl;
+    cout << "####Sgin Up Successfully. Your ID(" << NewCustomer.ID << ")####" << endl;
     cout << "========================================" << endl;
 }
 // <<-- view product menu -->>
