@@ -56,30 +56,30 @@ const int CATEGORY_COUNT = 5;// at least 5
 string productCategories[CATEGORY_COUNT] = { "Dairy", "Beverages", "Bakery", "Snacks", "Frozen Food" };
 
 const int MAX_PRODUCTS = 3; // 3 products per category
-Product dairyProducts[MAX_PRODUCTS] = {
-     {"D001", "Milk", "Dairy", "2025-03-01", "2025-03-10", 1.50},
-     {"D002", "Cheese", "Dairy", "2025-02-25", "2025-03-20", 4.00},
-     {"D003", "Butter", "Dairy", "2025-02-28", "2025-04-15", 2.50} };
-
-Product beveragesProducts[MAX_PRODUCTS] = {
-    {"B001", "Orange Juice", "Beverages", "2025-03-05", "2025-06-05", 2.00},
-    {"B002", "Coca-Cola", "Beverages", "2025-02-15", "2025-08-15", 1.25},
-    {"B003", "Green Tea", "Beverages", "2025-01-30", "2025-07-30", 1.75} };
-
-Product bakeryProducts[MAX_PRODUCTS] = {
-    {"BK001", "White Bread", "Bakery", "2025-03-08", "2025-03-12", 1.20},
-    {"BK002", "Croissant", "Bakery", "2025-03-07", "2025-03-10", 0.99},
-    {"BK003", "Chocolate Muffin", "Bakery", "2025-03-06", "2025-03-11", 1.50} };
-
-Product snacksProducts[MAX_PRODUCTS] = {
-    {"S001", "Potato Chips", "Snacks", "2025-02-20", "2025-08-20", 1.75},
-    {"S002", "Chocolate Bar", "Snacks", "2025-03-01", "2025-09-01", 1.25},
-    {"S003", "Peanuts", "Snacks", "2025-02-18", "2025-12-18", 2.30} };
-
-Product frozenFoodProducts[MAX_PRODUCTS] = {
-    {"F001", "Frozen Pizza", "Frozen Food", "2025-02-10", "2026-02-10", 5.50},
-    {"F002", "Ice Cream (Vanilla)", "Frozen Food", "2025-02-28", "2026-02-28", 3.99},
-    {"F003", "Chicken Nuggets", "Frozen Food", "2025-03-01", "2026-03-01", 6.75} };
+//Product dairyProducts[MAX_PRODUCTS] = {
+//     {"D001", "Milk", "Dairy", "2025-03-01", "2025-03-10", 1.50},
+//     {"D002", "Cheese", "Dairy", "2025-02-25", "2025-03-20", 4.00},
+//     {"D003", "Butter", "Dairy", "2025-02-28", "2025-04-15", 2.50} };
+//
+//Product beveragesProducts[MAX_PRODUCTS] = {
+//    {"B001", "Orange Juice", "Beverages", "2025-03-05", "2025-06-05", 2.00},
+//    {"B002", "Coca-Cola", "Beverages", "2025-02-15", "2025-08-15", 1.25},
+//    {"B003", "Green Tea", "Beverages", "2025-01-30", "2025-07-30", 1.75} };
+//
+//Product bakeryProducts[MAX_PRODUCTS] = {
+//    {"BK001", "White Bread", "Bakery", "2025-03-08", "2025-03-12", 1.20},
+//    {"BK002", "Croissant", "Bakery", "2025-03-07", "2025-03-10", 0.99},
+//    {"BK003", "Chocolate Muffin", "Bakery", "2025-03-06", "2025-03-11", 1.50} };
+//
+//Product snacksProducts[MAX_PRODUCTS] = {
+//    {"S001", "Potato Chips", "Snacks", "2025-02-20", "2025-08-20", 1.75},
+//    {"S002", "Chocolate Bar", "Snacks", "2025-03-01", "2025-09-01", 1.25},
+//    {"S003", "Peanuts", "Snacks", "2025-02-18", "2025-12-18", 2.30} };
+//
+//Product frozenFoodProducts[MAX_PRODUCTS] = {
+//    {"F001", "Frozen Pizza", "Frozen Food", "2025-02-10", "2026-02-10", 5.50},
+//    {"F002", "Ice Cream (Vanilla)", "Frozen Food", "2025-02-28", "2026-02-28", 3.99},
+//    {"F003", "Chicken Nuggets", "Frozen Food", "2025-03-01", "2026-03-01", 6.75} };
 
 //All the products are in the array of products
 Product Products[CATEGORY_COUNT][MAX_PRODUCTS] = {
@@ -305,8 +305,16 @@ void edit_information()
     cout << "1. Dairy\n2. Beverages\n3. Bakery\n4. Snacks\n5. Frozen Food\n";
     cout << "Enter your choice (1-5): ";
     cin >> categoryChoice;
+	categoryChoice = categoryChoice - 1;
 
-    switch (categoryChoice) {
+	cout << "\nCategory: " << productCategories[categoryChoice] << endl;
+        for (int j = 0;j < MAX_PRODUCTS;j++)
+        {
+            cout << (j + 1) << ".Code: " << Products[categoryChoice][j].Code << "   ";
+            cout << "Name: " << Products[categoryChoice][j].Name << endl;
+        }
+
+    /*switch (categoryChoice) {
     case 1:
         cout << "\nDairy Products:\n";
         for (int i = 0;i < MAX_PRODUCTS;i++)
@@ -345,7 +353,7 @@ void edit_information()
     default:
         cout << "Invalid category choice.\n";
         return;
-    }
+    }*/
 
     cout << "\n Select product number to edit (1-3): ";
     cin >> productChoice;
@@ -361,7 +369,14 @@ void edit_information()
     cout << "Enter your choice (1-6): ";
     cin >> fieldChoice;
 
-    switch (categoryChoice) {
+    switch (fieldChoice)
+    {
+    case 1:
+        cout << "Enter new code: ";
+		cin >> Products[categoryChoice][productChoice].Code;
+        break;
+    }
+    /*switch (categoryChoice) {
     case 1:
         switch (fieldChoice) {
         case 1:
@@ -522,5 +537,5 @@ void edit_information()
         return;
     }
 
-    cout << "\nProduct information updated successfully.\n";
+    cout << "\nProduct information updated successfully.\n";*/
 }
