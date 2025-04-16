@@ -135,6 +135,8 @@ void view_total_price(); //Youssef Ahmed
 void log_out(); //Sa3eed
 int menu();
 
+
+
 int main()
 {
     //pull first !!!!
@@ -165,6 +167,13 @@ int main()
     
     return 0; //pull first !!!!
 }
+
+/*before you start working and before you push your work, please do the following:
+git add superMarket.cpp
+git commit -m "your message"
+git pull
+git push
+*/
 
 int menu()
 {
