@@ -288,3 +288,226 @@ void view_total_price()
     }
     cout << totalPrice << endl;
 }
+
+void edit_information()
+ {
+    int categoryChoice, productChoice, fieldChoice;
+
+    cout << "Select product category to edit:\n";
+    cout << "1. Dairy\n2. Beverages\n3. Bakery\n4. Snacks\n5. Frozen Food\n";
+    cout << "Enter your choice (1-5): ";
+    cin >> categoryChoice;
+
+    switch (categoryChoice) {
+    case 1:
+        cout << "\nDairy Products:\n";
+        cout << "1. Code: " << dairyProducts[0].Code << "   Name: " << dairyProducts[0].Name << "\n";
+        cout << "2. Code: " << dairyProducts[1].Code << "   Name: " << dairyProducts[1].Name << "\n";
+        cout << "3. Code: " << dairyProducts[2].Code << "   Name: " << dairyProducts[2].Name << "\n";
+        break;
+    case 2:
+        cout << "\nBeverages Products:\n";
+        cout << "1. Code: " << beveragesProducts[0].Code << "   Name: " << beveragesProducts[0].Name << "\n";
+        cout << "2. Code: " << beveragesProducts[1].Code << "   Name: " << beveragesProducts[1].Name << "\n";
+        cout << "3. Code: " << beveragesProducts[2].Code << "   Name: " << beveragesProducts[2].Name << "\n";
+        break;
+    case 3:
+        cout << "\nBakery Products:\n";
+        cout << "1. Code: " << bakeryProducts[0].Code << "   Name: " << bakeryProducts[0].Name << "\n";
+        cout << "2. Code: " << bakeryProducts[1].Code << "   Name: " << bakeryProducts[1].Name << "\n";
+        cout << "3. Code: " << bakeryProducts[2].Code << "   Name: " << bakeryProducts[2].Name << "\n";
+        break;
+    case 4:
+        cout << "\nSnacks Products:\n";
+        cout << "1. Code: " << snacksProducts[0].Code << "   Name: " << snacksProducts[0].Name << "\n";
+        cout << "2. Code: " << snacksProducts[1].Code << "   Name: " << snacksProducts[1].Name << "\n";
+        cout << "3. Code: " << snacksProducts[2].Code << "   Name: " << snacksProducts[2].Name << "\n";
+        break;
+    case 5:
+        cout << "\nFrozen Food Products:\n";
+        cout << "1. Code: " << frozenFoodProducts[0].Code << "   Name: " << frozenFoodProducts[0].Name << "\n";
+        cout << "2. Code: " << frozenFoodProducts[1].Code << "   Name: " << frozenFoodProducts[1].Name << "\n";
+        cout << "3. Code: " << frozenFoodProducts[2].Code << "   Name: " << frozenFoodProducts[2].Name << "\n";
+        break;
+    default:
+        cout << "Invalid category choice.\n";
+        return;
+    }
+
+    cout << "\n Select product number to edit (1-3): ";
+    cin >> productChoice;
+    productChoice = productChoice - 1; 
+
+    cout << "\nWhich data do you want to edit?\n";
+    cout << "1. Code\n";
+    cout << "2. Name\n";
+    cout << "3. Category\n";
+    cout << "4. Production Date\n";
+    cout << "5. Expired Date\n";
+    cout << "6. Price\n";
+    cout << "Enter your choice (1-7): ";
+    cin >> fieldChoice;
+
+    switch (categoryChoice) {
+    case 1: 
+        switch (fieldChoice) {
+        case 1:
+            cout << "Enter new Code: ";
+            cin >> dairyProducts[productChoice].Code;
+            break;
+        case 2:
+            cout << "Enter new Name: ";
+            cin >> dairyProducts[productChoice].Name;
+            break;
+        case 3:
+            cout << "Enter new Category: ";
+            cin >> dairyProducts[productChoice].Category;
+            break;
+        case 4:
+            cout << "Enter new Production Date (YYYY-MM-DD): ";
+            cin >> dairyProducts[productChoice].ProductionDate;
+            break;
+        case 5:
+            cout << "Enter new Expired Date (YYYY-MM-DD): ";
+            cin >> dairyProducts[productChoice].ExpiredDate;
+            break;
+        case 6:
+            cout << "Enter new Price: ";
+            cin >> dairyProducts[productChoice].Price;
+            break;
+        default:
+            cout << "Invalid field choice.\n";
+            return;
+        }
+        break;
+    case 2: 
+        switch (fieldChoice) {
+        case 1:
+            cout << "Enter new Code: ";
+            cin >> beveragesProducts[productChoice].Code;
+            break;
+        case 2:
+            cout << "Enter new Name: ";
+            cin >> beveragesProducts[productChoice].Name;
+            break;
+        case 3:
+            cout << "Enter new Category: ";
+            cin >> beveragesProducts[productChoice].Category;
+            break;
+        case 4:
+            cout << "Enter new Production Date (YYYY-MM-DD): ";
+            cin >> beveragesProducts[productChoice].ProductionDate;
+            break;
+        case 5:
+            cout << "Enter new Expired Date (YYYY-MM-DD): ";
+            cin >> beveragesProducts[productChoice].ExpiredDate;
+            break;
+        case 6:
+            cout << "Enter new Price: ";
+            cin >> beveragesProducts[productChoice].Price;
+            break;
+        default:
+            cout << "Invalid field choice.\n";
+            return;
+        }
+        break;
+    case 3: 
+        switch (fieldChoice) {
+        case 1:
+            cout << "Enter new Code: ";
+            cin >> bakeryProducts[productChoice].Code;
+            break;
+        case 2:
+            cout << "Enter new Name: ";
+            cin >> bakeryProducts[productChoice].Name;
+            break;
+        case 3:
+            cout << "Enter new Category: ";
+            cin >> bakeryProducts[productChoice].Category;
+            break;
+        case 4:
+            cout << "Enter new Production Date (YYYY-MM-DD): ";
+            cin >> bakeryProducts[productChoice].ProductionDate;
+            break;
+        case 5:
+            cout << "Enter new Expired Date (YYYY-MM-DD): ";
+            cin >> bakeryProducts[productChoice].ExpiredDate;
+            break;
+        case 6:
+            cout << "Enter new Price: ";
+            cin >> bakeryProducts[productChoice].Price;
+            break;
+        default:
+            cout << "Invalid field choice.\n";
+            return;
+        }
+        break;
+    case 4: 
+        switch (fieldChoice) {
+        case 1:
+            cout << "Enter new Code: ";
+            cin >> snacksProducts[productChoice].Code;
+            break;
+        case 2:
+            cout << "Enter new Name: ";
+            cin >> snacksProducts[productChoice].Name;
+            break;
+        case 3:
+            cout << "Enter new Category: ";
+            cin >> snacksProducts[productChoice].Category;
+            break;
+        case 4:
+            cout << "Enter new Production Date (YYYY-MM-DD): ";
+            cin >> snacksProducts[productChoice].ProductionDate;
+            break;
+        case 5:
+            cout << "Enter new Expired Date (YYYY-MM-DD): ";
+            cin >> snacksProducts[productChoice].ExpiredDate;
+            break;
+        case 6:
+            cout << "Enter new Price: ";
+            cin >> snacksProducts[productChoice].Price;
+            break;
+        default:
+            cout << "Invalid field choice.\n";
+            return;
+        }
+        break;
+    case 5: 
+        switch (fieldChoice) {
+        case 1:
+            cout << "Enter new Code: ";
+            cin >> frozenFoodProducts[productChoice].Code;
+            break;
+        case 2:
+            cout << "Enter new Name: ";
+            cin >> frozenFoodProducts[productChoice].Name;
+            break;
+        case 3:
+            cout << "Enter new Category: ";
+            cin >> frozenFoodProducts[productChoice].Category;
+            break;
+        case 4:
+            cout << "Enter new Production Date (YYYY-MM-DD): ";
+            cin >> frozenFoodProducts[productChoice].ProductionDate;
+            break;
+        case 5:
+            cout << "Enter new Expired Date (YYYY-MM-DD): ";
+            cin >> frozenFoodProducts[productChoice].ExpiredDate;
+            break;
+        case 6:
+            cout << "Enter new Price: ";
+            cin >> frozenFoodProducts[productChoice].Price;
+            break;
+        default:
+            cout << "Invalid field choice.\n";
+            return;
+        }
+        break;
+    default:
+        cout << "Invalid category choice.\n";
+        return;
+    }
+
+    cout << "\nProduct information updated successfully.\n";
+}
