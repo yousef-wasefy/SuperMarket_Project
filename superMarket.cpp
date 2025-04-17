@@ -14,7 +14,7 @@ using namespace std;
 
 struct Customer
 {
-    int ID = 0;
+    int ID;
     string Name;
     string PhoneNumber;
     string Location;
@@ -125,7 +125,7 @@ when we finish we may add new functions and it may take week or more.
 // ظبط الفانكشن بتاعتك من حيث الاسم والنوع والبراميترز اللي هتاخدها
 // حاولوا بقدر الامكان تنوعوا في النوع والبراميترز
 void sign_up(); //Sa3eed
-void log_in(); //Sa3eed
+void log_in(string name,string password); //Sa3eed
 void edit_information(); //nour
 void view_products_menu(); //Doha
 void view_the_information_of_the_item_that_the_customer_has_chosen(); //Doha
@@ -155,6 +155,9 @@ int main()
         {
         case 1:
             sign_up();
+            break;
+        case 2:
+            log_in();
             break;
         case 3:
             view_products_menu();
@@ -220,8 +223,25 @@ void sign_up() {
     cin >> NewCustomer.Password;
     customers[customerCount] = NewCustomer;
     customerCount++;
-    cout << "####Sgin Up Successfully. Your ID(" << NewCustomer.ID << ")####" << endl;
+    cout << "#### Sgin Up Successfully. Your ID(" << NewCustomer.ID << ") ####" << endl;
     cout << "========================================" << endl;
+}
+//<<--log_in-->>
+void log_in(string name, string password) {
+    cout << "========================================" << endl;
+    cout << "Enter Your Name:\t\t";
+    cin >> name;
+    cout << "Enter Your Password:\t\t";
+    cin >> password;
+    for (int i = 0;i < customerCount;i++) {
+        if (customers[i].Name == name && customers[i].Password == password)
+            cout << "#### Log In Successfully. Your ID(" << customers[i].ID << ") ####" << endl;
+        else
+            cout<<"#### Your Name Or Password Is Incorrect. Please Try Again ####"
+        cout << "========================================" << endl;
+    }
+
+
 }
 // <<-- view product menu -->>
 void view_products_menu() {
