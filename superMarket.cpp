@@ -115,7 +115,7 @@ when we finish we may add new functions and it may take week or more.
 // ظبط الفانكشن بتاعتك من حيث الاسم والنوع والبراميترز اللي هتاخدها
 // حاولوا بقدر الامكان تنوعوا في النوع والبراميترز
 void sign_up(); //Sa3eed
-void log_in(); //Sa3eed
+bool log_in(string name, string password); //Sa3eed
 void edit_information(); //nour
 void view_products_menu(); //Doha
 void view_the_information_of_the_item_that_the_customer_has_chosen(); //Doha
@@ -138,6 +138,7 @@ int main()
     //pull first !!!!
     int choice;
     char answer;
+    string name, password;
     do
     {
         choice = menu();
@@ -145,6 +146,18 @@ int main()
         {
         case 1:
             sign_up();
+            break;
+        case 2:
+            cout << "========================================" << endl;
+            cout << "Enter Your Name:\t\t";
+            cin >> name;
+            cout << "Enter Your Password:\t\t";
+            cin >> password;
+            if (log_in(name, password))
+                cout << "#### Log In Successfully. ####" << endl;
+            else
+                cout << "#### Your Name Or Password Is Incorrect. Please Try Again ####" << endl;
+            cout << "========================================" << endl;
             break;
         case 3:
             view_products_menu();
@@ -158,9 +171,9 @@ int main()
         case 8:
             view_total_price();
             break;
-		case 9:
-			edit_information();
-			break;
+        case 9:
+            edit_information();
+            break;
         default:
             cout << "Invalid choice!\nPlease re-enter the correct one\n";
             answer = 'y';
@@ -171,12 +184,12 @@ int main()
     } while (answer == 'Y' || answer == 'y');
 
     return 0; //pull first !!!!
+
 }
 
 int menu()
 {
     int choice;
-
     cout << "\t\tWelcome to Super Market Online Shopping" << endl;
     cout << "\t\t***************************************" << endl;
     cout << "========================================" << endl;
@@ -213,8 +226,15 @@ void sign_up() {
     cin >> NewCustomer.Password;
     customers[customerCount] = NewCustomer;
     customerCount++;
-    cout << "####Sgin Up Successfully. Your ID(" << NewCustomer.ID << ")####" << endl;
+    cout << "#### Sgin Up Successfully. Your ID(" << NewCustomer.ID << ") ####" << endl;
     cout << "========================================" << endl;
+}
+//<<--log_in-->>
+bool log_in(string name, string password) {
+    for (int i = 0;i <= customerCount;i++) {
+        if (customers[i].Name == name && customers[i].Password == password)
+            return true;
+    } return false;
 }
 // <<-- view product menu -->>
 void view_products_menu() {
@@ -304,14 +324,14 @@ void edit_information()
     cout << "1. Dairy\n2. Beverages\n3. Bakery\n4. Snacks\n5. Frozen Food\n";
     cout << "Enter your choice (1-5): ";
     cin >> categoryChoice;
-	categoryChoice = categoryChoice - 1;
+    categoryChoice = categoryChoice - 1;
 
-	cout << "\nCategory: " << productCategories[categoryChoice] << endl;
-        for (int j = 0;j < MAX_PRODUCTS;j++)
-        {
-            cout << (j + 1) << ".Code: " << Products[categoryChoice][j].Code << "   ";
-            cout << "Name: " << Products[categoryChoice][j].Name << endl;
-        }
+    cout << "\nCategory: " << productCategories[categoryChoice] << endl;
+    for (int j = 0;j < MAX_PRODUCTS;j++)
+    {
+        cout << (j + 1) << ".Code: " << Products[categoryChoice][j].Code << "   ";
+        cout << "Name: " << Products[categoryChoice][j].Name << endl;
+    }
 
     /*switch (categoryChoice) {
     case 1:
@@ -372,7 +392,7 @@ void edit_information()
     {
     case 1:
         cout << "Enter new code: ";
-		cin >> Products[categoryChoice][productChoice].Code;
+        cin >> Products[categoryChoice][productChoice].Code;
         break;
     }
     /*switch (categoryChoice) {
