@@ -5,7 +5,7 @@
 #include<ctime>  //used for the time
 #include<iomanip> //used for the time
 #include<fstream>
-
+//test
 using namespace std;
 #define max 50 
 
@@ -20,6 +20,10 @@ struct Customer
     string Location;
     string Password;
 };
+
+Customer customers[max];
+int customerCount = 0;
+bool is_logged_in = false; //to check if he has logged in before any access he can do
 
 struct Product
 {
@@ -156,7 +160,12 @@ int main()
             if (log_in(name, password))
                 cout << "#### Log In Successfully. ####" << endl;
             else
+            {
                 cout << "#### Your Name Or Password Is Incorrect. Please Try Again ####" << endl;
+                cout << "Sign up if you don't have an account" << endl;
+                answer = 'y';
+                continue;
+            }
             cout << "========================================" << endl;
             break;
         case 3:
@@ -205,13 +214,19 @@ int menu()
     cout << "10. to log out\n";
     cout << "========================================" << endl;
     cin >> choice;
+    if (choice != 1 && choice != 2)
+    {
+        if (is_logged_in) return choice;
+        else
+        {
+            cout << "Please log in first";
+            return choice = 2;
+        }
+    }
     return choice;
 }
 
-
 // <<--sign_up-->>
-Customer customers[max];
-int customerCount = 0;
 void sign_up() {
     cout << "========================================" << endl;
     Customer NewCustomer;
@@ -226,14 +241,17 @@ void sign_up() {
     cin >> NewCustomer.Password;
     customers[customerCount] = NewCustomer;
     customerCount++;
-    cout << "#### Sgin Up Successfully. Your ID(" << NewCustomer.ID << ") ####" << endl;
+    cout << "#### Sign Up Successfully. Your ID(" << NewCustomer.ID << ") ####" << endl;
     cout << "========================================" << endl;
 }
 //<<--log_in-->>
 bool log_in(string name, string password) {
     for (int i = 0;i <= customerCount;i++) {
         if (customers[i].Name == name && customers[i].Password == password)
+        {
+			is_logged_in = true; //when he log out make it false
             return true;
+        }            
     } return false;
 }
 // <<-- view product menu -->>
@@ -293,8 +311,9 @@ void view_total_price()
     // customerOrder[1].orderTime = getCurrentTimeString();
 
     cout << "Item\t\tquantity\ttotal price" << endl;
-    for (int i = 0; i < 2; i++)
+    for (int i = 0; i < 3; i++)
     {
+        totalPrice = 0;
 		cout << "Order number ." << (i + 1) << endl;
         for (int j = 0; j < 3; j++)
         {
@@ -303,17 +322,14 @@ void view_total_price()
             cout << "\t\t" << customerOrder[i].list_Of_Products[j].Price * customerOrder[i].list_Of_Products[j].ProductCount;
             cout << endl;
         }
-    }
-
-    cout << "Total Price : ";
-	for (int i = 0; i < 1; i++)
-	{
-		for (int j = 0; j < 2; j++)
+        cout << "Total Price : ";
+        for (int j = 0; j < 3; j++)
 		{
 			totalPrice += customerOrder[i].list_Of_Products[j].Price * customerOrder[i].list_Of_Products[j].ProductCount;
 		}
-	}
-    cout << totalPrice << endl;
+        cout << totalPrice << endl;
+        cout << "=========================" << endl;
+    }
 }
 
 void edit_information()
