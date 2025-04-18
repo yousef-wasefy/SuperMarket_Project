@@ -29,33 +29,23 @@ struct Product
     string ProductionDate;
     string ExpiredDate;
     double Price = 0.0;
+    int ProductCount = 0; //the quantity of one order (not relatable to the product but to the order)
 };
 
-const int NUMBER_OF_PRODUCTS = 50;
+const int NUMBER_OF_PRODUCTS = max;
 struct Order
 {
     int CustomerID = 0;
     Product list_Of_Products[NUMBER_OF_PRODUCTS]; // that the customer will take
-    int ProductCount = 0;  //عدد المنتجات في الطلب الفعلي
+    int OrderCount = 0;  //(عدد المنتجات في الطلب الفعلي (ككل
     double TotalPrice = 0;
-    string orderTime;
-} customerOrder[50];
-
-// string getCurrentTimeString() // only testing rightnow
-// {
-//     auto now = std::chrono::system_clock::now();
-//     std::time_t now_time = std::chrono::system_clock::to_time_t(now);
-//     std::tm local_time = *std::localtime(&now_time); // تحويل الوقت إلى `tm`
-
-//     std::ostringstream oss;
-//     oss << std::put_time(&local_time, "%Y-%m-%d %H:%M"); // تحويل إلى نص
-//     return oss.str();
-// }
+} customerOrder[max];
 
 const int CATEGORY_COUNT = 5;// at least 5
 string productCategories[CATEGORY_COUNT] = { "Dairy", "Beverages", "Bakery", "Snacks", "Frozen Food" };
 
 const int MAX_PRODUCTS = 3; // 3 products per category
+
 //Product dairyProducts[MAX_PRODUCTS] = {
 //     {"D001", "Milk", "Dairy", "2025-03-01", "2025-03-10", 1.50},
 //     {"D002", "Cheese", "Dairy", "2025-02-25", "2025-03-20", 4.00},
@@ -161,6 +151,9 @@ int main()
             break;
         case 4:
             view_the_information_of_the_item_that_the_customer_has_chosen();
+            break;
+        case 7:
+            the_customer_is_able_to_modify_his_order();
             break;
         case 8:
             view_total_price();
@@ -279,21 +272,27 @@ void view_total_price()
     // customerOrder[1].ProductCount = 3;
     // customerOrder[1].orderTime = getCurrentTimeString();
 
-    cout << "Item\t\tquantity\ttotal price\tOrder Date & Time" << endl;
-    for (int j = 0; j < 2; j++)
+    cout << "Item\t\tquantity\ttotal price" << endl;
+    for (int i = 0; i < 2; i++)
     {
-        cout << customerOrder[j].list_Of_Products[j].Name;
-        cout << "\t\t" << customerOrder[j].ProductCount;
-        cout << "\t\t" << customerOrder[j].list_Of_Products[j].Price * customerOrder[j].ProductCount;
-        cout << "\t\t" << customerOrder[j].orderTime;
-        cout << endl;
+		cout << "Order number ." << (i + 1) << endl;
+        for (int j = 0; j < 3; j++)
+        {
+            cout << customerOrder[i].list_Of_Products[j].Name;
+            cout << "\t\t" << customerOrder[i].list_Of_Products[j].ProductCount;
+            cout << "\t\t" << customerOrder[i].list_Of_Products[j].Price * customerOrder[i].list_Of_Products[j].ProductCount;
+            cout << endl;
+        }
     }
 
     cout << "Total Price : ";
-    for (int i = 0; i < NUMBER_OF_PRODUCTS; i++)
-    {
-        totalPrice += customerOrder[i].list_Of_Products[i].Price * customerOrder[i].ProductCount;
-    }
+	for (int i = 0; i < 1; i++)
+	{
+		for (int j = 0; j < 2; j++)
+		{
+			totalPrice += customerOrder[i].list_Of_Products[j].Price * customerOrder[i].list_Of_Products[j].ProductCount;
+		}
+	}
     cout << totalPrice << endl;
 }
 
@@ -538,4 +537,127 @@ void edit_information()
     }
 
     cout << "\nProduct information updated successfully.\n";*/
+}
+
+void the_customer_is_able_to_modify_his_order()
+{
+    int choice;
+	int orderNumber;
+	customerOrder[0].OrderCount = 2; // Assuming there are 2 products in that order for testing
+	customerOrder[0].list_Of_Products[0] = Products[0][0]; // Adding a product for testing
+	customerOrder[0].list_Of_Products[1] = Products[1][1]; // Adding another product for testing
+	customerOrder[1].OrderCount = 2; // Assuming there is 2 products in that order for testing
+	customerOrder[1].list_Of_Products[0] = Products[2][0]; // Adding a product for testing
+	customerOrder[1].list_Of_Products[1] = Products[3][1]; // Adding another product for testing
+	customerOrder[2].OrderCount = 3; // Assuming there is 3 products in that order for testing
+	customerOrder[2].list_Of_Products[0] = Products[4][0]; // Adding a product for testing
+	customerOrder[2].list_Of_Products[1] = Products[0][1]; // Adding another product for testing
+
+    do {
+        cout << "\n========== Modify Your Order ==========\n";
+        cout << "Current Products in your order:\n";
+        for (int i = 0; i < 3; i++)
+        {
+			cout << "Order number: " << (i + 1) << endl;
+            for (int j = 0; j < customerOrder[i].OrderCount; j++) {
+                cout << j + 1 << ". " << customerOrder[i].list_Of_Products[j].Name
+                    << " (Quantity: " << customerOrder[i].list_Of_Products[j].ProductCount
+                    << ", Price: $" << customerOrder[i].list_Of_Products[j].Price * customerOrder[i].list_Of_Products[j].ProductCount << ")\n";
+            }
+        }
+
+        cout << "Enter the order number (or press 0 to exit):";
+        cin >> orderNumber;
+		if (orderNumber == 0) {
+			cout << "Exiting...\n";
+			return;
+		}
+        orderNumber--;
+
+        cout << "\nWhat would you like to do?\n";
+        cout << "1. Remove an item\n";
+        cout << "2. Change quantity of an item\n";
+        cout << "3. Add a new product to the order\n";
+        cout << "4. Exit modification\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+        case 1: {
+            int removeIndex;
+            cout << "Enter the number of the product you want to remove: ";
+            cin >> removeIndex;
+            removeIndex--;
+
+            if (removeIndex >= 0 && removeIndex < customerOrder[orderNumber].OrderCount)
+            {
+                for (int i = removeIndex; i < customerOrder[orderNumber].OrderCount - 1; i++)
+                {
+                    customerOrder[orderNumber].list_Of_Products[i] = customerOrder[orderNumber].list_Of_Products[i + 1]; //shifting                   
+                }
+                customerOrder[orderNumber].OrderCount--;
+
+                if (customerOrder[orderNumber].OrderCount == 0)
+                {
+                    for (int n = orderNumber; n < 3; n++) //shifting
+                    {
+                        customerOrder[n] = customerOrder[n + 1];
+                    }
+                }
+                cout << "Item removed successfully!\n";
+            }
+            else {
+                cout << "Invalid product number.\n";
+            }
+            break;
+        }
+
+        case 2: {
+            int index, newQuantity;
+            cout << "Enter the product number you want to change quantity for: ";
+            cin >> index;
+            index--;
+
+            if (index >= 0 && index < customerOrder[orderNumber].OrderCount) {
+                cout << "Enter the new quantity: ";
+                cin >> newQuantity;
+                customerOrder[orderNumber].list_Of_Products[index].ProductCount = newQuantity;
+                cout << "Quantity updated successfully!\n";
+            }
+            else {
+                cout << "Invalid product number.\n";
+            }
+            break;
+        }
+
+        case 3: {
+            string code;
+            bool found = false;
+            cout << "Enter the product code to add: ";
+            cin >> code;
+
+            for (int cat = 0; cat < CATEGORY_COUNT && !found; cat++) {
+                for (int i = 0; i < MAX_PRODUCTS; i++) {
+                    if (Products[cat][i].Code == code) {
+                        customerOrder[orderNumber].list_Of_Products[customerOrder[orderNumber].OrderCount++] = Products[cat][i];
+                        found = true;
+                        cout << "Product added to your order.\n";
+                        break;
+                    }
+                }
+            }
+            if (!found)
+                cout << "Product not found!\n";
+            break;
+        }
+
+        case 4:
+            cout << "Exiting modification...\n";
+            break;
+
+        default:
+            cout << "Invalid choice!\n";
+        }
+
+    } while (choice != 4);
 }
