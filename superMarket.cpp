@@ -8,6 +8,7 @@
 //test
 using namespace std;
 #define max 50 
+int currentCustomerIndex = -1;//to save the index
 
 //ofstream outFile("superMarket.txt", ios::app); // file to save the data
 //ifstream inFile("superMarket.txt"); // file to read the data
@@ -183,6 +184,17 @@ int main()
         case 9:
             edit_information();
             break;
+        case 10:
+            char confirm;
+            cout << "#### Are You Sure You Want To Log Out? ####" << endl;
+            cin >> confirm;
+            if (confirm == 'Y' || confirm == 'y') {
+                log_out();
+            }
+            else {
+                cout << "#### Log Out Cancelled.\n";
+            }
+            break;
         default:
             cout << "Invalid choice!\nPlease re-enter the correct one\n";
             answer = 'y';
@@ -219,7 +231,7 @@ int menu()
         if (is_logged_in) return choice;
         else
         {
-            cout << "Please log in first";
+            cout << "Please log in first" << endl;
             return choice = 2;
         }
     }
@@ -249,9 +261,10 @@ bool log_in(string name, string password) {
     for (int i = 0;i <= customerCount;i++) {
         if (customers[i].Name == name && customers[i].Password == password)
         {
-			is_logged_in = true; //when he log out make it false
+            currentCustomerIndex = i;
+            is_logged_in = true; //when he log out make it false
             return true;
-        }            
+        }
     } return false;
 }
 // <<-- view product menu -->>
@@ -314,7 +327,7 @@ void view_total_price()
     for (int i = 0; i < 3; i++)
     {
         totalPrice = 0;
-		cout << "Order number ." << (i + 1) << endl;
+        cout << "Order number ." << (i + 1) << endl;
         for (int j = 0; j < 3; j++)
         {
             cout << customerOrder[i].list_Of_Products[j].Name;
@@ -324,9 +337,9 @@ void view_total_price()
         }
         cout << "Total Price : ";
         for (int j = 0; j < 3; j++)
-		{
-			totalPrice += customerOrder[i].list_Of_Products[j].Price * customerOrder[i].list_Of_Products[j].ProductCount;
-		}
+        {
+            totalPrice += customerOrder[i].list_Of_Products[j].Price * customerOrder[i].list_Of_Products[j].ProductCount;
+        }
         cout << totalPrice << endl;
         cout << "=========================" << endl;
     }
@@ -578,23 +591,23 @@ void edit_information()
 void the_customer_is_able_to_modify_his_order()
 {
     int choice;
-	int orderNumber;
-	customerOrder[0].OrderCount = 2; // Assuming there are 2 products in that order for testing
-	customerOrder[0].list_Of_Products[0] = Products[0][0]; // Adding a product for testing
-	customerOrder[0].list_Of_Products[1] = Products[1][1]; // Adding another product for testing
-	customerOrder[1].OrderCount = 2; // Assuming there is 2 products in that order for testing
-	customerOrder[1].list_Of_Products[0] = Products[2][0]; // Adding a product for testing
-	customerOrder[1].list_Of_Products[1] = Products[3][1]; // Adding another product for testing
-	customerOrder[2].OrderCount = 3; // Assuming there is 3 products in that order for testing
-	customerOrder[2].list_Of_Products[0] = Products[4][0]; // Adding a product for testing
-	customerOrder[2].list_Of_Products[1] = Products[0][1]; // Adding another product for testing
+    int orderNumber;
+    customerOrder[0].OrderCount = 2; // Assuming there are 2 products in that order for testing
+    customerOrder[0].list_Of_Products[0] = Products[0][0]; // Adding a product for testing
+    customerOrder[0].list_Of_Products[1] = Products[1][1]; // Adding another product for testing
+    customerOrder[1].OrderCount = 2; // Assuming there is 2 products in that order for testing
+    customerOrder[1].list_Of_Products[0] = Products[2][0]; // Adding a product for testing
+    customerOrder[1].list_Of_Products[1] = Products[3][1]; // Adding another product for testing
+    customerOrder[2].OrderCount = 3; // Assuming there is 3 products in that order for testing
+    customerOrder[2].list_Of_Products[0] = Products[4][0]; // Adding a product for testing
+    customerOrder[2].list_Of_Products[1] = Products[0][1]; // Adding another product for testing
 
     do {
         cout << "\n========== Modify Your Order ==========\n";
         cout << "Current Products in your order:\n";
         for (int i = 0; i < 3; i++)
         {
-			cout << "Order number: " << (i + 1) << endl;
+            cout << "Order number: " << (i + 1) << endl;
             for (int j = 0; j < customerOrder[i].OrderCount; j++) {
                 cout << j + 1 << ". " << customerOrder[i].list_Of_Products[j].Name
                     << " (Quantity: " << customerOrder[i].list_Of_Products[j].ProductCount
@@ -604,10 +617,10 @@ void the_customer_is_able_to_modify_his_order()
 
         cout << "Enter the order number (or press 0 to exit):";
         cin >> orderNumber;
-		if (orderNumber == 0) {
-			cout << "Exiting...\n";
-			return;
-		}
+        if (orderNumber == 0) {
+            cout << "Exiting...\n";
+            return;
+        }
         orderNumber--;
 
         cout << "\nWhat would you like to do?\n";
@@ -696,4 +709,20 @@ void the_customer_is_able_to_modify_his_order()
         }
 
     } while (choice != 4);
+}
+//<<---log_out--->>
+void log_out() {
+    cout << "========================================" << endl;
+    if (currentCustomerIndex >= 0 && currentCustomerIndex < customerCount) {
+        customers[currentCustomerIndex].ID = 0;
+        customers[currentCustomerIndex].Location = "";
+        customers[currentCustomerIndex].Name = "";
+        customers[currentCustomerIndex].Password = "";
+        customers[currentCustomerIndex].PhoneNumber = "";
+    }
+    is_logged_in = false;
+    currentCustomerIndex = -1;
+    cout << "#### You Have Been Succsessfully Logged Out. ####" << endl;
+    cout << "#### Thank You For Using Our Online Supermarket!" << endl;
+    cout << "========================================" << endl;
 }
