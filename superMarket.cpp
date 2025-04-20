@@ -33,7 +33,7 @@ struct Order
     int OrderCount = 0;  //(عدد المنتجات في الطلب الفعلي (ككل
     double TotalPrice = 0;
 } customerOrder[max]; //every client has only one order
-//ازاي تربط الطلب بعميله؟؟
+
 struct Customer
 {
     int ID = 0;
@@ -125,9 +125,9 @@ bool log_in(string name, string password, int ID); //Sa3eed
 void edit_information(); //nour
 void view_products_menu(); //Doha
 void view_the_information_of_the_item_that_the_customer_has_chosen(); //Doha
-void the_customer_selects_the_goods_he_wants_to_add_to_his_order(); //Mostafa
-void Review_his_order(); //Youssef hagras
-void the_customer_is_able_to_modify_his_order(); //Mohra
+void the_customer_selects_the_goods_he_wants_to_add_to_his_order(int ID); //Mostafa
+void Review_his_order(int ID); //Youssef hagras
+void the_customer_is_able_to_modify_his_order(int ID); //Mohra
 void view_total_price(int ID); //Youssef Ahmed
 void log_out(); //Sa3eed
 void belong_orders();
@@ -198,7 +198,7 @@ int main()
             view_the_information_of_the_item_that_the_customer_has_chosen();
             break;
         case 7:
-            the_customer_is_able_to_modify_his_order();
+            the_customer_is_able_to_modify_his_order(targetID);
             break;
         case 8:
             view_total_price(targetID);
@@ -338,14 +338,6 @@ void view_the_information_of_the_item_that_the_customer_has_chosen() {
 void view_total_price(int ID)
 {
     double totalPrice = 0;
-
-    // customerOrder[0].list_Of_Products[0] = dairyProducts[0];
-    // customerOrder[0].ProductCount = 2;
-    // customerOrder[0].orderTime = getCurrentTimeString();
-    // customerOrder[1].list_Of_Products[1] = dairyProducts[1];
-    // customerOrder[1].ProductCount = 3;
-    // customerOrder[1].orderTime = getCurrentTimeString();
-
     cout << "Item\t\tquantity\ttotal price" << endl;
     for (int i = 0; i < 3; i++)
     {
@@ -637,31 +629,29 @@ void edit_information()
     cout << "\nProduct information updated successfully.\n";*/
 }
 
-void the_customer_is_able_to_modify_his_order()
+void the_customer_is_able_to_modify_his_order(int ID)
 {
     int choice;
-    int orderNumber;
+    if (customerOrder[currentCustomerIndex].OrderCount == 0)
+    {
+        cout << "Your order is empty.\n";
+        return;
+    }
 
     do {
         cout << "\n========== Modify Your Order ==========\n";
         cout << "Current Products in your order:\n";
         for (int i = 0; i < 3; i++)
         {
-            cout << "Order number: " << (i + 1) << endl;
-            for (int j = 0; j < customerOrder[i].OrderCount; j++) {
-                cout << j + 1 << ". " << customerOrder[i].list_Of_Products[j].Name
-                    << " (Quantity: " << customerOrder[i].list_Of_Products[j].ProductCount
-                    << ", Price: $" << customerOrder[i].list_Of_Products[j].Price * customerOrder[i].list_Of_Products[j].ProductCount << ")\n";
+            if (customerOrder[i].CustomerID == ID)
+            {
+                for (int j = 0; j < customerOrder[i].OrderCount; j++) {
+                    cout << j + 1 << ". " << customerOrder[i].list_Of_Products[j].Name
+                        << " (Quantity: " << customerOrder[i].list_Of_Products[j].ProductCount
+                        << ", Price: $" << customerOrder[i].list_Of_Products[j].Price * customerOrder[i].list_Of_Products[j].ProductCount << ")\n";
+                }
             }
         }
-
-        cout << "Enter the order number (or press 0 to exit):";
-        cin >> orderNumber;
-        if (orderNumber == 0) {
-            cout << "Exiting...\n";
-            return;
-        }
-        orderNumber--;
 
         cout << "\nWhat would you like to do?\n";
         cout << "1. Remove an item\n";
@@ -678,22 +668,19 @@ void the_customer_is_able_to_modify_his_order()
             cin >> removeIndex;
             removeIndex--;
 
-            if (removeIndex >= 0 && removeIndex < customerOrder[orderNumber].OrderCount)
+            if (removeIndex >= 0 && removeIndex < customerOrder[currentCustomerIndex].OrderCount)
             {
-                for (int i = removeIndex; i < customerOrder[orderNumber].OrderCount - 1; i++)
+                for (int i = removeIndex; i < customerOrder[currentCustomerIndex].OrderCount - 1; i++)
                 {
-                    customerOrder[orderNumber].list_Of_Products[i] = customerOrder[orderNumber].list_Of_Products[i + 1]; //shifting                   
+                    customerOrder[currentCustomerIndex].list_Of_Products[i] = customerOrder[currentCustomerIndex].list_Of_Products[i + 1]; //shifting                   
                 }
-                customerOrder[orderNumber].OrderCount--;
-
-                if (customerOrder[orderNumber].OrderCount == 0)
-                {
-                    for (int n = orderNumber; n < 3; n++) //shifting
-                    {
-                        customerOrder[n] = customerOrder[n + 1];
-                    }
-                }
+                customerOrder[currentCustomerIndex].OrderCount--;
                 cout << "Item removed successfully!\n";
+            }
+            if (customerOrder[currentCustomerIndex].OrderCount == 0)
+            {
+                cout << "Your order is empty now.\n";
+                return;
             }
             else {
                 cout << "Invalid product number.\n";
@@ -707,10 +694,10 @@ void the_customer_is_able_to_modify_his_order()
             cin >> index;
             index--;
 
-            if (index >= 0 && index < customerOrder[orderNumber].OrderCount) {
+            if (index >= 0 && index < customerOrder[currentCustomerIndex].OrderCount) {
                 cout << "Enter the new quantity: ";
                 cin >> newQuantity;
-                customerOrder[orderNumber].list_Of_Products[index].ProductCount = newQuantity;
+                customerOrder[currentCustomerIndex].list_Of_Products[index].ProductCount = newQuantity;
                 cout << "Quantity updated successfully!\n";
             }
             else {
@@ -728,7 +715,7 @@ void the_customer_is_able_to_modify_his_order()
             for (int cat = 0; cat < CATEGORY_COUNT && !found; cat++) {
                 for (int i = 0; i < MAX_PRODUCTS; i++) {
                     if (Products[cat][i].Code == code) {
-                        customerOrder[orderNumber].list_Of_Products[customerOrder[orderNumber].OrderCount++] = Products[cat][i];
+                        customerOrder[currentCustomerIndex].list_Of_Products[customerOrder[currentCustomerIndex].OrderCount++] = Products[cat][i];
                         found = true;
                         cout << "Product added to your order.\n";
                         break;
