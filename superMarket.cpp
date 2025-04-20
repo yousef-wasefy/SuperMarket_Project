@@ -448,6 +448,30 @@ void edit_information()
         cout << "Enter new code: ";
         cin >> Products[categoryChoice][productChoice].Code;
         break;
+    case 2:
+        cout << "Enter new Name: ";
+        cin >> Products[categoryChoice][productChoice].Name;
+        break;
+    case 3:
+        cout << "Enter new Category: ";
+        cin >> Products[categoryChoice][productChoice].Category;
+        break;
+    case 4:
+        cout << "Enter new Production Date (YYYY-MM-DD): ";
+        cin >> Products[categoryChoice][productChoice].ProductionDate;
+        break;
+    case 5:
+        cout << "Enter new Expired Date (YYYY-MM-DD): ";
+        cin >> Products[categoryChoice][productChoice].ExpiredDate;
+        break;
+    case 6:
+        cout << "Enter new Price: ";
+        cin >> Products[categoryChoice][productChoice].Price;
+        break;
+    default:
+        cout << "Invalid field choice.\n";
+        return;
+
     }
     /*switch (categoryChoice) {
     case 1:
