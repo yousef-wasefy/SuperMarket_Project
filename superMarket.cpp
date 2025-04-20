@@ -1,4 +1,4 @@
-#include<iostream>
+##include<iostream>
 #include<string>
 #include<vector>
 #include<chrono> //used for the time
@@ -9,6 +9,7 @@
 using namespace std;
 #define max 50 
 int currentCustomerIndex = -1;//to save the index
+char answer;//to use it in log out 
 
 //ofstream outFile("superMarket.txt", ios::app); // file to save the data
 //ifstream inFile("superMarket.txt"); // file to read the data
@@ -143,7 +144,6 @@ int main()
 {
     //pull first !!!!
     int choice;
-    char answer;
     string name, password;
 
     customerOrder[0].OrderCount = 2; // Assuming there are 2 products in that order for testing
@@ -210,6 +210,7 @@ int main()
             cin >> confirm;
             if (confirm == 'Y' || confirm == 'y') {
                 log_out();
+                continue;
             }
             else {
                 cout << "#### Log Out Cancelled.\n";
@@ -735,6 +736,7 @@ void log_out() {
     currentCustomerIndex = -1;
     cout << "#### You Have Been Succsessfully Logged Out. ####" << endl;
     cout << "#### Thank You For Using Our Online Supermarket!" << endl;
+    answer = 'y';
     cout << "========================================" << endl;
 }
 
