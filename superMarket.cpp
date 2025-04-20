@@ -1,4 +1,4 @@
-##include<iostream>
+#include<iostream>
 #include<string>
 #include<vector>
 #include<chrono> //used for the time
@@ -121,14 +121,14 @@ when we finish we may add new functions and it may take week or more.
 // ظبط الفانكشن بتاعتك من حيث الاسم والنوع والبراميترز اللي هتاخدها
 // حاولوا بقدر الامكان تنوعوا في النوع والبراميترز
 void sign_up(); //Sa3eed
-bool log_in(string name, string password); //Sa3eed
+bool log_in(string name, string password, int ID); //Sa3eed
 void edit_information(); //nour
 void view_products_menu(); //Doha
 void view_the_information_of_the_item_that_the_customer_has_chosen(); //Doha
 void the_customer_selects_the_goods_he_wants_to_add_to_his_order(); //Mostafa
 void Review_his_order(); //Youssef hagras
 void the_customer_is_able_to_modify_his_order(); //Mohra
-void view_total_price(); //Youssef Ahmed
+void view_total_price(int ID); //Youssef Ahmed
 void log_out(); //Sa3eed
 void belong_orders();
 int menu();
@@ -145,21 +145,7 @@ int main()
     //pull first !!!!
     int choice;
     string name, password;
-
-    customerOrder[0].OrderCount = 2; // Assuming there are 2 products in that order for testing
-    customerOrder[0].list_Of_Products[0] = Products[0][0]; // Adding a product for testing
-    customerOrder[0].list_Of_Products[1] = Products[1][1]; // Adding another product for testing
-    // Assuming the customer ID is set
-
-    customerOrder[1].CustomerID = customers[customerCount].ID; // Assuming the customer ID is set
-    customerOrder[1].OrderCount = 2; // Assuming there is 2 products in that order for testing
-    customerOrder[1].list_Of_Products[0] = Products[2][0]; // Adding a product for testing
-    customerOrder[1].list_Of_Products[1] = Products[3][1]; // Adding another product for testing
-
-    customerOrder[2].CustomerID = customers[customerCount].ID; // Assuming the customer ID is set
-    customerOrder[2].OrderCount = 3; // Assuming there is 3 products in that order for testing
-    customerOrder[2].list_Of_Products[0] = Products[4][0]; // Adding a product for testing
-    customerOrder[2].list_Of_Products[1] = Products[0][1]; // Adding another product for testing
+	int targetID = 0;
 
     do
     {
@@ -175,18 +161,34 @@ int main()
             cin >> name;
             cout << "Enter Your Password:\t\t";
             cin >> password;
-            if (log_in(name, password))
+			cout << "Enter your ID:\t\t";
+            cin >> targetID;
+            if (log_in(name, password, targetID))
             {
                 cout << "#### Log In Successfully. ####" << endl;
             }
             else
             {
-                cout << "#### Your Name Or Password Is Incorrect. Please Try Again ####" << endl;
+                cout << "#### Your Name Or Password Or ID Is Incorrect. Please Try Again ####" << endl;
                 cout << "Sign up if you don't have an account" << endl;
                 answer = 'y';
                 continue;
             }
-            belong_orders();
+            customerOrder[0].OrderCount = 2; // Assuming there are 2 products in that order for testing
+            customerOrder[0].list_Of_Products[0] = Products[0][0]; // Adding a product for testing
+            customerOrder[0].list_Of_Products[1] = Products[1][1]; // Adding another product for testing
+            customerOrder[0].CustomerID = customers[0].ID; // Assuming the customer ID is set
+
+            customerOrder[1].CustomerID = customers[1].ID; // Assuming the customer ID is set
+            customerOrder[1].OrderCount = 2; // Assuming there is 2 products in that order for testing
+            customerOrder[1].list_Of_Products[0] = Products[2][0]; // Adding a product for testing
+            customerOrder[1].list_Of_Products[1] = Products[3][1]; // Adding another product for testing
+
+            customerOrder[2].CustomerID = customers[2].ID; // Assuming the customer ID is set
+            customerOrder[2].OrderCount = 3; // Assuming there is 3 products in that order for testing
+            customerOrder[2].list_Of_Products[0] = Products[4][0]; // Adding a product for testing
+            customerOrder[2].list_Of_Products[1] = Products[0][1]; // Adding another product for testing
+            /*belong_orders();*/
             cout << "========================================" << endl;
             break;
         case 3:
@@ -199,7 +201,7 @@ int main()
             the_customer_is_able_to_modify_his_order();
             break;
         case 8:
-            view_total_price();
+            view_total_price(targetID);
             break;
         case 9:
             edit_information();
@@ -278,9 +280,9 @@ void sign_up() {
     cout << "========================================" << endl;
 }
 //<<--log_in-->>
-bool log_in(string name, string password) {
+bool log_in(string name, string password, int ID) {
     for (int i = 0;i <= customerCount;i++) {
-        if (customers[i].Name == name && customers[i].Password == password)
+        if (customers[i].Name == name && customers[i].Password == password && customers[i].ID == ID)
         {
             currentCustomerIndex = i;
             is_logged_in = true; //when he log out make it false
@@ -333,7 +335,7 @@ void view_the_information_of_the_item_that_the_customer_has_chosen() {
     }
 }
 
-void view_total_price()
+void view_total_price(int ID)
 {
     double totalPrice = 0;
 
@@ -347,22 +349,24 @@ void view_total_price()
     cout << "Item\t\tquantity\ttotal price" << endl;
     for (int i = 0; i < 3; i++)
     {
-        totalPrice = 0;
-        cout << "Order number ." << (i + 1) << endl;
-        for (int j = 0; j < 3; j++)
+        if (customerOrder[i].CustomerID == ID)
         {
-            cout << customerOrder[i].list_Of_Products[j].Name;
-            cout << "\t\t" << customerOrder[i].list_Of_Products[j].ProductCount;
-            cout << "\t\t" << customerOrder[i].list_Of_Products[j].Price * customerOrder[i].list_Of_Products[j].ProductCount;
-            cout << endl;
+            totalPrice = 0;
+            for (int j = 0; j < 3; j++)
+            {
+                cout << customerOrder[i].list_Of_Products[j].Name;
+                cout << "\t\t" << customerOrder[i].list_Of_Products[j].ProductCount;
+                cout << "\t\t" << customerOrder[i].list_Of_Products[j].Price * customerOrder[i].list_Of_Products[j].ProductCount;
+                cout << endl;
+            }
+            cout << "Total Price : ";
+            for (int j = 0; j < 3; j++)
+            {
+                totalPrice += customerOrder[i].list_Of_Products[j].Price * customerOrder[i].list_Of_Products[j].ProductCount;
+            }
+            cout << totalPrice << endl;
+            cout << "=========================" << endl;
         }
-        cout << "Total Price : ";
-        for (int j = 0; j < 3; j++)
-        {
-            totalPrice += customerOrder[i].list_Of_Products[j].Price * customerOrder[i].list_Of_Products[j].ProductCount;
-        }
-        cout << totalPrice << endl;
-        cout << "=========================" << endl;
     }
 }
 
@@ -740,17 +744,16 @@ void log_out() {
     cout << "========================================" << endl;
 }
 
-void belong_orders()
-{
-    customerOrder[0].CustomerID = customers[--customerCount].ID;
-    int targetID = customers[0].ID; // مثلًا عايز أجيب طلبات العميل رقم 1
-
-    for (int i = 0; i < 1; i++) {
-        if (customerOrder[i].CustomerID == targetID) {
-            cout << "Order #" << i << " belongs to customer: " << customers[0].Name << endl;
-            for (int j = 0; j < customerOrder[i].OrderCount; j++) {
-                cout << "- " << customerOrder[i].list_Of_Products[j].Name << endl;
-            }
-        }
-    }
-}
+//void belong_orders()
+//{
+//    int targetID = customers[0].ID; // مثلًا عايز أجيب طلبات العميل رقم 1
+//
+//    for (int i = 0; i < 1; i++) {
+//        if (customerOrder[i].CustomerID == targetID) {
+//            cout << "Order #" << i << " belongs to customer: " << customers[0].Name << endl;
+//            for (int j = 0; j < customerOrder[i].OrderCount; j++) {
+//                cout << "- " << customerOrder[i].list_Of_Products[j].Name << endl;
+//            }
+//        }
+//    }
+//}
