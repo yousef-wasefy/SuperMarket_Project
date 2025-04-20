@@ -5,26 +5,13 @@
 #include<ctime>  //used for the time
 #include<iomanip> //used for the time
 #include<fstream>
-//test
+
 using namespace std;
 #define max 50 
 int currentCustomerIndex = -1;//to save the index
 
 //ofstream outFile("superMarket.txt", ios::app); // file to save the data
 //ifstream inFile("superMarket.txt"); // file to read the data
-
-struct Customer
-{
-    int ID = 0;
-    string Name;
-    string PhoneNumber;
-    string Location;
-    string Password;
-};
-
-Customer customers[max];
-int customerCount = 0;
-bool is_logged_in = false; //to check if he has logged in before any access he can do
 
 struct Product
 {
@@ -44,7 +31,20 @@ struct Order
     Product list_Of_Products[NUMBER_OF_PRODUCTS]; // that the customer will take
     int OrderCount = 0;  //(عدد المنتجات في الطلب الفعلي (ككل
     double TotalPrice = 0;
-} customerOrder[max];
+} customerOrder[max]; //every client has only one order
+//ازاي تربط الطلب بعميله؟؟
+struct Customer
+{
+    int ID = 0;
+    string Name;
+    string PhoneNumber;
+    string Location;
+    string Password;
+};
+
+Customer customers[max];
+int customerCount = 0;
+bool is_logged_in = false; //to check if he has logged in before any access he can do
 
 const int CATEGORY_COUNT = 5;// at least 5
 string productCategories[CATEGORY_COUNT] = { "Dairy", "Beverages", "Bakery", "Snacks", "Frozen Food" };
@@ -129,6 +129,7 @@ void Review_his_order(); //Youssef hagras
 void the_customer_is_able_to_modify_his_order(); //Mohra
 void view_total_price(); //Youssef Ahmed
 void log_out(); //Sa3eed
+void belong_orders();
 int menu();
 
 /*before you start working and before you push your work, please do the following:
@@ -144,6 +145,22 @@ int main()
     int choice;
     char answer;
     string name, password;
+
+    customerOrder[0].OrderCount = 2; // Assuming there are 2 products in that order for testing
+    customerOrder[0].list_Of_Products[0] = Products[0][0]; // Adding a product for testing
+    customerOrder[0].list_Of_Products[1] = Products[1][1]; // Adding another product for testing
+    // Assuming the customer ID is set
+
+    customerOrder[1].CustomerID = customers[customerCount].ID; // Assuming the customer ID is set
+    customerOrder[1].OrderCount = 2; // Assuming there is 2 products in that order for testing
+    customerOrder[1].list_Of_Products[0] = Products[2][0]; // Adding a product for testing
+    customerOrder[1].list_Of_Products[1] = Products[3][1]; // Adding another product for testing
+
+    customerOrder[2].CustomerID = customers[customerCount].ID; // Assuming the customer ID is set
+    customerOrder[2].OrderCount = 3; // Assuming there is 3 products in that order for testing
+    customerOrder[2].list_Of_Products[0] = Products[4][0]; // Adding a product for testing
+    customerOrder[2].list_Of_Products[1] = Products[0][1]; // Adding another product for testing
+
     do
     {
         choice = menu();
@@ -159,7 +176,9 @@ int main()
             cout << "Enter Your Password:\t\t";
             cin >> password;
             if (log_in(name, password))
+            {
                 cout << "#### Log In Successfully. ####" << endl;
+            }
             else
             {
                 cout << "#### Your Name Or Password Is Incorrect. Please Try Again ####" << endl;
@@ -167,6 +186,7 @@ int main()
                 answer = 'y';
                 continue;
             }
+            belong_orders();
             cout << "========================================" << endl;
             break;
         case 3:
@@ -186,7 +206,7 @@ int main()
             break;
         case 10:
             char confirm;
-            cout << "#### Are You Sure You Want To Log Out? ####" << endl;
+            cout << "#### Are You Sure You Want To Log Out?(Y/N) ####" << endl;
             cin >> confirm;
             if (confirm == 'Y' || confirm == 'y') {
                 log_out();
@@ -592,15 +612,6 @@ void the_customer_is_able_to_modify_his_order()
 {
     int choice;
     int orderNumber;
-    customerOrder[0].OrderCount = 2; // Assuming there are 2 products in that order for testing
-    customerOrder[0].list_Of_Products[0] = Products[0][0]; // Adding a product for testing
-    customerOrder[0].list_Of_Products[1] = Products[1][1]; // Adding another product for testing
-    customerOrder[1].OrderCount = 2; // Assuming there is 2 products in that order for testing
-    customerOrder[1].list_Of_Products[0] = Products[2][0]; // Adding a product for testing
-    customerOrder[1].list_Of_Products[1] = Products[3][1]; // Adding another product for testing
-    customerOrder[2].OrderCount = 3; // Assuming there is 3 products in that order for testing
-    customerOrder[2].list_Of_Products[0] = Products[4][0]; // Adding a product for testing
-    customerOrder[2].list_Of_Products[1] = Products[0][1]; // Adding another product for testing
 
     do {
         cout << "\n========== Modify Your Order ==========\n";
@@ -713,16 +724,31 @@ void the_customer_is_able_to_modify_his_order()
 //<<---log_out--->>
 void log_out() {
     cout << "========================================" << endl;
-    if (currentCustomerIndex >= 0 && currentCustomerIndex < customerCount) {
+    /*if (currentCustomerIndex >= 0 && currentCustomerIndex < customerCount) {
         customers[currentCustomerIndex].ID = 0;
         customers[currentCustomerIndex].Location = "";
         customers[currentCustomerIndex].Name = "";
         customers[currentCustomerIndex].Password = "";
         customers[currentCustomerIndex].PhoneNumber = "";
-    }
+    }*/
     is_logged_in = false;
     currentCustomerIndex = -1;
     cout << "#### You Have Been Succsessfully Logged Out. ####" << endl;
     cout << "#### Thank You For Using Our Online Supermarket!" << endl;
     cout << "========================================" << endl;
+}
+
+void belong_orders()
+{
+    customerOrder[0].CustomerID = customers[--customerCount].ID;
+    int targetID = customers[0].ID; // مثلًا عايز أجيب طلبات العميل رقم 1
+
+    for (int i = 0; i < 1; i++) {
+        if (customerOrder[i].CustomerID == targetID) {
+            cout << "Order #" << i << " belongs to customer: " << customers[0].Name << endl;
+            for (int j = 0; j < customerOrder[i].OrderCount; j++) {
+                cout << "- " << customerOrder[i].list_Of_Products[j].Name << endl;
+            }
+        }
+    }
 }
