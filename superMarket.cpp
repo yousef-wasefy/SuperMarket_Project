@@ -46,6 +46,7 @@ struct Customer
 Customer customers[max];
 int customerCount = 0;
 bool is_logged_in = false; //to check if he has logged in before any access he can do
+bool is_logged_out = true; //to check if he has logged out before sign up when he logged in
 
 const int CATEGORY_COUNT = 5;// at least 5
 string productCategories[CATEGORY_COUNT] = { "Dairy", "Beverages", "Bakery", "Snacks", "Frozen Food" };
@@ -145,7 +146,7 @@ int main()
     //pull first !!!!
     int choice;
     string name, password;
-	int targetID = 0;
+    int targetID = 0;
 
     do
     {
@@ -153,7 +154,16 @@ int main()
         switch (choice) //add your case.
         {
         case 1:
-            sign_up();
+            if (is_logged_out) {
+                sign_up();
+            }
+            else {
+                cout << "========================================" << endl;
+                cout << "#### You Must Logged Out First. ####" << endl;
+                answer = 'y';
+                cout << "========================================" << endl;
+                continue;
+            }
             break;
         case 2:
             cout << "========================================" << endl;
@@ -161,7 +171,7 @@ int main()
             cin >> name;
             cout << "Enter Your Password:\t\t";
             cin >> password;
-			cout << "Enter your ID:\t\t";
+            cout << "Enter your ID:\t\t";
             cin >> targetID;
             if (log_in(name, password, targetID))
             {
@@ -207,6 +217,7 @@ int main()
             edit_information();
             break;
         case 10:
+            cout << "========================================" << endl;
             char confirm;
             cout << "#### Are You Sure You Want To Log Out?(Y/N) ####" << endl;
             cin >> confirm;
@@ -286,6 +297,7 @@ bool log_in(string name, string password, int ID) {
         {
             currentCustomerIndex = i;
             is_logged_in = true; //when he log out make it false
+            is_logged_out = false;
             return true;
         }
     } return false;
@@ -748,6 +760,7 @@ void log_out() {
         customers[currentCustomerIndex].PhoneNumber = "";
     }*/
     is_logged_in = false;
+    is_logged_out = true;
     currentCustomerIndex = -1;
     cout << "#### You Have Been Succsessfully Logged Out. ####" << endl;
     cout << "#### Thank You For Using Our Online Supermarket!" << endl;
