@@ -166,40 +166,49 @@ int main()
             }
             break;
         case 2:
-            cout << "========================================" << endl;
-            cout << "Enter Your Name:\t\t";
-            cin >> name;
-            cout << "Enter Your Password:\t\t";
-            cin >> password;
-            cout << "Enter your ID:\t\t";
-            cin >> targetID;
-            if (log_in(name, password, targetID))
-            {
-                cout << "#### Log In Successfully. ####" << endl;
+            if (is_logged_out) {
+                cout << "========================================" << endl;
+                cout << "Enter Your Name:\t\t";
+                cin >> name;
+                cout << "Enter Your Password:\t\t";
+                cin >> password;
+                cout << "Enter your ID:\t\t";
+                cin >> targetID;
+                if (log_in(name, password, targetID))
+                {
+                    cout << "#### Log In Successfully. ####" << endl;
+                }
+                else
+                {
+                    cout << "#### Your Name Or Password Or ID Is Incorrect. Please Try Again ####" << endl;
+                    cout << "Sign up if you don't have an account" << endl;
+                    answer = 'y';
+                    continue;
+                }
+                customerOrder[0].OrderCount = 2; // Assuming there are 2 products in that order for testing
+                customerOrder[0].list_Of_Products[0] = Products[0][0]; // Adding a product for testing
+                customerOrder[0].list_Of_Products[1] = Products[1][1]; // Adding another product for testing
+                customerOrder[0].CustomerID = customers[0].ID; // Assuming the customer ID is set
+
+                customerOrder[1].CustomerID = customers[1].ID; // Assuming the customer ID is set
+                customerOrder[1].OrderCount = 2; // Assuming there is 2 products in that order for testing
+                customerOrder[1].list_Of_Products[0] = Products[2][0]; // Adding a product for testing
+                customerOrder[1].list_Of_Products[1] = Products[3][1]; // Adding another product for testing
+
+                customerOrder[2].CustomerID = customers[2].ID; // Assuming the customer ID is set
+                customerOrder[2].OrderCount = 3; // Assuming there is 3 products in that order for testing
+                customerOrder[2].list_Of_Products[0] = Products[4][0]; // Adding a product for testing
+                customerOrder[2].list_Of_Products[1] = Products[0][1]; // Adding another product for testing
+                /*belong_orders();*/
+                cout << "========================================" << endl;
             }
-            else
-            {
-                cout << "#### Your Name Or Password Or ID Is Incorrect. Please Try Again ####" << endl;
-                cout << "Sign up if you don't have an account" << endl;
+            else {
+                cout << "========================================" << endl;
+                cout << "#### You Are Already Logged In! You Must Logged Out First. ####" << endl;
                 answer = 'y';
+                cout << "========================================" << endl;
                 continue;
             }
-            customerOrder[0].OrderCount = 2; // Assuming there are 2 products in that order for testing
-            customerOrder[0].list_Of_Products[0] = Products[0][0]; // Adding a product for testing
-            customerOrder[0].list_Of_Products[1] = Products[1][1]; // Adding another product for testing
-            customerOrder[0].CustomerID = customers[0].ID; // Assuming the customer ID is set
-
-            customerOrder[1].CustomerID = customers[1].ID; // Assuming the customer ID is set
-            customerOrder[1].OrderCount = 2; // Assuming there is 2 products in that order for testing
-            customerOrder[1].list_Of_Products[0] = Products[2][0]; // Adding a product for testing
-            customerOrder[1].list_Of_Products[1] = Products[3][1]; // Adding another product for testing
-
-            customerOrder[2].CustomerID = customers[2].ID; // Assuming the customer ID is set
-            customerOrder[2].OrderCount = 3; // Assuming there is 3 products in that order for testing
-            customerOrder[2].list_Of_Products[0] = Products[4][0]; // Adding a product for testing
-            customerOrder[2].list_Of_Products[1] = Products[0][1]; // Adding another product for testing
-            /*belong_orders();*/
-            cout << "========================================" << endl;
             break;
         case 3:
             view_products_menu();
