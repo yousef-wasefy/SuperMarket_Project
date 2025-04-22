@@ -349,26 +349,53 @@ void view_total_price(int ID)
     double totalPrice = 0;
     cout << "Item\t\tquantity\ttotal price" << endl;
     for (int i = 0; i < customerCount; i++)
+        >>>>>> > 00688b7255ea2191b5a02d23cf04349338b21615
     {
+
         if (customerOrder[i].CustomerID == ID)
         {
+            found = true;
             totalPrice = 0;
             for (int j = 0; j < customerOrder[i].OrderCount; j++)
             {
                 cout << customerOrder[i].list_Of_Products[j].Name;
                 cout << "\t\t" << customerOrder[i].list_Of_Products[j].ProductCount;
-                cout << "\t\t" << customerOrder[i].list_Of_Products[j].Price * customerOrder[i].list_Of_Products[j].ProductCount;
+                cout << "\t\t\t\t " << customerOrder[i].list_Of_Products[j].Price << "\t    " << customerOrder[i].list_Of_Products[j].Price * customerOrder[i].list_Of_Products[j].ProductCount;
                 cout << endl;
             }
-            cout << "Total Price : ";
+
+
+        }
+
+    }
+        if (found == false)
+            cout << "ID not found\n";
+}
+void view_total_price(int ID)
+{
+    for (int i = 0; i < 3; i++)
+    {
+        if (customerOrder[i].CustomerID == ID)
+        {
+            double totalPrice = 0;
+            for (int j = 0; j < 3; j++)
+                ====== =
+                cout << "Total Price : ";
             for (int j = 0; j < customerOrder[i].OrderCount; j++)
+         
             {
                 totalPrice += customerOrder[i].list_Of_Products[j].Price * customerOrder[i].list_Of_Products[j].ProductCount;
             }
-            cout << totalPrice << endl;
             cout << "=========================" << endl;
+            cout << "Total Price : ";
+            cout << totalPrice << endl;
+
+
+
+
         }
-    }
+    }   if (found == false)
+        cout << "ID not found\n";
 }
 // at its PEAK
 void edit_information()
