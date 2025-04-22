@@ -126,12 +126,11 @@ bool log_in(string name, string password, int ID); //Sa3eed
 void edit_information(); //nour
 void view_products_menu(); //Doha
 void view_the_information_of_the_item_that_the_customer_has_chosen(); //Doha
-void the_customer_selects_the_goods_he_wants_to_add_to_his_order(int ID); //Mostafa
-void Review_his_order(int ID); //Youssef hagras
+void the_customer_selects_the_goods_he_wants_to_add_to_his_order(); //Mostafa
+void Review_his_order(); //Youssef hagras
 void the_customer_is_able_to_modify_his_order(int ID); //Mohra
 void view_total_price(int ID); //Youssef Ahmed
 void log_out(); //Sa3eed
-void belong_orders();
 int menu();
 
 /*before you start working and before you push your work, please do the following:
@@ -185,21 +184,6 @@ int main()
                     answer = 'y';
                     continue;
                 }
-                customerOrder[0].OrderCount = 2; // Assuming there are 2 products in that order for testing
-                customerOrder[0].list_Of_Products[0] = Products[0][0]; // Adding a product for testing
-                customerOrder[0].list_Of_Products[1] = Products[1][1]; // Adding another product for testing
-                customerOrder[0].CustomerID = customers[0].ID; // Assuming the customer ID is set
-
-                customerOrder[1].CustomerID = customers[1].ID; // Assuming the customer ID is set
-                customerOrder[1].OrderCount = 2; // Assuming there is 2 products in that order for testing
-                customerOrder[1].list_Of_Products[0] = Products[2][0]; // Adding a product for testing
-                customerOrder[1].list_Of_Products[1] = Products[3][1]; // Adding another product for testing
-
-                customerOrder[2].CustomerID = customers[2].ID; // Assuming the customer ID is set
-                customerOrder[2].OrderCount = 3; // Assuming there is 3 products in that order for testing
-                customerOrder[2].list_Of_Products[0] = Products[4][0]; // Adding a product for testing
-                customerOrder[2].list_Of_Products[1] = Products[0][1]; // Adding another product for testing
-                /*belong_orders();*/
                 cout << "========================================" << endl;
             }
             else {
@@ -215,6 +199,9 @@ int main()
             break;
         case 4:
             view_the_information_of_the_item_that_the_customer_has_chosen();
+            break;
+        case 5:
+            the_customer_selects_the_goods_he_wants_to_add_to_his_order();
             break;
         case 7:
             the_customer_is_able_to_modify_his_order(targetID);
@@ -295,11 +282,12 @@ void sign_up() {
     cout << "Enter Your Password:\t\t";
     cin >> NewCustomer.Password;
     customers[customerCount] = NewCustomer;
+    customerOrder[customerCount].CustomerID = customers[customerCount].ID;
     customerCount++;
     cout << "#### Sign Up Successfully. Your ID(" << NewCustomer.ID << ") ####" << endl;
     cout << "========================================" << endl;
 }
-//<<--log_in-->>
+//<<--log_in-->> 
 bool log_in(string name, string password, int ID) {
     for (int i = 0;i <= customerCount;i++) {
         if (customers[i].Name == name && customers[i].Password == password && customers[i].ID == ID)
@@ -311,7 +299,7 @@ bool log_in(string name, string password, int ID) {
         }
     } return false;
 }
-// <<-- view product menu -->>
+// <<-- view product menu -->> at its PEAK
 void view_products_menu() {
     cout << endl << "\t\t-------------------------------------" << endl;
     cout << "\t\t\tMenu of the products" << endl;
@@ -328,7 +316,7 @@ void view_products_menu() {
         cout << endl;
     }
 }
-// <<-- view_the_information_of_the_item_that_the_customer_has_chosen -->>
+// <<-- view_the_information_of_the_item_that_the_customer_has_chosen -->> at its PEAK
 void view_the_information_of_the_item_that_the_customer_has_chosen() {
     string name;
     bool found = false;
@@ -355,17 +343,17 @@ void view_the_information_of_the_item_that_the_customer_has_chosen() {
         cout << "\nProduct not found! Please check the code and try again.\n\n";
     }
 }
-
+// at its PEAK
 void view_total_price(int ID)
 {
     double totalPrice = 0;
     cout << "Item\t\tquantity\ttotal price" << endl;
-    for (int i = 0; i < 3; i++)
+    for (int i = 0; i < customerCount; i++)
     {
         if (customerOrder[i].CustomerID == ID)
         {
             totalPrice = 0;
-            for (int j = 0; j < 3; j++)
+            for (int j = 0; j < customerOrder[i].OrderCount; j++)
             {
                 cout << customerOrder[i].list_Of_Products[j].Name;
                 cout << "\t\t" << customerOrder[i].list_Of_Products[j].ProductCount;
@@ -373,7 +361,7 @@ void view_total_price(int ID)
                 cout << endl;
             }
             cout << "Total Price : ";
-            for (int j = 0; j < 3; j++)
+            for (int j = 0; j < customerOrder[i].OrderCount; j++)
             {
                 totalPrice += customerOrder[i].list_Of_Products[j].Price * customerOrder[i].list_Of_Products[j].ProductCount;
             }
@@ -382,7 +370,7 @@ void view_total_price(int ID)
         }
     }
 }
-
+// at its PEAK
 void edit_information()
 {
     int categoryChoice, productChoice, fieldChoice;
@@ -649,7 +637,7 @@ void edit_information()
 
     cout << "\nProduct information updated successfully.\n";*/
 }
-
+// at its PEAK
 void the_customer_is_able_to_modify_his_order(int ID)
 {
     int choice;
@@ -729,13 +717,23 @@ void the_customer_is_able_to_modify_his_order(int ID)
 
         case 3: {
             string code;
+            int  qnt;
             bool found = false;
             cout << "Enter the product code to add: ";
             cin >> code;
 
             for (int cat = 0; cat < CATEGORY_COUNT && !found; cat++) {
                 for (int i = 0; i < MAX_PRODUCTS; i++) {
+                    if (customerOrder[currentCustomerIndex].list_Of_Products[i].Code == code) {
+                        found = true;
+                        cout << "Enter the quantity: ";
+                        cin >> qnt;
+                        customerOrder[currentCustomerIndex].list_Of_Products[i].ProductCount += qnt;
+                        break;
+                    }
                     if (Products[cat][i].Code == code) {
+                        cout << "Enter the quantity: ";
+                        cin >> Products[cat][i].ProductCount;
                         customerOrder[currentCustomerIndex].list_Of_Products[customerOrder[currentCustomerIndex].OrderCount++] = Products[cat][i];
                         found = true;
                         cout << "Product added to your order.\n";
@@ -758,16 +756,52 @@ void the_customer_is_able_to_modify_his_order(int ID)
 
     } while (choice != 4);
 }
-//<<---log_out--->>
+// at its PEAK
+void the_customer_selects_the_goods_he_wants_to_add_to_his_order()
+{
+    string name;
+    int qnt;
+    bool found = false;
+    char ans;
+    do
+    {
+        cout << "Enter the product name: ";
+        cin.ignore();
+        getline(cin, name);
+        for (int i = 0; i < CATEGORY_COUNT; i++)
+        {
+            found = false;
+            for (int j = 0; j < MAX_PRODUCTS; j++)
+            {
+                if (customerOrder[currentCustomerIndex].list_Of_Products[j].Name == name) {
+                    found = true;
+                    cout << "Enter the quantity: ";
+                    cin >> qnt;
+                    customerOrder[currentCustomerIndex].list_Of_Products[j].ProductCount += qnt;
+                    break;
+                }
+                if (Products[i][j].Name == name) {
+                    found = true;
+                    cout << "Enter the quantity: ";
+                    cin >> Products[i][j].ProductCount;
+                    customerOrder[currentCustomerIndex].list_Of_Products[customerOrder[currentCustomerIndex].OrderCount++] = Products[i][j];
+                }
+                if (found) break;
+            }
+            if (found) break;
+        }
+        if(!found) {
+            cout << "Product not found!, please try again" << endl;
+            ans = 'y';
+            continue;
+        }
+        cout << "Want to add another product?(Y/N): ";
+        cin >> ans;
+    } while (ans == 'y' || ans == 'Y');
+}
+//<<---log_out--->> at its PEAK
 void log_out() {
     cout << "========================================" << endl;
-    /*if (currentCustomerIndex >= 0 && currentCustomerIndex < customerCount) {
-        customers[currentCustomerIndex].ID = 0;
-        customers[currentCustomerIndex].Location = "";
-        customers[currentCustomerIndex].Name = "";
-        customers[currentCustomerIndex].Password = "";
-        customers[currentCustomerIndex].PhoneNumber = "";
-    }*/
     is_logged_in = false;
     is_logged_out = true;
     currentCustomerIndex = -1;
@@ -776,17 +810,3 @@ void log_out() {
     answer = 'y';
     cout << "========================================" << endl;
 }
-
-//void belong_orders()
-//{
-//    int targetID = customers[0].ID; // مثلًا عايز أجيب طلبات العميل رقم 1
-//
-//    for (int i = 0; i < 1; i++) {
-//        if (customerOrder[i].CustomerID == targetID) {
-//            cout << "Order #" << i << " belongs to customer: " << customers[0].Name << endl;
-//            for (int j = 0; j < customerOrder[i].OrderCount; j++) {
-//                cout << "- " << customerOrder[i].list_Of_Products[j].Name << endl;
-//            }
-//        }
-//    }
-//}
