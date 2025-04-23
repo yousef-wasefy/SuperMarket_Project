@@ -53,31 +53,6 @@ string productCategories[CATEGORY_COUNT] = { "Dairy", "Beverages", "Bakery", "Sn
 
 const int MAX_PRODUCTS = 3; // 3 products per category
 
-//Product dairyProducts[MAX_PRODUCTS] = {
-//     {"D001", "Milk", "Dairy", "2025-03-01", "2025-03-10", 1.50},
-//     {"D002", "Cheese", "Dairy", "2025-02-25", "2025-03-20", 4.00},
-//     {"D003", "Butter", "Dairy", "2025-02-28", "2025-04-15", 2.50} };
-//
-//Product beveragesProducts[MAX_PRODUCTS] = {
-//    {"B001", "Orange Juice", "Beverages", "2025-03-05", "2025-06-05", 2.00},
-//    {"B002", "Coca-Cola", "Beverages", "2025-02-15", "2025-08-15", 1.25},
-//    {"B003", "Green Tea", "Beverages", "2025-01-30", "2025-07-30", 1.75} };
-//
-//Product bakeryProducts[MAX_PRODUCTS] = {
-//    {"BK001", "White Bread", "Bakery", "2025-03-08", "2025-03-12", 1.20},
-//    {"BK002", "Croissant", "Bakery", "2025-03-07", "2025-03-10", 0.99},
-//    {"BK003", "Chocolate Muffin", "Bakery", "2025-03-06", "2025-03-11", 1.50} };
-//
-//Product snacksProducts[MAX_PRODUCTS] = {
-//    {"S001", "Potato Chips", "Snacks", "2025-02-20", "2025-08-20", 1.75},
-//    {"S002", "Chocolate Bar", "Snacks", "2025-03-01", "2025-09-01", 1.25},
-//    {"S003", "Peanuts", "Snacks", "2025-02-18", "2025-12-18", 2.30} };
-//
-//Product frozenFoodProducts[MAX_PRODUCTS] = {
-//    {"F001", "Frozen Pizza", "Frozen Food", "2025-02-10", "2026-02-10", 5.50},
-//    {"F002", "Ice Cream (Vanilla)", "Frozen Food", "2025-02-28", "2026-02-28", 3.99},
-//    {"F003", "Chicken Nuggets", "Frozen Food", "2025-03-01", "2026-03-01", 6.75} };
-
 //All the products are in the array of products
 Product Products[CATEGORY_COUNT][MAX_PRODUCTS] = {
     { // Dairy
@@ -107,20 +82,6 @@ Product Products[CATEGORY_COUNT][MAX_PRODUCTS] = {
     }
 };
 
-/*              -->> NOTES <<--
-- Don't modify,add or use any new structs or arrays before you tell us and we approve.
-- Don't forget to -->["pull"]<-- before you start working , and before you push your work.
-- We will finish from the required functions before the midterm,
-when we finish we may add new functions and it may take week or more.
-- Don't use GPT !!, just make him helps you.
-- بالنسبة لموضوع الفايل : انت الاول هتخلص الفانكشن بتاعتك عادي بعدين تبدا تظبط موضوع الفايل بحيث تقرا وتكتب منه
-- ممكن تستعين ب gpt في موضوع الفايل بس كون فاهم اللي بيتعمل
-- كل واحد مسؤول عن كوده (اكيد هنساعد بعض )
-- اتاكد ان الفانكشن بتاعتك بتأدي دورها بشكل كامل مع عدم وجود اي اخطاء في اي مكان في البروجكت
-*/
-
-// ظبط الفانكشن بتاعتك من حيث الاسم والنوع والبراميترز اللي هتاخدها
-// حاولوا بقدر الامكان تنوعوا في النوع والبراميترز
 void sign_up(); //Sa3eed
 bool log_in(string name, string password, int ID); //Sa3eed
 void edit_information(); //nour
@@ -296,7 +257,7 @@ bool log_in(string name, string password, int ID) {
         if (customers[i].Name == name && customers[i].Password == password && customers[i].ID == ID)
         {
             currentCustomerIndex = i;
-            is_logged_in = true; //when he log out make it false
+            is_logged_in = true;
             is_logged_out = false;
             return true;
         }
@@ -410,47 +371,6 @@ void edit_information()
         cout << "Name: " << Products[categoryChoice][j].Name << endl;
     }
 
-    /*switch (categoryChoice) {
-    case 1:
-        cout << "\nDairy Products:\n";
-        for (int i = 0;i < MAX_PRODUCTS;i++)
-        {
-            cout << "1. Code: " << dairyProducts[i].Code << "   Name: " << dairyProducts[i].Name << "\n";
-        }
-            break;
-    case 2:
-        cout << "\nBeverages Products:\n";
-        for (int i = 0;i < MAX_PRODUCTS;i++)
-        {
-            cout << "1. Code: " << beveragesProducts[i].Code << "   Name: " << beveragesProducts[i].Name << "\n";
-        }
-            break;
-    case 3:
-        cout << "\nBakery Products:\n";
-        for (int i = 0;i < MAX_PRODUCTS;i++)
-        {
-            cout << "1. Code: " << bakeryProducts[i].Code << "   Name: " << bakeryProducts[i].Name << "\n";
-        }
-            break;
-    case 4:
-        cout << "\nSnacks Products:\n";
-        for (int i = 0;i < MAX_PRODUCTS;i++)
-        {
-            cout << "1. Code: " << snacksProducts[i].Code << "   Name: " << snacksProducts[i].Name << "\n";
-        }
-            break;
-    case 5:
-        cout << "\nFrozen Food Products:\n";
-        for (int i = 0;i < MAX_PRODUCTS;i++)
-        {
-            cout << "1. Code: " << frozenFoodProducts[i].Code << "   Name: " << frozenFoodProducts[i].Name << "\n";
-        }
-            break;
-    default:
-        cout << "Invalid category choice.\n";
-        return;
-    }*/
-
     cout << "\n Select product number to edit (1-3): ";
     cin >> productChoice;
     productChoice = productChoice - 1;
@@ -496,168 +416,6 @@ void edit_information()
         return;
 
     }
-    /*switch (categoryChoice) {
-    case 1:
-        switch (fieldChoice) {
-        case 1:
-            cout << "Enter new Code: ";
-            cin >> dairyProducts[productChoice].Code;
-            break;
-        case 2:
-            cout << "Enter new Name: ";
-            cin >> dairyProducts[productChoice].Name;
-            break;
-        case 3:
-            cout << "Enter new Category: ";
-            cin >> dairyProducts[productChoice].Category;
-            break;
-        case 4:
-            cout << "Enter new Production Date (YYYY-MM-DD): ";
-            cin >> dairyProducts[productChoice].ProductionDate;
-            break;
-        case 5:
-            cout << "Enter new Expired Date (YYYY-MM-DD): ";
-            cin >> dairyProducts[productChoice].ExpiredDate;
-            break;
-        case 6:
-            cout << "Enter new Price: ";
-            cin >> dairyProducts[productChoice].Price;
-            break;
-        default:
-            cout << "Invalid field choice.\n";
-            return;
-        }
-        break;
-    case 2:
-        switch (fieldChoice) {
-        case 1:
-            cout << "Enter new Code: ";
-            cin >> beveragesProducts[productChoice].Code;
-            break;
-        case 2:
-            cout << "Enter new Name: ";
-            cin >> beveragesProducts[productChoice].Name;
-            break;
-        case 3:
-            cout << "Enter new Category: ";
-            cin >> beveragesProducts[productChoice].Category;
-            break;
-        case 4:
-            cout << "Enter new Production Date (YYYY-MM-DD): ";
-            cin >> beveragesProducts[productChoice].ProductionDate;
-            break;
-        case 5:
-            cout << "Enter new Expired Date (YYYY-MM-DD): ";
-            cin >> beveragesProducts[productChoice].ExpiredDate;
-            break;
-        case 6:
-            cout << "Enter new Price: ";
-            cin >> beveragesProducts[productChoice].Price;
-            break;
-        default:
-            cout << "Invalid field choice.\n";
-            return;
-        }
-        break;
-    case 3:
-        switch (fieldChoice) {
-        case 1:
-            cout << "Enter new Code: ";
-            cin >> bakeryProducts[productChoice].Code;
-            break;
-        case 2:
-            cout << "Enter new Name: ";
-            cin >> bakeryProducts[productChoice].Name;
-            break;
-        case 3:
-            cout << "Enter new Category: ";
-            cin >> bakeryProducts[productChoice].Category;
-            break;
-        case 4:
-            cout << "Enter new Production Date (YYYY-MM-DD): ";
-            cin >> bakeryProducts[productChoice].ProductionDate;
-            break;
-        case 5:
-            cout << "Enter new Expired Date (YYYY-MM-DD): ";
-            cin >> bakeryProducts[productChoice].ExpiredDate;
-            break;
-        case 6:
-            cout << "Enter new Price: ";
-            cin >> bakeryProducts[productChoice].Price;
-            break;
-        default:
-            cout << "Invalid field choice.\n";
-            return;
-        }
-        break;
-    case 4:
-        switch (fieldChoice) {
-        case 1:
-            cout << "Enter new Code: ";
-            cin >> snacksProducts[productChoice].Code;
-            break;
-        case 2:
-            cout << "Enter new Name: ";
-            cin >> snacksProducts[productChoice].Name;
-            break;
-        case 3:
-            cout << "Enter new Category: ";
-            cin >> snacksProducts[productChoice].Category;
-            break;
-        case 4:
-            cout << "Enter new Production Date (YYYY-MM-DD): ";
-            cin >> snacksProducts[productChoice].ProductionDate;
-            break;
-        case 5:
-            cout << "Enter new Expired Date (YYYY-MM-DD): ";
-            cin >> snacksProducts[productChoice].ExpiredDate;
-            break;
-        case 6:
-            cout << "Enter new Price: ";
-            cin >> snacksProducts[productChoice].Price;
-            break;
-        default:
-            cout << "Invalid field choice.\n";
-            return;
-        }
-        break;
-    case 5:
-        switch (fieldChoice) {
-        case 1:
-            cout << "Enter new Code: ";
-            cin >> frozenFoodProducts[productChoice].Code;
-            break;
-        case 2:
-            cout << "Enter new Name: ";
-            cin >> frozenFoodProducts[productChoice].Name;
-            break;
-        case 3:
-            cout << "Enter new Category: ";
-            cin >> frozenFoodProducts[productChoice].Category;
-            break;
-        case 4:
-            cout << "Enter new Production Date (YYYY-MM-DD): ";
-            cin >> frozenFoodProducts[productChoice].ProductionDate;
-            break;
-        case 5:
-            cout << "Enter new Expired Date (YYYY-MM-DD): ";
-            cin >> frozenFoodProducts[productChoice].ExpiredDate;
-            break;
-        case 6:
-            cout << "Enter new Price: ";
-            cin >> frozenFoodProducts[productChoice].Price;
-            break;
-        default:
-            cout << "Invalid field choice.\n";
-            return;
-        }
-        break;
-    default:
-        cout << "Invalid category choice.\n";
-        return;
-    }
-
-    cout << "\nProduct information updated successfully.\n";*/
 }
 // at its PEAK
 void the_customer_is_able_to_modify_his_order(int ID)
@@ -727,33 +485,7 @@ void the_customer_is_able_to_modify_his_order(int ID)
         }
 
         case 3: {
-            string code;
-            int  qnt;
-            bool found = false;
-            cout << "Enter the product code to add: ";
-            cin >> code;
-
-            for (int cat = 0; cat < CATEGORY_COUNT && !found; cat++) {
-                for (int i = 0; i < MAX_PRODUCTS; i++) {
-                    if (customerOrder[currentCustomerIndex].list_Of_Products[i].Code == code) {
-                        found = true;
-                        cout << "Enter the quantity: ";
-                        cin >> qnt;
-                        customerOrder[currentCustomerIndex].list_Of_Products[i].ProductCount += qnt;
-                        break;
-                    }
-                    if (Products[cat][i].Code == code) {
-                        cout << "Enter the quantity: ";
-                        cin >> Products[cat][i].ProductCount;
-                        customerOrder[currentCustomerIndex].list_Of_Products[customerOrder[currentCustomerIndex].OrderCount++] = Products[cat][i];
-                        found = true;
-                        cout << "Product added to your order.\n";
-                        break;
-                    }
-                }
-            }
-            if (!found)
-                cout << "Product not found!\n";
+            the_customer_selects_the_goods_he_wants_to_add_to_his_order();
             break;
         }
 
@@ -784,21 +516,25 @@ void the_customer_selects_the_goods_he_wants_to_add_to_his_order()
             found = false;
             for (int j = 0; j < MAX_PRODUCTS; j++)
             {
-                if (customerOrder[currentCustomerIndex].list_Of_Products[j].Name == name) {
-                    found = true;
-                    cout << "Enter the quantity: ";
-                    cin >> qnt;
-                    customerOrder[currentCustomerIndex].list_Of_Products[j].ProductCount += qnt;
-                    break;
+                for (int n = 0; n < customerOrder[currentCustomerIndex].OrderCount; n++) //عدي على كل الطلبات بتاعته
+                {
+                    if (customerOrder[currentCustomerIndex].list_Of_Products[n].Name == name) {
+                        found = true;
+                        cout << "Enter the quantity: ";
+                        cin >> qnt;
+                        customerOrder[currentCustomerIndex].list_Of_Products[n].ProductCount += qnt;
+                        break;
+                    }
                 }
+                if (found) break;
                 if (Products[i][j].Name == name) {
                     found = true;
                     cout << "Enter the quantity: ";
                     cin >> Products[i][j].ProductCount;
                     customerOrder[currentCustomerIndex].list_Of_Products[customerOrder[currentCustomerIndex].OrderCount++] = Products[i][j];
                     cout << "Product added to your order.\n";
-                }
-                if (found) break;
+                    break;
+                }      
             }
             if (found) break;
         }
