@@ -127,7 +127,7 @@ void edit_information(); //nour
 void view_products_menu(); //Doha
 void view_the_information_of_the_item_that_the_customer_has_chosen(); //Doha
 void the_customer_selects_the_goods_he_wants_to_add_to_his_order(); //Mostafa
-void Review_his_order(); //Youssef hagras
+void Review_his_order(int ID); //Youssef hagras
 void the_customer_is_able_to_modify_his_order(int ID); //Mohra
 void view_total_price(int ID); //Youssef Ahmed
 void log_out(); //Sa3eed
@@ -202,6 +202,9 @@ int main()
             break;
         case 5:
             the_customer_selects_the_goods_he_wants_to_add_to_his_order();
+            break;
+        case 6:
+            Review_his_order(targetID);
             break;
         case 7:
             the_customer_is_able_to_modify_his_order(targetID);
@@ -344,58 +347,50 @@ void view_the_information_of_the_item_that_the_customer_has_chosen() {
     }
 }
 // at its PEAK
-void view_total_price(int ID)
+void Review_his_order(int ID)
 {
-    double totalPrice = 0;
-    cout << "Item\t\tquantity\ttotal price" << endl;
-    for (int i = 0; i < customerCount; i++)
-        >>>>>> > 00688b7255ea2191b5a02d23cf04349338b21615
+    if (customerOrder[currentCustomerIndex].OrderCount == 0)
     {
+        cout << "Your order is empty.\n";
+        return;
+    }
 
+    double totalPrice = 0;
+    cout << "Current Products in your order:\n";
+    for (int i = 0; i < customerCount; i++)
+    {
         if (customerOrder[i].CustomerID == ID)
         {
-            found = true;
-            totalPrice = 0;
-            for (int j = 0; j < customerOrder[i].OrderCount; j++)
-            {
-                cout << customerOrder[i].list_Of_Products[j].Name;
-                cout << "\t\t" << customerOrder[i].list_Of_Products[j].ProductCount;
-                cout << "\t\t\t\t " << customerOrder[i].list_Of_Products[j].Price << "\t    " << customerOrder[i].list_Of_Products[j].Price * customerOrder[i].list_Of_Products[j].ProductCount;
-                cout << endl;
+            for (int j = 0; j < customerOrder[i].OrderCount; j++) {
+                cout << j + 1 << ". " << customerOrder[i].list_Of_Products[j].Name
+                << " (Quantity: " << customerOrder[i].list_Of_Products[j].ProductCount
+                << ", Price: $" << customerOrder[i].list_Of_Products[j].Price * customerOrder[i].list_Of_Products[j].ProductCount << ")\n";
             }
-
-
         }
-
     }
-        if (found == false)
-            cout << "ID not found\n";
 }
+// at its PEAK
 void view_total_price(int ID)
 {
-    for (int i = 0; i < 3; i++)
+    if (customerOrder[currentCustomerIndex].OrderCount == 0)
+    {
+        cout << "Your order is empty.\n";
+        return;
+    }
+
+    for (int i = 0; i < customerCount; i++)
     {
         if (customerOrder[i].CustomerID == ID)
         {
             double totalPrice = 0;
-            for (int j = 0; j < 3; j++)
-                ====== =
-                cout << "Total Price : ";
+            cout << "Total Price : ";
             for (int j = 0; j < customerOrder[i].OrderCount; j++)
-         
             {
                 totalPrice += customerOrder[i].list_Of_Products[j].Price * customerOrder[i].list_Of_Products[j].ProductCount;
             }
-            cout << "=========================" << endl;
-            cout << "Total Price : ";
             cout << totalPrice << endl;
-
-
-
-
         }
-    }   if (found == false)
-        cout << "ID not found\n";
+    }
 }
 // at its PEAK
 void edit_information()
@@ -676,18 +671,7 @@ void the_customer_is_able_to_modify_his_order(int ID)
 
     do {
         cout << "\n========== Modify Your Order ==========\n";
-        cout << "Current Products in your order:\n";
-        for (int i = 0; i < 3; i++)
-        {
-            if (customerOrder[i].CustomerID == ID)
-            {
-                for (int j = 0; j < customerOrder[i].OrderCount; j++) {
-                    cout << j + 1 << ". " << customerOrder[i].list_Of_Products[j].Name
-                        << " (Quantity: " << customerOrder[i].list_Of_Products[j].ProductCount
-                        << ", Price: $" << customerOrder[i].list_Of_Products[j].Price * customerOrder[i].list_Of_Products[j].ProductCount << ")\n";
-                }
-            }
-        }
+        Review_his_order(ID);
 
         cout << "\nWhat would you like to do?\n";
         cout << "1. Remove an item\n";
@@ -812,6 +796,7 @@ void the_customer_selects_the_goods_he_wants_to_add_to_his_order()
                     cout << "Enter the quantity: ";
                     cin >> Products[i][j].ProductCount;
                     customerOrder[currentCustomerIndex].list_Of_Products[customerOrder[currentCustomerIndex].OrderCount++] = Products[i][j];
+                    cout << "Product added to your order.\n";
                 }
                 if (found) break;
             }
