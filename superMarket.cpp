@@ -47,7 +47,7 @@ Customer customers[max];
 int customerCount = 0;
 bool is_logged_in = false; //to check if he has logged in before any access he can do
 bool is_logged_out = true; //to check if he has logged out before sign up when he logged in
-bool is_admin;
+bool is_admin = false;
 
 const int CATEGORY_COUNT = 5;// at least 5
 string productCategories[CATEGORY_COUNT] = { "Dairy", "Beverages", "Bakery", "Snacks", "Frozen Food" };
@@ -94,13 +94,6 @@ void the_customer_is_able_to_modify_his_order(int ID); //Mohra
 void view_total_price(int ID); //Youssef Ahmed
 void log_out(); //Sa3eed
 int menu();
-
-/*before you start working and before you push your work, please do the following:
-git add superMarket.cpp
-git commit -m "your message"
-git pull
-git push
-*/
 
 int main()
 {
@@ -175,8 +168,12 @@ int main()
             view_total_price(targetID);
             break;
         case 9:
-            edit_information();
-            break;
+            if (is_admin)
+            {
+                edit_information();
+                break;
+            }
+            else {}
         case 10:
             cout << "========================================" << endl;
             char confirm;
@@ -200,7 +197,6 @@ int main()
     } while (answer == 'Y' || answer == 'y');
 
     return 0; //pull first !!!!
-
 }
 
 int menu()
@@ -217,9 +213,17 @@ int menu()
     cout << "6. to review your order\n";
     cout << "7. to modify your order\n";
     cout << "8. to view the total price\n";
-    cout << "9. to edit information\n";
-    cout << "10. to log out\n";
-    cout << "========================================" << endl;
+    if (is_admin)
+    {
+        cout << "9. to edit information\n";
+        cout << "10. to log out\n";
+        cout << "========================================" << endl;
+    }
+    else
+    {
+        cout << "9. to log out\n";
+        cout << "========================================" << endl;
+    }
     cin >> choice;
     if (choice != 1 && choice != 2)
     {
@@ -229,10 +233,6 @@ int menu()
             cout << "Please log in first" << endl;
             return choice = 2;
         }
-        if (choice = 9 && is_admin = true)
-            edit_ information;
-        if (choice = 9 && is_admin == false)
-            cout « "invalid this choice is only available for admins";
     }
     return choice;
 }
@@ -242,8 +242,8 @@ void sign_up() {
     cout << "========================================" << endl;
     Customer NewCustomer;
     string rank;
-    cout « "Please choose the rank: admin or customer ?"; cin >> rank;
-    if (rank == "admin" || rank == "ADMIN")
+    cout << "Please choose the rank: admin or customer ?"; cin >> rank;
+    if (rank[0] == 'a' || rank[0] == 'A')
         is_admin = true;
     else
         is_admin = false;
