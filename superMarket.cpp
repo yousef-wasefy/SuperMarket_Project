@@ -47,6 +47,7 @@ Customer customers[max];
 int customerCount = 0;
 bool is_logged_in = false; //to check if he has logged in before any access he can do
 bool is_logged_out = true; //to check if he has logged out before sign up when he logged in
+bool is_admin;
 
 const int CATEGORY_COUNT = 5;// at least 5
 string productCategories[CATEGORY_COUNT] = { "Dairy", "Beverages", "Bakery", "Snacks", "Frozen Food" };
@@ -228,6 +229,10 @@ int menu()
             cout << "Please log in first" << endl;
             return choice = 2;
         }
+        if (choice = 9 && is_admin = true)
+            edit_ information;
+        if (choice = 9 && is_admin == false)
+            cout « "invalid this choice is only available for admins";
     }
     return choice;
 }
@@ -236,6 +241,12 @@ int menu()
 void sign_up() {
     cout << "========================================" << endl;
     Customer NewCustomer;
+    string rank;
+    cout « "Please choose the rank: admin or customer ?"; cin >> rank;
+    if (rank == "admin" || rank == "ADMIN")
+        is_admin = true;
+    else
+        is_admin = false;
     NewCustomer.ID = customerCount + 1;
     cout << "Enter Your Name:\t\t";
     cin >> NewCustomer.Name;
