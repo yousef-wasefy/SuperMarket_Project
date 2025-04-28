@@ -88,6 +88,7 @@ bool log_in(string name, string password, int ID); //Sa3eed
 void edit_information(); //nour
 void view_products_menu(); //Doha
 void view_the_information_of_the_item_that_the_customer_has_chosen(); //Doha
+bool word_check(string name); //Doha
 void the_customer_selects_the_goods_he_wants_to_add_to_his_order(); //Mostafa
 void Review_his_order(int ID); //Youssef hagras
 void the_customer_is_able_to_modify_his_order(int ID); //Mohra
@@ -300,7 +301,7 @@ void view_the_information_of_the_item_that_the_customer_has_chosen() {
     getline(cin, name);
     for (int cat = 0; cat < CATEGORY_COUNT; cat++) {
         for (int i = 0; i < MAX_PRODUCTS; i++) {
-            if (Products[cat][i].Name == name) {
+            if (word_check(name)) {
                 cout << "\nProduct [ " << Products[cat][i].Code << " ] Information:\n";
                 cout << "-------------------------\n";
                 cout << "Category      : " << Products[cat][i].Category << endl;
@@ -313,10 +314,29 @@ void view_the_information_of_the_item_that_the_customer_has_chosen() {
             }
         }
     }
-
     if (!found) {
         cout << "\nProduct not found! Please check the code and try again.\n\n";
     }
+}
+// <<-- word check -->>
+bool word_check(string name) {
+    char* pOfUserInput = &name[0];
+    while (*pOfUserInput != '\0') {
+        *pOfUserInput = tolower(*pOfUserInput);
+        ++pOfUserInput;
+    }
+    for (int cat = 0; cat < CATEGORY_COUNT; cat++) {
+        for (int i = 0; i < MAX_PRODUCTS; i++) {
+            string product = Products[cat][i].Name;
+            char* pOfProduct = &product[0];
+            while (*pOfProduct != '\0') {
+                *pOfProduct = tolower(*pOfProduct);
+                ++pOfProduct;
+            }
+            if (name == product) return true;
+        }
+    }
+    return false;
 }
 // at its PEAK
 void Review_his_order(int ID)
