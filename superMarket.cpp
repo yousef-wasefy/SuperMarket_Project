@@ -57,7 +57,7 @@ const int MAX_PRODUCTS = 3; // 3 products per category
 //All the products are in the array of products
 Product Products[CATEGORY_COUNT][MAX_PRODUCTS] = {
     { // Dairy
-        {"D001", "milk", "Dairy", "2025-03-01", "2025-03-10", 1.50},
+        {"D001", "Milk", "Dairy", "2025-03-01", "2025-03-10", 1.50},
         {"D002", "Cheese", "Dairy", "2025-02-25", "2025-03-20", 4.00},
         {"D003", "Butter", "Dairy", "2025-02-28", "2025-04-15", 2.50}
     },
