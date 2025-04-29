@@ -57,7 +57,7 @@ const int MAX_PRODUCTS = 3; // 3 products per category
 //All the products are in the array of products
 Product Products[CATEGORY_COUNT][MAX_PRODUCTS] = {
     { // Dairy
-        {"D001", "Milk", "Dairy", "2025-03-01", "2025-03-10", 1.50},
+        {"D001", "milk", "Dairy", "2025-03-01", "2025-03-10", 1.50},
         {"D002", "Cheese", "Dairy", "2025-02-25", "2025-03-20", 4.00},
         {"D003", "Butter", "Dairy", "2025-02-28", "2025-04-15", 2.50}
     },
@@ -228,7 +228,11 @@ int menu()
     cin >> choice;
     if (choice != 1 && choice != 2)
     {
-        if (is_logged_in) return choice;
+        if (is_logged_in)
+        {
+            if (!is_admin && choice == 10) return choice = -1; //any value just to go to the default case
+            return choice;
+        }
         else
         {
             cout << "Please log in first" << endl;
@@ -275,7 +279,7 @@ bool log_in(string name, string password, int ID) {
         }
     } return false;
 }
-// <<-- view product menu -->> at its PEAK
+// <<-- view product menu -->>
 void view_products_menu() {
     cout << endl << "\t\t-------------------------------------" << endl;
     cout << "\t\t\tMenu of the products" << endl;
@@ -292,7 +296,7 @@ void view_products_menu() {
         cout << endl;
     }
 }
-// <<-- view_the_information_of_the_item_that_the_customer_has_chosen -->> at its PEAK
+// <<-- view_the_information_of_the_item_that_the_customer_has_chosen -->>
 void view_the_information_of_the_item_that_the_customer_has_chosen() {
     string name;
     bool found = false;
@@ -338,7 +342,7 @@ bool word_check(string name) {
     }
     return false;
 }
-// at its PEAK
+// <<-- Review_his_order -->>
 void Review_his_order(int ID)
 {
     if (customerOrder[currentCustomerIndex].OrderCount == 0)
@@ -361,7 +365,7 @@ void Review_his_order(int ID)
         }
     }
 }
-// at its PEAK
+// <<-- view_total_price -->>
 void view_total_price(int ID)
 {
     if (customerOrder[currentCustomerIndex].OrderCount == 0)
@@ -384,7 +388,7 @@ void view_total_price(int ID)
         }
     }
 }
-// at its PEAK
+// <<-- edit_information -->>
 void edit_information()
 {
     int categoryChoice, productChoice, fieldChoice;
@@ -448,7 +452,7 @@ void edit_information()
 
     }
 }
-// at its PEAK
+// <<-- the_customer_is_able_to_modify_his_order -->>
 void the_customer_is_able_to_modify_his_order(int ID)
 {
     int choice;
@@ -530,7 +534,7 @@ void the_customer_is_able_to_modify_his_order(int ID)
 
     } while (choice != 4);
 }
-// at its PEAK
+// <<-- the_customer_selects_the_goods_he_wants_to_add_to_his_order -->>
 void the_customer_selects_the_goods_he_wants_to_add_to_his_order()
 {
     string name;
@@ -542,33 +546,33 @@ void the_customer_selects_the_goods_he_wants_to_add_to_his_order()
         cout << "Enter the product name: ";
         cin.ignore();
         getline(cin, name);
-        for (int i = 0; i < CATEGORY_COUNT; i++)
-        {
-            found = false;
-            for (int j = 0; j < MAX_PRODUCTS; j++)
+            for (int i = 0; i < CATEGORY_COUNT; i++)
             {
-                for (int n = 0; n < customerOrder[currentCustomerIndex].OrderCount; n++) //عدي على كل الطلبات بتاعته
+                found = false;
+                for (int j = 0; j < MAX_PRODUCTS; j++)
                 {
-                    if (customerOrder[currentCustomerIndex].list_Of_Products[n].Name == name) {
-                        found = true;
-                        cout << "Enter the quantity: ";
-                        cin >> qnt;
-                        customerOrder[currentCustomerIndex].list_Of_Products[n].ProductCount += qnt;
-                        break;
-                    }
+                        for (int n = 0; n < customerOrder[currentCustomerIndex].OrderCount; n++) //عدي على كل الطلبات بتاعته
+                        {
+                            if (customerOrder[currentCustomerIndex].list_Of_Products[n].Name == name) {
+                                found = true;
+                                cout << "Enter the quantity: ";
+                                cin >> qnt;
+                                customerOrder[currentCustomerIndex].list_Of_Products[n].ProductCount += qnt;
+                                break;
+                            }
+                        }
+                        if (found) break;
+                        if (Products[i][j].Name == name) {
+                            found = true;
+                            cout << "Enter the quantity: ";
+                            cin >> Products[i][j].ProductCount;
+                            customerOrder[currentCustomerIndex].list_Of_Products[customerOrder[currentCustomerIndex].OrderCount++] = Products[i][j];
+                            cout << "Product added to your order.\n";
+                            break;
+                        }
                 }
                 if (found) break;
-                if (Products[i][j].Name == name) {
-                    found = true;
-                    cout << "Enter the quantity: ";
-                    cin >> Products[i][j].ProductCount;
-                    customerOrder[currentCustomerIndex].list_Of_Products[customerOrder[currentCustomerIndex].OrderCount++] = Products[i][j];
-                    cout << "Product added to your order.\n";
-                    break;
-                }      
             }
-            if (found) break;
-        }
         if(!found) {
             cout << "Product not found!, please try again" << endl;
             ans = 'y';
@@ -578,7 +582,7 @@ void the_customer_selects_the_goods_he_wants_to_add_to_his_order()
         cin >> ans;
     } while (ans == 'y' || ans == 'Y');
 }
-//<<---log_out--->> at its PEAK
+// <<-- log_out -->>
 void log_out() {
     cout << "========================================" << endl;
     is_logged_in = false;
