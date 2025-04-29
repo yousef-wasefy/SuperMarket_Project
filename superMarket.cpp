@@ -48,6 +48,7 @@ int customerCount = 0;
 bool is_logged_in = false; //to check if he has logged in before any access he can do
 bool is_logged_out = true; //to check if he has logged out before sign up when he logged in
 bool is_admin = false;
+string userRank;
 
 const int CATEGORY_COUNT = 5;// at least 5
 string productCategories[CATEGORY_COUNT] = { "Dairy", "Beverages", "Bakery", "Snacks", "Frozen Food" };
@@ -174,7 +175,6 @@ int main()
                 edit_information();
                 break;
             }
-            else {}
         case 10:
             cout << "========================================" << endl;
             char confirm;
@@ -246,12 +246,8 @@ int menu()
 void sign_up() {
     cout << "========================================" << endl;
     Customer NewCustomer;
-    string rank;
-    cout << "Please choose the rank: admin or customer ?"; cin >> rank;
-    if (rank[0] == 'a' || rank[0] == 'A')
-        is_admin = true;
-    else
-        is_admin = false;
+    cout << "Please choose the rank: admin or customer ?"; cin >> userRank;
+    
     NewCustomer.ID = customerCount + 1;
     cout << "Enter Your Name:\t\t";
     cin >> NewCustomer.Name;
@@ -267,8 +263,12 @@ void sign_up() {
     cout << "#### Sign Up Successfully. Your ID(" << NewCustomer.ID << ") ####" << endl;
     cout << "========================================" << endl;
 }
-//<<--log_in-->> 
+//<<--log_in-->>
 bool log_in(string name, string password, int ID) {
+    if (userRank[0] == 'a' || userRank[0] == 'A')
+        is_admin = true;
+    else
+        is_admin = false;
     for (int i = 0;i <= customerCount;i++) {
         if (customers[i].Name == name && customers[i].Password == password && customers[i].ID == ID)
         {
@@ -305,7 +305,7 @@ void view_the_information_of_the_item_that_the_customer_has_chosen() {
     getline(cin, name);
     for (int cat = 0; cat < CATEGORY_COUNT; cat++) {
         for (int i = 0; i < MAX_PRODUCTS; i++) {
-            if (word_check(name)) {
+            //if (word_check(name)) {
                 cout << "\nProduct [ " << Products[cat][i].Code << " ] Information:\n";
                 cout << "-------------------------\n";
                 cout << "Category      : " << Products[cat][i].Category << endl;
@@ -315,7 +315,7 @@ void view_the_information_of_the_item_that_the_customer_has_chosen() {
                 cout << "-------------------------\n\n";
                 found = true;
                 break;
-            }
+            //}
         }
     }
     if (!found) {
@@ -428,7 +428,8 @@ void edit_information()
         break;
     case 2:
         cout << "Enter new Name: ";
-        cin >> Products[categoryChoice][productChoice].Name;
+        cin.ignore();
+        getline(cin,Products[categoryChoice][productChoice].Name);
         break;
     case 3:
         cout << "Enter new Category: ";
@@ -489,11 +490,12 @@ void the_customer_is_able_to_modify_his_order(int ID)
                 }
                 customerOrder[currentCustomerIndex].OrderCount--;
                 cout << "Item removed successfully!\n";
-            }
-            if (customerOrder[currentCustomerIndex].OrderCount == 0)
-            {
-                cout << "Your order is empty now.\n";
-                return;
+
+                if (customerOrder[currentCustomerIndex].OrderCount == 0)
+                {
+                    cout << "Your order is empty now.\n";
+                    return;
+                }
             }
             else {
                 cout << "Invalid product number.\n";
@@ -551,25 +553,25 @@ void the_customer_selects_the_goods_he_wants_to_add_to_his_order()
                 found = false;
                 for (int j = 0; j < MAX_PRODUCTS; j++)
                 {
-                        for (int n = 0; n < customerOrder[currentCustomerIndex].OrderCount; n++) //عدي على كل الطلبات بتاعته
-                        {
-                            if (customerOrder[currentCustomerIndex].list_Of_Products[n].Name == name) {
-                                found = true;
-                                cout << "Enter the quantity: ";
-                                cin >> qnt;
-                                customerOrder[currentCustomerIndex].list_Of_Products[n].ProductCount += qnt;
-                                break;
-                            }
-                        }
-                        if (found) break;
-                        if (Products[i][j].Name == name) {
+                    for (int n = 0; n < customerOrder[currentCustomerIndex].OrderCount; n++) //عدي على كل الطلبات بتاعته
+                    {
+                        if (customerOrder[currentCustomerIndex].list_Of_Products[n].Name == name) {
                             found = true;
                             cout << "Enter the quantity: ";
-                            cin >> Products[i][j].ProductCount;
-                            customerOrder[currentCustomerIndex].list_Of_Products[customerOrder[currentCustomerIndex].OrderCount++] = Products[i][j];
-                            cout << "Product added to your order.\n";
+                            cin >> qnt;
+                            customerOrder[currentCustomerIndex].list_Of_Products[n].ProductCount += qnt;
                             break;
                         }
+                    }
+                    if (found) break;
+                    if (Products[i][j].Name == name) {
+                        found = true;
+                        cout << "Enter the quantity: ";
+                        cin >> Products[i][j].ProductCount;
+                        customerOrder[currentCustomerIndex].list_Of_Products[customerOrder[currentCustomerIndex].OrderCount++] = Products[i][j];
+                        cout << "Product added to your order.\n";
+                        break;
+                    }
                 }
                 if (found) break;
             }
