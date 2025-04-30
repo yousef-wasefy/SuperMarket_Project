@@ -406,10 +406,17 @@ void edit_products_information()
 {
     int categoryChoice, productChoice, fieldChoice;
 
-    cout << "Select product category to edit:\n";
-    cout << "1. Dairy\n2. Beverages\n3. Bakery\n4. Snacks\n5. Frozen Food\n";
-    cout << "Enter your choice (1-5): ";
-    cin >> categoryChoice;
+    do {
+        cout << "Select product category to edit:\n";
+        cout << "1. Dairy\n2. Beverages\n3. Bakery\n4. Snacks\n5. Frozen Food\n";
+        cout << "Enter your choice (1-5): ";
+        cin >> categoryChoice;
+
+        if (categoryChoice < 1 || categoryChoice > 5) {
+            cout << "Invalid choice. Please select a number from 1 to 5.\n";
+        }
+    } while (categoryChoice < 1 || categoryChoice > 5);
+
     categoryChoice = categoryChoice - 1;
 
     cout << "\nCategory: " << productCategories[categoryChoice] << endl;
@@ -419,19 +426,30 @@ void edit_products_information()
         cout << "Name: " << Products[categoryChoice][j].Name << endl;
     }
 
-    cout << "\n Select product number to edit (1-3): ";
-    cin >> productChoice;
+    do {
+        cout << "\n Select product number to edit (1-3): ";
+        cin >> productChoice;
+        if (productChoice < 1 || productChoice > 3) {
+            cout << "Invalid choice. Please select a product number from 1 to 3.\n";
+        }
+    } while (productChoice < 1 || productChoice > 3);
+
     productChoice = productChoice - 1;
 
-    cout << "\nWhich data do you want to edit?\n";
-    cout << "1. Code\n";
-    cout << "2. Name\n";
-    cout << "3. Category\n";
-    cout << "4. Production Date\n";
-    cout << "5. Expired Date\n";
-    cout << "6. Price\n";
-    cout << "Enter your choice (1-6): ";
-    cin >> fieldChoice;
+    do {
+        cout << "\nWhich data do you want to edit?\n";
+        cout << "1. Code\n";
+        cout << "2. Name\n";
+        cout << "3. Category\n";
+        cout << "4. Production Date\n";
+        cout << "5. Expired Date\n";
+        cout << "6. Price\n";
+        cout << "Enter your choice (1-6): ";
+        cin >> fieldChoice;
+        if (fieldChoice < 1 || fieldChoice > 6) {
+            cout << "Invalid field choice. Please try again.\n";
+        }
+    } while (fieldChoice < 1 || fieldChoice > 6);
 
     switch (fieldChoice)
     {
@@ -442,7 +460,7 @@ void edit_products_information()
     case 2:
         cout << "Enter new Name: ";
         cin.ignore();
-        getline(cin,Products[categoryChoice][productChoice].Name);
+        getline(cin, Products[categoryChoice][productChoice].Name);
         break;
     case 3:
         cout << "Enter new Category: ";
