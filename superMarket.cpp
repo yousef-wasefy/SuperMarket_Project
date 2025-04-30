@@ -64,7 +64,7 @@ Product Products[CATEGORY_COUNT][MAX_PRODUCTS] = {
     },
     { // Beverages
         {"B001", "Orange Juice", "Beverages", "2025-03-05", "2025-06-05", 2.00},
-        {"B002", "Coca-Cola", "Beverages", "2025-02-15", "2025-08-15", 1.25},
+        {"B002", "Coca Cola", "Beverages", "2025-02-15", "2025-08-15", 1.25},
         {"B003", "Green Tea", "Beverages", "2025-01-30", "2025-07-30", 1.75}
     },
     { // Bakery
@@ -79,7 +79,7 @@ Product Products[CATEGORY_COUNT][MAX_PRODUCTS] = {
     },
     { // Frozen Food
         {"F001", "Frozen Pizza", "Frozen Food", "2025-02-10", "2026-02-10", 5.50},
-        {"F002", "Ice Cream (Vanilla)", "Frozen Food", "2025-02-28", "2026-02-28", 3.99},
+        {"F002", "Ice Cream ", "Frozen Food", "2025-02-28", "2026-02-28", 3.99},
         {"F003", "Chicken Nuggets", "Frozen Food", "2025-03-01", "2026-03-01", 6.75}
     }
 };
