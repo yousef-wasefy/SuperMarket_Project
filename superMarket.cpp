@@ -86,7 +86,8 @@ Product Products[CATEGORY_COUNT][MAX_PRODUCTS] = {
 
 void sign_up(); //Sa3eed
 bool log_in(string name, string password, int ID); //Sa3eed
-void edit_information(); //nour
+void edit_customer_information(); //nour
+void edit_products_information(); //nour
 void view_products_menu(); //Doha
 void view_the_information_of_the_item_that_the_customer_has_chosen(); //Doha
 void word_check(string &name); //Doha
@@ -170,12 +171,15 @@ int main()
             view_total_price(targetID);
             break;
         case 9:
+            edit_customer_information();
+            break;
+        case 10:
             if (is_admin)
             {
-                edit_information();
+                edit_products_information();
                 break;
             }
-        case 10:
+        case 11:
             cout << "========================================" << endl;
             char confirm;
             cout << "#### Are You Sure You Want To Log Out?(Y/N) ####" << endl;
@@ -214,15 +218,16 @@ int menu()
     cout << "6. to review your order\n";
     cout << "7. to modify your order\n";
     cout << "8. to view the total price\n";
+    cout << "9. to edit your informations\n";
     if (is_admin)
     {
-        cout << "9. to edit information\n";
-        cout << "10. to log out\n";
+        cout << "10. to edit information of product\n";
+        cout << "11. to log out\n";
         cout << "========================================" << endl;
     }
     else
     {
-        cout << "9. to log out\n";
+        cout << "10. to log out\n";
         cout << "========================================" << endl;
     }
     cin >> choice;
@@ -230,7 +235,7 @@ int menu()
     {
         if (is_logged_in)
         {
-            if (!is_admin && choice == 10) return choice = -1; //any value just to go to the default case
+            if (!is_admin && choice == 11) return choice = -1; //any value just to go to the default case
             return choice;
         }
         else
@@ -306,16 +311,16 @@ void view_the_information_of_the_item_that_the_customer_has_chosen() {
     word_check(name);
     for (int cat = 0; cat < CATEGORY_COUNT; cat++) {
         for (int i = 0; i < MAX_PRODUCTS; i++) {
-                if (Products[cat][i].Name == name) {
-                    cout << "\nProduct [ " << Products[cat][i].Code << " ] Information:\n";
-                    cout << "-------------------------\n";
-                    cout << "Category      : " << Products[cat][i].Category << endl;
-                    cout << "Production    : " << Products[cat][i].ProductionDate << endl;
-                    cout << "Expiration    : " << Products[cat][i].ExpiredDate << endl;
-                    cout << "Price         : " << Products[cat][i].Price << endl;
-                    cout << "-------------------------\n\n";
-                    found = true;
-                    break;
+            if (Products[cat][i].Name == name) {
+                cout << "\nProduct [ " << Products[cat][i].Code << " ] Information:\n";
+                cout << "-------------------------\n";
+                cout << "Category      : " << Products[cat][i].Category << endl;
+                cout << "Production    : " << Products[cat][i].ProductionDate << endl;
+                cout << "Expiration    : " << Products[cat][i].ExpiredDate << endl;
+                cout << "Price         : " << Products[cat][i].Price << endl;
+                cout << "-------------------------\n\n";
+                found = true;
+                break;
             }
         }
     }
@@ -332,7 +337,6 @@ void word_check(string &name) {
         ++pOfUserInput;
     }
 }
-
 // <<-- Review_his_order -->>
 void Review_his_order(int ID)
 {
@@ -380,7 +384,7 @@ void view_total_price(int ID)
     }
 }
 // <<-- edit_information -->>
-void edit_information()
+void edit_products_information()
 {
     int categoryChoice, productChoice, fieldChoice;
 
@@ -574,6 +578,45 @@ void the_customer_selects_the_goods_he_wants_to_add_to_his_order()
         cout << "Want to add another product?(Y/N): ";
         cin >> ans;
     } while (ans == 'y' || ans == 'Y');
+}
+// <<-- edit_customer_information -->>
+void edit_customer_information() {
+    int choice;
+    cout << "Which information would you like to edit?\n";
+    cout << "1. Name\n2. Phone Number\n3. Location\n4.Password\nEnter choice: ";
+    cin >> choice;
+
+    switch (choice) {
+    case 1:
+        cout << "Enter new name: ";
+        cin >> customers[currentCustomerIndex].Name;
+        cout << "Name updated successfully.\n";
+        break;
+    case 2:
+        cout << "Enter new phone number: ";
+        cin >> customers[currentCustomerIndex].PhoneNumber;
+        cout << "Phone number updated successfully.\n";
+        break;
+    case 3:
+        cout << "Enter new location: ";
+        cin >> customers[currentCustomerIndex].Location;
+        cout << "Location updated successfully.\n";
+        break;
+    case 4:
+        cout << "Enter new password: ";
+        cin >> customers[currentCustomerIndex].Password;
+        cout << "Password updated.\n";
+        break;
+    default:
+        cout << "Invalid choice.\n";
+    }
+	cout << "Your information has been updated successfully.\n";
+	cout << "Name: " << customers[currentCustomerIndex].Name << endl;
+	cout << "Phone Number: " << customers[currentCustomerIndex].PhoneNumber << endl;
+	cout << "Location: " << customers[currentCustomerIndex].Location << endl;
+	cout << "Password: " << customers[currentCustomerIndex].Password << endl;
+
+	cout << "========================================" << endl;
 }
 // <<-- log_out -->>
 void log_out() {
