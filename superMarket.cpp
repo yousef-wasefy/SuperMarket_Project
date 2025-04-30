@@ -41,6 +41,7 @@ struct Customer
     string PhoneNumber;
     string Location;
     string Password;
+    string userRank;
 };
 
 Customer customers[max];
@@ -48,7 +49,6 @@ int customerCount = 0;
 bool is_logged_in = false; //to check if he has logged in before any access he can do
 bool is_logged_out = true; //to check if he has logged out before sign up when he logged in
 bool is_admin = false;
-string userRank;
 
 const int CATEGORY_COUNT = 5;// at least 5
 string productCategories[CATEGORY_COUNT] = { "Dairy", "Beverages", "Bakery", "Snacks", "Frozen Food" };
@@ -89,7 +89,7 @@ bool log_in(string name, string password, int ID); //Sa3eed
 void edit_information(); //nour
 void view_products_menu(); //Doha
 void view_the_information_of_the_item_that_the_customer_has_chosen(); //Doha
-bool word_check(string name); //Doha
+void word_check(string &name); //Doha
 void the_customer_selects_the_goods_he_wants_to_add_to_his_order(); //Mostafa
 void Review_his_order(int ID); //Youssef hagras
 void the_customer_is_able_to_modify_his_order(int ID); //Mohra
@@ -226,7 +226,7 @@ int menu()
         cout << "========================================" << endl;
     }
     cin >> choice;
-    if (choice != 1 && choice != 2)
+    if (choice != 1 && choice != 2 && choice != 3 && choice != 4)
     {
         if (is_logged_in)
         {
@@ -246,7 +246,7 @@ int menu()
 void sign_up() {
     cout << "========================================" << endl;
     Customer NewCustomer;
-    cout << "Please choose the rank: admin or customer ?"; cin >> userRank;
+    cout << "Please choose the rank: admin or customer ?"; cin >> NewCustomer.userRank;
     
     NewCustomer.ID = customerCount + 1;
     cout << "Enter Your Name:\t\t";
@@ -265,16 +265,16 @@ void sign_up() {
 }
 //<<--log_in-->>
 bool log_in(string name, string password, int ID) {
-    if (userRank[0] == 'a' || userRank[0] == 'A')
-        is_admin = true;
-    else
-        is_admin = false;
     for (int i = 0;i <= customerCount;i++) {
         if (customers[i].Name == name && customers[i].Password == password && customers[i].ID == ID)
         {
             currentCustomerIndex = i;
             is_logged_in = true;
             is_logged_out = false;
+            if (customers[currentCustomerIndex].userRank[0] == 'a' || customers[currentCustomerIndex].userRank[0] == 'A')
+                is_admin = true;
+            else
+                is_admin = false;
             return true;
         }
     } return false;
@@ -303,19 +303,20 @@ void view_the_information_of_the_item_that_the_customer_has_chosen() {
     cout << "Enter the product name: ";
     cin.ignore();
     getline(cin, name);
+    word_check(name);
     for (int cat = 0; cat < CATEGORY_COUNT; cat++) {
         for (int i = 0; i < MAX_PRODUCTS; i++) {
-            //if (word_check(name)) {
-                cout << "\nProduct [ " << Products[cat][i].Code << " ] Information:\n";
-                cout << "-------------------------\n";
-                cout << "Category      : " << Products[cat][i].Category << endl;
-                cout << "Production    : " << Products[cat][i].ProductionDate << endl;
-                cout << "Expiration    : " << Products[cat][i].ExpiredDate << endl;
-                cout << "Price         : " << Products[cat][i].Price << endl;
-                cout << "-------------------------\n\n";
-                found = true;
-                break;
-            //}
+                if (Products[cat][i].Name == name) {
+                    cout << "\nProduct [ " << Products[cat][i].Code << " ] Information:\n";
+                    cout << "-------------------------\n";
+                    cout << "Category      : " << Products[cat][i].Category << endl;
+                    cout << "Production    : " << Products[cat][i].ProductionDate << endl;
+                    cout << "Expiration    : " << Products[cat][i].ExpiredDate << endl;
+                    cout << "Price         : " << Products[cat][i].Price << endl;
+                    cout << "-------------------------\n\n";
+                    found = true;
+                    break;
+            }
         }
     }
     if (!found) {
@@ -323,25 +324,15 @@ void view_the_information_of_the_item_that_the_customer_has_chosen() {
     }
 }
 // <<-- word check -->>
-bool word_check(string name) {
-    char* pOfUserInput = &name[0];
+void word_check(string &name) {
+    char* pOfUserInput = &name[1];
+    name[0] = toupper(name[0]);
     while (*pOfUserInput != '\0') {
         *pOfUserInput = tolower(*pOfUserInput);
         ++pOfUserInput;
     }
-    for (int cat = 0; cat < CATEGORY_COUNT; cat++) {
-        for (int i = 0; i < MAX_PRODUCTS; i++) {
-            string product = Products[cat][i].Name;
-            char* pOfProduct = &product[0];
-            while (*pOfProduct != '\0') {
-                *pOfProduct = tolower(*pOfProduct);
-                ++pOfProduct;
-            }
-            if (name == product) return true;
-        }
-    }
-    return false;
 }
+
 // <<-- Review_his_order -->>
 void Review_his_order(int ID)
 {
@@ -589,6 +580,7 @@ void log_out() {
     cout << "========================================" << endl;
     is_logged_in = false;
     is_logged_out = true;
+    is_admin = false;
     currentCustomerIndex = -1;
     cout << "#### You Have Been Succsessfully Logged Out. ####" << endl;
     cout << "#### Thank You For Using Our Online Supermarket!" << endl;
