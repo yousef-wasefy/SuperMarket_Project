@@ -323,6 +323,7 @@ void view_the_information_of_the_item_that_the_customer_has_chosen() {
                 break;
             }
         }
+        if(found) break;
     }
     if (!found) {
         cout << "\nProduct not found! Please check the code and try again.\n\n";
@@ -332,7 +333,24 @@ void view_the_information_of_the_item_that_the_customer_has_chosen() {
 void word_check(string &name) {
     char* pOfUserInput = &name[1];
     name[0] = toupper(name[0]);
-    while (*pOfUserInput != '\0') {
+    for (int i = 1; i < name.length(); i++)
+    {
+        if (i == name.length() - 1) // not to make name[i + 1] -->> will crash
+        {
+            *pOfUserInput = tolower(*pOfUserInput);
+            return;
+        }
+        if (name[i] == ' ' && name[i + 1] != ' ') // handle first letter of the coming word
+        {
+            ++pOfUserInput;
+            *pOfUserInput = toupper(*pOfUserInput);
+            continue;
+        }
+        if (name[i] != ' ' && name[i - 1] == ' ')
+        {
+            ++pOfUserInput;
+            continue; // skip first letter of the coming word
+        }
         *pOfUserInput = tolower(*pOfUserInput);
         ++pOfUserInput;
     }
@@ -543,6 +561,7 @@ void the_customer_selects_the_goods_he_wants_to_add_to_his_order()
         cout << "Enter the product name: ";
         cin.ignore();
         getline(cin, name);
+		word_check(name);
             for (int i = 0; i < CATEGORY_COUNT; i++)
             {
                 found = false;
