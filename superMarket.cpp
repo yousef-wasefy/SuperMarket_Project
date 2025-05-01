@@ -622,9 +622,17 @@ void the_customer_selects_the_goods_he_wants_to_add_to_his_order()
 // <<-- edit_customer_information -->>
 void edit_customer_information() {
     int choice;
-    cout << "Which information would you like to edit?\n";
-    cout << "1. Name\n2. Phone Number\n3. Location\n4.Password\nEnter choice: ";
-    cin >> choice;
+
+    do {
+        cout << "Which information would you like to edit?\n";
+        cout << "1. Name\n2. Phone Number\n3. Location\n4. Password\nEnter choice: ";
+        cin >> choice;
+
+        if (choice < 1 || choice > 4) {
+            cout << "Invalid choice. Please enter a number between 1 and 4.\n";
+        }
+    } while (choice < 1 || choice > 4);
+
 
     switch (choice) {
     case 1:
