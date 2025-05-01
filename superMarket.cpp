@@ -94,13 +94,13 @@ void the_customer_is_able_to_modify_his_order(int ID); //Mohra
 void view_total_price(int ID); //Youssef Ahmed
 void log_out(); //Sa3eed
 int menu();
-void save_customers_to_file();
-void load_customers_from_file();
+//void save_customers_to_file();
+//void load_customers_from_file();
 
 int main()
 {
     //pull first !!!!
-    load_customers_from_file();
+    //load_customers_from_file();
     int choice;
     string name, password;
     int targetID = 0;
@@ -200,7 +200,7 @@ int main()
         cout << "\nAnother operation? (Y/N)";
         cin >> answer;
     } while (answer == 'Y' || answer == 'y');
-    save_customers_to_file();
+    //save_customers_to_file();
     return 0; //pull first !!!!
 }
 
@@ -579,7 +579,7 @@ void the_customer_selects_the_goods_he_wants_to_add_to_his_order()
         cout << "Enter the product name: ";
         cin.ignore();
         getline(cin, name);
-		word_check(name);
+        word_check(name);
             for (int i = 0; i < CATEGORY_COUNT; i++)
             {
                 found = false;
@@ -608,9 +608,12 @@ void the_customer_selects_the_goods_he_wants_to_add_to_his_order()
                 if (found) break;
             }
         if(!found) {
-            cout << "Product not found!, please try again" << endl;
-            ans = 'y';
-            continue;
+            cout << "Product not found!, would you like to try again? (Y/N): " << endl;
+            cin >> ans;
+			if (ans == 'y' || ans == 'Y')
+				continue;
+			else
+				return;
         }
         cout << "Want to add another product?(Y/N): ";
         cin >> ans;
@@ -668,32 +671,32 @@ void log_out() {
     cout << "========================================" << endl;
 }
 
-void save_customers_to_file() {
-    ofstream outFile("customers.txt");
-    for (int i = 0; i < customerCount; i++) {
-        outFile << customers[i].ID << ','
-            << customers[i].Name << ','
-            << customers[i].PhoneNumber << ','
-            << customers[i].Location << ','
-            << customers[i].Password << ','
-            << customers[i].userRank << '\n';
-    }
-    outFile.close();
-}
+// void save_customers_to_file() {
+//     ofstream outFile("customers.txt");
+//     for (int i = 0; i < customerCount; i++) {
+//         outFile << customers[i].ID << ','
+//             << customers[i].Name << ','
+//             << customers[i].PhoneNumber << ','
+//             << customers[i].Location << ','
+//             << customers[i].Password << ','
+//             << customers[i].userRank << '\n';
+//     }
+//     outFile.close();
+// }
 
-void load_customers_from_file() {
-    ifstream inFile("customers.txt");
-    customerCount = 0;
-    string line;
-    while (getline(inFile, line)) {
-        getline(inFile, customers[customerCount].Name, ',');
-        getline(inFile, customers[customerCount].PhoneNumber, ',');
-        getline(inFile, customers[customerCount].Location, ',');
-        getline(inFile, customers[customerCount].Password, ',');
-        getline(inFile, customers[customerCount].userRank);
+// void load_customers_from_file() {
+//     ifstream inFile("customers.txt");
+//     customerCount = 0;
+//     string line;
+//     while (getline(inFile, line)) {
+//         getline(inFile, customers[customerCount].Name, ',');
+//         getline(inFile, customers[customerCount].PhoneNumber, ',');
+//         getline(inFile, customers[customerCount].Location, ',');
+//         getline(inFile, customers[customerCount].Password, ',');
+//         getline(inFile, customers[customerCount].userRank);
 
-        customers[customerCount].ID = customerCount + 1;
-        customerCount++;
-    }
-    inFile.close();
-}
+//         customers[customerCount].ID = customerCount + 1;
+//         customerCount++;
+//     }
+//     inFile.close();
+// }
