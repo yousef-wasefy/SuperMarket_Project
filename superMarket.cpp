@@ -11,9 +11,6 @@ using namespace std;
 int currentCustomerIndex = -1;//to save the index
 char answer;//to use it in log out 
 
-//ofstream outFile("superMarket.txt", ios::app); // file to save the data
-//ifstream inFile("superMarket.txt"); // file to read the data
-
 struct Product
 {
     string Code;
@@ -97,10 +94,13 @@ void the_customer_is_able_to_modify_his_order(int ID); //Mohra
 void view_total_price(int ID); //Youssef Ahmed
 void log_out(); //Sa3eed
 int menu();
+void save_customers_to_file();
+void load_customers_from_file();
 
 int main()
 {
     //pull first !!!!
+    load_customers_from_file();
     int choice;
     string name, password;
     int targetID = 0;
@@ -200,7 +200,7 @@ int main()
         cout << "\nAnother operation? (Y/N)";
         cin >> answer;
     } while (answer == 'Y' || answer == 'y');
-
+    save_customers_to_file();
     return 0; //pull first !!!!
 }
 
@@ -329,7 +329,7 @@ void view_the_information_of_the_item_that_the_customer_has_chosen() {
         cout << "\nProduct not found! Please check the code and try again.\n\n";
     }
 }
-// <<-- word check -->>
+// <<-- word check -->> //DONE
 void word_check(string &name) {
     char* pOfUserInput = &name[1];
     name[0] = toupper(name[0]);
@@ -666,4 +666,34 @@ void log_out() {
     cout << "#### Thank You For Using Our Online Supermarket!" << endl;
     answer = 'y';
     cout << "========================================" << endl;
+}
+
+void save_customers_to_file() {
+    ofstream outFile("customers.txt");
+    for (int i = 0; i < customerCount; i++) {
+        outFile << customers[i].ID << ','
+            << customers[i].Name << ','
+            << customers[i].PhoneNumber << ','
+            << customers[i].Location << ','
+            << customers[i].Password << ','
+            << customers[i].userRank << '\n';
+    }
+    outFile.close();
+}
+
+void load_customers_from_file() {
+    ifstream inFile("customers.txt");
+    customerCount = 0;
+    string line;
+    while (getline(inFile, line)) {
+        getline(inFile, customers[customerCount].Name, ',');
+        getline(inFile, customers[customerCount].PhoneNumber, ',');
+        getline(inFile, customers[customerCount].Location, ',');
+        getline(inFile, customers[customerCount].Password, ',');
+        getline(inFile, customers[customerCount].userRank);
+
+        customers[customerCount].ID = customerCount + 1;
+        customerCount++;
+    }
+    inFile.close();
 }
