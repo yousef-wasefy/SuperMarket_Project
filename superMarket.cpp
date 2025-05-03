@@ -7,7 +7,7 @@
 #include<fstream>
 
 using namespace std;
-#define max 50 
+#define MAX 50 
 int currentCustomerIndex = -1;//to save the index
 char answer;//to use it in log out 
 
@@ -22,14 +22,14 @@ struct Product
     int ProductCount = 0; //the quantity of one order (not relatable to the product but to the order)
 };
 
-const int NUMBER_OF_PRODUCTS = max;
+const int NUMBER_OF_PRODUCTS = MAX;
 struct Order
 {
     int CustomerID = 0;
     Product list_Of_Products[NUMBER_OF_PRODUCTS]; // that the customer will take
     int OrderCount = 0;  //(عدد المنتجات في الطلب الفعلي (ككل
     double TotalPrice = 0;
-} customerOrder[max]; //every client has only one order
+} customerOrder[MAX]; //every client has only one order
 
 struct Customer
 {
@@ -41,7 +41,7 @@ struct Customer
     string userRank;
 };
 
-Customer customers[max];
+Customer customers[MAX];
 int customerCount = 0;
 bool is_logged_in = false; //to check if he has logged in before any access he can do
 bool is_logged_out = true; //to check if he has logged out before sign up when he logged in
