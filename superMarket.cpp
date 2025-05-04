@@ -259,6 +259,15 @@ void sign_up() {
     cin >> NewCustomer.Location;
     cout << "Enter Your Password:\t\t";
     cin >> NewCustomer.Password;
+    for (int i = 0; i < customerCount; i++)
+    {
+        if (NewCustomer.Name == customers[i].Name && NewCustomer.Password == customers[i].Password)
+        {
+            cout << "This account is already existed" << endl;
+            sign_up();
+            return;
+        }
+    }   
     customers[customerCount] = NewCustomer;
     customerOrder[customerCount].CustomerID = customers[customerCount].ID;
     customerCount++;
@@ -273,7 +282,6 @@ bool log_in(string name, string password, int ID) {
         {
             currentCustomerIndex = i;
             is_logged_in = true;
-            is_logged_out = false;
             if (customers[currentCustomerIndex].userRank[0] == 'a' || customers[currentCustomerIndex].userRank[0] == 'A')
                 is_admin = true;
             else
