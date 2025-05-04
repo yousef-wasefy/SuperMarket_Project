@@ -7,7 +7,7 @@
 #include<fstream>
 
 using namespace std;
-#define max 50 
+#define MAX 50 
 int currentCustomerIndex = -1;//to save the index
 char answer;//to use it in log out 
 
@@ -22,14 +22,14 @@ struct Product
     int ProductCount = 0; //the quantity of one order (not relatable to the product but to the order)
 };
 
-const int NUMBER_OF_PRODUCTS = max;
+const int NUMBER_OF_PRODUCTS = MAX;
 struct Order
 {
     int CustomerID = 0;
     Product list_Of_Products[NUMBER_OF_PRODUCTS]; // that the customer will take
     int OrderCount = 0;  //(عدد المنتجات في الطلب الفعلي (ككل
     double TotalPrice = 0;
-} customerOrder[max]; //every client has only one order
+} customerOrder[MAX]; //every client has only one order
 
 struct Customer
 {
@@ -40,8 +40,8 @@ struct Customer
     string Password;
     string userRank;
 };
-
-Customer customers[max];
+Customer NewCustomer;
+Customer customers[MAX];
 int customerCount = 0;
 bool is_logged_in = false; //to check if he has logged in before any access he can do
 bool is_logged_out = true; //to check if he has logged out before sign up when he logged in
@@ -87,20 +87,21 @@ void edit_customer_information(); //nour
 void edit_products_information(); //nour
 void view_products_menu(); //Doha
 void view_the_information_of_the_item_that_the_customer_has_chosen(); //Doha
-void word_check(string &name); //Doha
+void word_check(string& name); //Doha
 void the_customer_selects_the_goods_he_wants_to_add_to_his_order(); //Mostafa
 void Review_his_order(int ID); //Youssef hagras
 void the_customer_is_able_to_modify_his_order(int ID); //Mohra
 void view_total_price(int ID); //Youssef Ahmed
 void log_out(); //Sa3eed
 int menu();
-//void save_customers_to_file();
-//void load_customers_from_file();
+void save_customers_to_file();
+void load_customers_from_file();
+void edit_customers_to_file();
 
 int main()
 {
     //pull first !!!!
-    //load_customers_from_file();
+    load_customers_from_file();
     int choice;
     string name, password;
     int targetID = 0;
@@ -189,7 +190,9 @@ int main()
                 continue;
             }
             else {
-                cout << "#### Log Out Cancelled.\n";
+                cout << "========================================" << endl;
+                cout << "#### Log Out Cancelled. ####\n";
+                cout << "========================================" << endl;
             }
             break;
         default:
@@ -200,7 +203,6 @@ int main()
         cout << "\nAnother operation? (Y/N)";
         cin >> answer;
     } while (answer == 'Y' || answer == 'y');
-    //save_customers_to_file();
     return 0; //pull first !!!!
 }
 
@@ -250,9 +252,8 @@ int menu()
 // <<--sign_up-->>
 void sign_up() {
     cout << "========================================" << endl;
-    Customer NewCustomer;
-    cout << "Please choose the rank: admin or customer ?"; cin >> NewCustomer.userRank;
-    
+    cout << "Please choose the rank: admin or customer ?\t";
+    cin >> NewCustomer.userRank;
     NewCustomer.ID = customerCount + 1;
     cout << "Enter Your Name:\t\t";
     cin >> NewCustomer.Name;
@@ -265,12 +266,13 @@ void sign_up() {
     customers[customerCount] = NewCustomer;
     customerOrder[customerCount].CustomerID = customers[customerCount].ID;
     customerCount++;
+    save_customers_to_file();
     cout << "#### Sign Up Successfully. Your ID(" << NewCustomer.ID << ") ####" << endl;
     cout << "========================================" << endl;
 }
 //<<--log_in-->>
 bool log_in(string name, string password, int ID) {
-    for (int i = 0;i <= customerCount;i++) {
+    for (int i = 0;i < customerCount;i++) {
         if (customers[i].Name == name && customers[i].Password == password && customers[i].ID == ID)
         {
             currentCustomerIndex = i;
@@ -323,14 +325,14 @@ void view_the_information_of_the_item_that_the_customer_has_chosen() {
                 break;
             }
         }
-        if(found) break;
+        if (found) break;
     }
     if (!found) {
         cout << "\nProduct not found! Please check the code and try again.\n\n";
     }
 }
 // <<-- word check -->> //DONE
-void word_check(string &name) {
+void word_check(string& name) {
     char* pOfUserInput = &name[1];
     name[0] = toupper(name[0]);
     for (int i = 1; i < name.length(); i++)
@@ -372,8 +374,8 @@ void Review_his_order(int ID)
         {
             for (int j = 0; j < customerOrder[i].OrderCount; j++) {
                 cout << j + 1 << ". " << customerOrder[i].list_Of_Products[j].Name
-                << " (Quantity: " << customerOrder[i].list_Of_Products[j].ProductCount
-                << ", Price: $" << customerOrder[i].list_Of_Products[j].Price * customerOrder[i].list_Of_Products[j].ProductCount << ")\n";
+                    << " (Quantity: " << customerOrder[i].list_Of_Products[j].ProductCount
+                    << ", Price: $" << customerOrder[i].list_Of_Products[j].Price * customerOrder[i].list_Of_Products[j].ProductCount << ")\n";
             }
         }
     }
@@ -607,14 +609,14 @@ void the_customer_selects_the_goods_he_wants_to_add_to_his_order()
                 }
                 if (found) break;
             }
-            if(!found) {
-                cout << "Product not found!, would you like to try again? (Y/N): " << endl;
-                cin >> ans;
-                if (ans == 'y' || ans == 'Y')
-                    continue;
-                else
-                    return;
-            }
+        if(!found) {
+            cout << "Product not found!, would you like to try again? (Y/N): " << endl;
+            cin >> ans;
+			if (ans == 'y' || ans == 'Y')
+				continue;
+			else
+				return;
+        }
         cout << "Want to add another product?(Y/N): ";
         cin >> ans;
     } while (ans == 'y' || ans == 'Y');
@@ -622,9 +624,17 @@ void the_customer_selects_the_goods_he_wants_to_add_to_his_order()
 // <<-- edit_customer_information -->>
 void edit_customer_information() {
     int choice;
-    cout << "Which information would you like to edit?\n";
-    cout << "1. Name\n2. Phone Number\n3. Location\n4.Password\nEnter choice: ";
-    cin >> choice;
+
+    do {
+        cout << "Which information would you like to edit?\n";
+        cout << "1. Name\n2. Phone Number\n3. Location\n4. Password\nEnter choice: ";
+        cin >> choice;
+
+        if (choice < 1 || choice > 4) {
+            cout << "Invalid choice. Please enter a number between 1 and 4.\n";
+        }
+    } while (choice < 1 || choice > 4);
+
 
     switch (choice) {
     case 1:
@@ -650,13 +660,14 @@ void edit_customer_information() {
     default:
         cout << "Invalid choice.\n";
     }
-	cout << "Your information has been updated successfully.\n";
-	cout << "Name: " << customers[currentCustomerIndex].Name << endl;
-	cout << "Phone Number: " << customers[currentCustomerIndex].PhoneNumber << endl;
-	cout << "Location: " << customers[currentCustomerIndex].Location << endl;
-	cout << "Password: " << customers[currentCustomerIndex].Password << endl;
+    edit_customers_to_file();
+    cout << "Your information has been updated successfully.\n";
+    cout << "Name: " << customers[currentCustomerIndex].Name << endl;
+    cout << "Phone Number: " << customers[currentCustomerIndex].PhoneNumber << endl;
+    cout << "Location: " << customers[currentCustomerIndex].Location << endl;
+    cout << "Password: " << customers[currentCustomerIndex].Password << endl;
 
-	cout << "========================================" << endl;
+    cout << "========================================" << endl;
 }
 // <<-- log_out -->>
 void log_out() {
@@ -671,32 +682,21 @@ void log_out() {
     cout << "========================================" << endl;
 }
 
-// void save_customers_to_file() {
-//     ofstream outFile("customers.txt");
-//     for (int i = 0; i < customerCount; i++) {
-//         outFile << customers[i].ID << ','
-//             << customers[i].Name << ','
-//             << customers[i].PhoneNumber << ','
-//             << customers[i].Location << ','
-//             << customers[i].Password << ','
-//             << customers[i].userRank << '\n';
-//     }
-//     outFile.close();
-// }
-
-// void load_customers_from_file() {
-//     ifstream inFile("customers.txt");
-//     customerCount = 0;
-//     string line;
-//     while (getline(inFile, line)) {
-//         getline(inFile, customers[customerCount].Name, ',');
-//         getline(inFile, customers[customerCount].PhoneNumber, ',');
-//         getline(inFile, customers[customerCount].Location, ',');
-//         getline(inFile, customers[customerCount].Password, ',');
-//         getline(inFile, customers[customerCount].userRank);
-
-//         customers[customerCount].ID = customerCount + 1;
-//         customerCount++;
-//     }
-//     inFile.close();
-// }
+void save_customers_to_file() {
+    ofstream outFile("customersINFOR.txt", ios::app);
+    outFile << NewCustomer.Name << "     " << NewCustomer.Password << "     " << NewCustomer.ID << "     " << NewCustomer.PhoneNumber << "     " << NewCustomer.Location << "     " << NewCustomer.userRank << endl;
+    outFile.close();
+}
+void load_customers_from_file() {
+    customerCount = 0;
+    ifstream inFile("customersINFOR.txt");
+    while (inFile >> customers[customerCount].Name >> customers[customerCount].Password >> customers[customerCount].ID >> customers[customerCount].PhoneNumber >> customers[customerCount].Location >> customers[customerCount].userRank)
+        customerCount++;
+    inFile.close();
+}
+void edit_customers_to_file() {
+    ofstream editFile("customersINFOR.txt");
+    for (int i = 0;i < customerCount;i++)
+        editFile << customers[customerCount].Name << "     " << customers[customerCount].Password << "     " << customers[customerCount].ID << "     " << customers[customerCount].PhoneNumber << "     " << customers[customerCount].Location << "     " << customers[customerCount].userRank << endl;
+    editFile.close();
+}
