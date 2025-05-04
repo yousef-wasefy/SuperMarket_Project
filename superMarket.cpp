@@ -44,7 +44,6 @@ Customer NewCustomer;
 Customer customers[MAX];
 int customerCount = 0;
 bool is_logged_in = false; //to check if he has logged in before any access he can do
-bool is_logged_out = true; //to check if he has logged out before sign up when he logged in
 bool is_admin = false;
 
 const int CATEGORY_COUNT = 5;// at least 5
@@ -87,16 +86,16 @@ void edit_customer_information(); //nour
 void edit_products_information(); //nour
 void view_products_menu(); //Doha
 void view_the_information_of_the_item_that_the_customer_has_chosen(); //Doha
-void word_check(string& name); //Doha
+void word_check(string& name); //Youssef Ahmed
 void the_customer_selects_the_goods_he_wants_to_add_to_his_order(); //Mostafa
 void Review_his_order(int ID); //Youssef hagras
 void the_customer_is_able_to_modify_his_order(int ID); //Mohra
 void view_total_price(int ID); //Youssef Ahmed
 void log_out(); //Sa3eed
 int menu();
-void save_customers_to_file();
-void load_customers_from_file();
-void edit_customers_to_file();
+void save_customers_to_file(); //Sa3eed
+void load_customers_from_file(); //Sa3eed
+void edit_customers_to_file(); //Sa3eed
 
 int main()
 {
@@ -105,53 +104,34 @@ int main()
     int choice;
     string name, password;
     int targetID = 0;
-
     do
     {
         choice = menu();
         switch (choice) //add your case.
         {
         case 1:
-            if (is_logged_out) {
-                sign_up();
-            }
-            else {
-                cout << "========================================" << endl;
-                cout << "#### You Must Logged Out First. ####" << endl;
-                answer = 'y';
-                cout << "========================================" << endl;
-                continue;
-            }
+            sign_up();
             break;
         case 2:
-            if (is_logged_out) {
-                cout << "========================================" << endl;
-                cout << "Enter Your Name:\t\t";
-                cin >> name;
-                cout << "Enter Your Password:\t\t";
-                cin >> password;
-                cout << "Enter your ID:\t\t";
-                cin >> targetID;
-                if (log_in(name, password, targetID))
-                {
-                    cout << "#### Log In Successfully. ####" << endl;
-                }
-                else
-                {
-                    cout << "#### Your Name Or Password Or ID Is Incorrect. Please Try Again ####" << endl;
-                    cout << "Sign up if you don't have an account" << endl;
-                    answer = 'y';
-                    continue;
-                }
-                cout << "========================================" << endl;
+            cout << "========================================" << endl;
+            cout << "Enter Your Name:\t\t";
+            cin >> name;
+            cout << "Enter Your Password:\t\t";
+            cin >> password;
+            cout << "Enter your ID:\t\t";
+            cin >> targetID;
+            if (log_in(name, password, targetID))
+            {
+                cout << "#### Log In Successfully. ####" << endl;
             }
-            else {
-                cout << "========================================" << endl;
-                cout << "#### You Are Already Logged In! You Must Logged Out First. ####" << endl;
+            else
+            {
+                cout << "#### Your Name Or Password Or ID Is Incorrect. Please Try Again ####" << endl;
+                cout << "Sign up if you don't have an account" << endl;
                 answer = 'y';
-                cout << "========================================" << endl;
                 continue;
             }
+            cout << "========================================" << endl;
             break;
         case 3:
             view_products_menu();
@@ -212,27 +192,43 @@ int menu()
     cout << "\t\tWelcome to Super Market Online Shopping" << endl;
     cout << "\t\t***************************************" << endl;
     cout << "========================================" << endl;
-    cout << "Press\n1. to sign up\n";
-    cout << "2. to log in\n";
-    cout << "3. to view products menu\n";
-    cout << "4. to view the information of the item.\n";
-    cout << "5. to add to the order\n";
-    cout << "6. to review your order\n";
-    cout << "7. to modify your order\n";
-    cout << "8. to view the total price\n";
-    cout << "9. to edit your informations\n";
-    if (is_admin)
-    {
-        cout << "10. to edit information of product\n";
-        cout << "11. to log out\n";
-        cout << "========================================" << endl;
-    }
+    cout << "Press\n";
+
+	if (!is_logged_in)
+	{
+        cout << "1. to sign up\n";
+        cout << "2. to log in\n";
+        cout << "3. to view products menu\n";
+        cout << "4. to view the information of the item.\n";
+	}
+
     else
     {
-        cout << "10. to log out\n";
-        cout << "========================================" << endl;
+        cout << "3. to view products menu\n";
+        cout << "4. to view the information of the item.\n";
+        cout << "5. to add to the order\n";
+        cout << "6. to review your order\n";
+        cout << "7. to modify your order\n";
+        cout << "8. to view the total price\n";
+        cout << "9. to edit your informations\n";
+        if (is_admin)
+        {
+            cout << "10. to edit information of product\n";
+            cout << "11. to log out\n";
+            cout << "========================================" << endl;
+        }
+        else
+        {
+            cout << "10. to log out\n";
+            cout << "========================================" << endl;
+        }
     }
     cin >> choice;
+    if (is_logged_in && (choice == 1 || choice == 2))
+    {
+        cout << "Invalid choice!, Please try again\n";
+        choice = menu();
+    }
     if (choice != 1 && choice != 2 && choice != 3 && choice != 4)
     {
         if (is_logged_in)
@@ -242,8 +238,8 @@ int menu()
         }
         else
         {
-            cout << "Please log in first" << endl;
-            return choice = 2;
+			cout << "Invalid choice!, Please try again\n";
+			choice = menu();
         }
     }
     return choice;
@@ -673,7 +669,6 @@ void edit_customer_information() {
 void log_out() {
     cout << "========================================" << endl;
     is_logged_in = false;
-    is_logged_out = true;
     is_admin = false;
     currentCustomerIndex = -1;
     cout << "#### You Have Been Succsessfully Logged Out. ####" << endl;
