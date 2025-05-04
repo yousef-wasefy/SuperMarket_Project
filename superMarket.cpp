@@ -607,14 +607,14 @@ void the_customer_selects_the_goods_he_wants_to_add_to_his_order()
                 }
                 if (found) break;
             }
-        if(!found) {
-            cout << "Product not found!, would you like to try again? (Y/N): " << endl;
-            cin >> ans;
-			if (ans == 'y' || ans == 'Y')
-				continue;
-			else
-				return;
-        }
+            if(!found) {
+                cout << "Product not found!, would you like to try again? (Y/N): " << endl;
+                cin >> ans;
+                if (ans == 'y' || ans == 'Y')
+                    continue;
+                else
+                    return;
+            }
         cout << "Want to add another product?(Y/N): ";
         cin >> ans;
     } while (ans == 'y' || ans == 'Y');
