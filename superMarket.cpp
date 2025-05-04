@@ -96,6 +96,7 @@ void log_out(); //Sa3eed
 int menu();
 void save_customers_to_file();
 void load_customers_from_file();
+void edit_customers_to_file();
 
 int main()
 {
@@ -251,8 +252,8 @@ int menu()
 // <<--sign_up-->>
 void sign_up() {
     cout << "========================================" << endl;
-    cout << "Please choose the rank: admin or customer ?"; cin >> NewCustomer.userRank;
-
+    cout << "Please choose the rank: admin or customer ?\t";
+    cin >> NewCustomer.userRank;
     NewCustomer.ID = customerCount + 1;
     cout << "Enter Your Name:\t\t";
     cin >> NewCustomer.Name;
@@ -271,7 +272,7 @@ void sign_up() {
 }
 //<<--log_in-->>
 bool log_in(string name, string password, int ID) {
-    for (int i = 0;i <= customerCount;i++) {
+    for (int i = 0;i < customerCount;i++) {
         if (customers[i].Name == name && customers[i].Password == password && customers[i].ID == ID)
         {
             currentCustomerIndex = i;
@@ -659,6 +660,7 @@ void edit_customer_information() {
     default:
         cout << "Invalid choice.\n";
     }
+    edit_customers_to_file();
     cout << "Your information has been updated successfully.\n";
     cout << "Name: " << customers[currentCustomerIndex].Name << endl;
     cout << "Phone Number: " << customers[currentCustomerIndex].PhoneNumber << endl;
@@ -681,14 +683,20 @@ void log_out() {
 }
 
 void save_customers_to_file() {
-    ofstream outFile("customersINFORNATION.txt", ios::app);
+    ofstream outFile("customersINFOR.txt", ios::app);
     outFile << NewCustomer.Name << "     " << NewCustomer.Password << "     " << NewCustomer.ID << "     " << NewCustomer.PhoneNumber << "     " << NewCustomer.Location << "     " << NewCustomer.userRank << endl;
     outFile.close();
 }
 void load_customers_from_file() {
     customerCount = 0;
-    ifstream inFile("customersINFORMATION.txt");
+    ifstream inFile("customersINFOR.txt");
     while (inFile >> customers[customerCount].Name >> customers[customerCount].Password >> customers[customerCount].ID >> customers[customerCount].PhoneNumber >> customers[customerCount].Location >> customers[customerCount].userRank)
         customerCount++;
     inFile.close();
+}
+void edit_customers_to_file() {
+    ofstream editFile("customersINFOR.txt");
+    for (int i = 0;i < customerCount;i++)
+        editFile << customers[customerCount].Name << "     " << customers[customerCount].Password << "     " << customers[customerCount].ID << "     " << customers[customerCount].PhoneNumber << "     " << customers[customerCount].Location << "     " << customers[customerCount].userRank << endl;
+    editFile.close();
 }
