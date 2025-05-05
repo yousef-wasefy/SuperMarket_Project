@@ -5,9 +5,6 @@
 using namespace std;
 #define MAX 50 
 
-
-int currentCustomerIndex = -1;//to save the index
-
 struct Product
 {
     string Code;
@@ -39,6 +36,8 @@ struct Customer
 };
 Customer NewCustomer;
 Customer customers[MAX];
+
+int currentCustomerIndex = -1;//to save the index
 int customerCount;
 bool is_logged_in = false; //to check if he has logged in before any access he can do
 bool is_admin = false;
@@ -333,7 +332,7 @@ void view_the_information_of_the_item_that_the_customer_has_chosen() {
         cout << "\nProduct not found! Please check the code and try again.\n\n";
     }
 }
-// <<-- word check -->> //DONE
+// <<-- word check -->>
 void word_check(string& name) {
     char* pOfUserInput = &name[1];
     name[0] = toupper(name[0]);
