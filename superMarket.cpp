@@ -98,8 +98,8 @@ int main()
 {
     //pull first !!!!
     load_customers_from_file();
-    char answer = ' ';
     int choice;
+    char answer = ' ';
     string name, password;
     int targetID = 0;
     do
@@ -166,6 +166,7 @@ int main()
             cin >> confirm;
             if (confirm == 'Y' || confirm == 'y') {
                 log_out();
+                answer = 'y';
                 continue;
             }
             else {
@@ -686,8 +687,6 @@ void log_out() {
     cout << "#### You Have Been Succsessfully Logged Out. ####" << endl;
     cout << "#### Thank You For Using Our Online Supermarket! ####" << endl;
     cout << "========================================\n" << endl;
-    menu();
-    cout << "========================================" << endl;
 }
 
 void save_customers_to_file() {
