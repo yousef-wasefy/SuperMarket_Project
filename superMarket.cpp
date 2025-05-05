@@ -1,15 +1,12 @@
 #include<iostream>
 #include<string>
-#include<vector>
-#include<chrono> //used for the time
-#include<ctime>  //used for the time
-#include<iomanip> //used for the time
 #include<fstream>
 
 using namespace std;
 #define MAX 50 
+
+
 int currentCustomerIndex = -1;//to save the index
-char answer;//to use it in log out 
 
 struct Product
 {
@@ -42,7 +39,7 @@ struct Customer
 };
 Customer NewCustomer;
 Customer customers[MAX];
-int customerCount = 0;
+int customerCount;
 bool is_logged_in = false; //to check if he has logged in before any access he can do
 bool is_admin = false;
 
@@ -75,7 +72,7 @@ Product Products[CATEGORY_COUNT][MAX_PRODUCTS] = {
     },
     { // Frozen Food
         {"F001", "Frozen Pizza", "Frozen Food", "2025-02-10", "2026-02-10", 5.50},
-        {"F002", "Ice Cream ", "Frozen Food", "2025-02-28", "2026-02-28", 3.99},
+        {"F002", "Ice Cream", "Frozen Food", "2025-02-28", "2026-02-28", 3.99},
         {"F003", "Chicken Nuggets", "Frozen Food", "2025-03-01", "2026-03-01", 6.75}
     }
 };
@@ -101,6 +98,7 @@ int main()
 {
     //pull first !!!!
     load_customers_from_file();
+    char answer = ' ';
     int choice;
     string name, password;
     int targetID = 0;
@@ -681,7 +679,7 @@ void log_out() {
     currentCustomerIndex = -1;
     cout << "#### You Have Been Succsessfully Logged Out. ####" << endl;
     cout << "#### Thank You For Using Our Online Supermarket!" << endl;
-    answer = 'y';
+    menu();
     cout << "========================================" << endl;
 }
 
@@ -694,7 +692,10 @@ void load_customers_from_file() {
     customerCount = 0;
     ifstream inFile("customersINFOR.txt");
     while (inFile >> customers[customerCount].Name >> customers[customerCount].Password >> customers[customerCount].ID >> customers[customerCount].PhoneNumber >> customers[customerCount].Location >> customers[customerCount].userRank)
+    {
+        customerOrder[customerCount].CustomerID = customers[customerCount].ID;
         customerCount++;
+    }
     inFile.close();
 }
 void edit_customers_to_file() {
